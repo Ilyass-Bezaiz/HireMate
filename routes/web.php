@@ -30,5 +30,5 @@ Route::middleware([
 });
 
 Route::group(['middleware' => 'auth'],function(){
-    Route::get('/jobseeker-posts', JobSeekerNewPost::class)->name('jobseekerposts.index');
+    Route::get('/jobseeker-posts', JobSeekerNewPost::class)->name('jobseekerposts.index')->middleware('role:job_seeker');
 });

@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->foreignId('user_id')->constrained();
             $table->double('expected_salary',8,2);
-            $table->enum('flexibility',['on_site', 'hybrid', 'remote']);
+            $table->enum('flexibility',['On site', 'Hybrid', 'Remote']);
             $table->enum('requestedContract', ['Full-time', 'Part-time', 'Contract', 'Freelance']);
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('city_id');
+            $table->foreignId('country_id');
+            $table->foreignId('city_id');
             $table->timestamps();
         });
     }
