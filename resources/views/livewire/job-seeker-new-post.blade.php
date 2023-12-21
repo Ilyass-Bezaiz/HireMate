@@ -59,7 +59,7 @@
                     <div class="flex gap-5 flex-col lg:flex-row md:flex-row">
                         <div class="col-span-6 mb-4 w-full">
                                     <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                                    <select wire:model.live="selectedCountry" id="country" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <select wire:model.live="selectedCountry" id="country" name="country" autocomplete="country-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                                     @foreach($countries as $country)
                                         <option value="{{ $country->id }}">{{ $country->name }}</option>
                                     @endforeach
@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-span-6 w-full">
                                     <label for="city" class="block text-sm font-medium text-gray-700">City</label>
-                                    <select id="city" name="city" autocomplete="city-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <select id="city" name="city" autocomplete="city-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                                         @foreach($cities as $city)
                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach
@@ -78,7 +78,7 @@
                 
                 <div class="col-span-6 w-full mb-4">
                     <label for="desiredContractType" class="block text-sm font-medium text-gray-700">Contract type</label>
-                        <select id="desiredContractType" name="desiredContractType" autocomplete="desiredContractType-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <select id="desiredContractType" name="desiredContractType" autocomplete="desiredContractType-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                             <option value="full-time">Full-time</option>
                             <option value="part-time">Part-time</option>
                             <option value="contract">Contract</option>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="col-span-6 w-full">
                     <label for="flexibility" class="block text-sm font-medium text-gray-700">Flexibility</label>
-                        <select id="flexibility" name="flexibility" autocomplete="flexibility-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <select id="flexibility" name="flexibility" autocomplete="flexibility-name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                             <option value="remote">Remote</option>
                             <option value="on-site">On-site</option>
                             <option value="hybrid">Hybrid</option>
@@ -96,7 +96,7 @@
                 <div class="sm:col-span-6 pt-5">
                 <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
                 <div class="mt-1">
-                    <textarea id="description" rows="3" class="shadow-sm focus:ring-indigo-500 appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                    <textarea id="description" rows="3" class="shadow-sm focus:ring-green-500 appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
                 </div>
                 </div>
             </form>
