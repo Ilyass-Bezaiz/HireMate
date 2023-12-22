@@ -95,6 +95,9 @@
                   <select wire:model.live="selectedCountry" id="country" name="country" autocomplete="country-name"
                   class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                   <option value="null" selected disabled>Select your country</option>
+                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="null" selected disabled>Select your country</option>
+                    @if ($countries)
                       @foreach($countries as $country)
                       <option value="{{ $country->id }}">{{ $country->name }}</option>
                       @endforeach
@@ -118,6 +121,16 @@
                     @endif
                   </select>
                   @error('cityId') <span class="error text-red-600">{{ $message }}</span> @enderror
+                      @foreach($cities as $city)
+                      @if ($oldCityId == $city->id)
+                      <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
+                      @else
+                      <option value="{{ $city->id }}">{{ $city->name }}</option>
+                      @endif
+                      @endforeach
+                      @endif
+                    </select>
+                    @error('cityId') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
               </div>
             </div>
