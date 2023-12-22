@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\DataProviders\CandidateDataProvider;
-use App\Models\Candidate;
+use App\DataProviders\JobOfferDataProvider;
+use App\Models\JobOfferPost;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CandidateSeeder extends Seeder
+class JobOfferPostSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Candidate::insertOrIgnore(CandidateDataProvider::data());
+        JobOfferPost::insertOrIgnore(JobOfferDataProvider::data());
     }
 }
