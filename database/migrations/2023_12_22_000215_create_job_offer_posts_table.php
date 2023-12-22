@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('job_seeker_posts', function (Blueprint $table) {
+        Schema::create('job_offer_posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->double('expected_salary',8,2);
-            $table->enum('flexibility',['On site', 'Hybrid', 'Remote']);
-            $table->enum('requestedContract', ['Full-time', 'Part-time', 'Contract', 'Freelance']);
+            $table->string('title');
+            $table->text('description');
+            $table->double('salary',8,2);
             $table->foreignId('country_id');
             $table->foreignId('city_id');
+            $table->enum('flexibility',['On site', 'Hybrid', 'Remote']);
+            $table->enum('requestedContract', ['Full-time', 'Part-time', 'Contract', 'Freelance']);
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_seeker_posts');
+        Schema::dropIfExists('job_offer_posts');
     }
 };
