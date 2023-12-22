@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\DataProviders\CandidateDataProvider;
-use App\Models\Candidate;
+use App\DataProviders\UserDataProvider;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CandidateSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Candidate::insertOrIgnore(CandidateDataProvider::data());
+        User::insertOrIgnore(UserDataProvider::data());
     }
 }
