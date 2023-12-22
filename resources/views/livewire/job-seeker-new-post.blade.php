@@ -94,14 +94,12 @@
                     class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option value="null" selected disabled>Select your country</option>
                     @if ($countries)
-                    <select wire:model.live="selectedCountry" id="country" name="country" autocomplete="country-name"
-                      class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                       @foreach($countries as $country)
                       <option value="{{ $country->id }}">{{ $country->name }}</option>
                       @endforeach
-                      @endif
-                    </select>
-                    @error('selectedCountry') <span class="error text-red-600">{{ $message }}</span> @enderror
+                    @endif
+                  </select>
+                  @error('selectedCountry') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-span-6 w-full">
                   <label for="city" class="block text-sm font-medium text-gray-700">City</label>
@@ -109,8 +107,6 @@
                     class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option value="null" selected disabled>Select city</option>
                     @if ($cities)
-                    <select id="city" name="city" autocomplete="city-name"
-                      class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                       @foreach($cities as $city)
                       @if ($oldCityId == $city->id)
                       <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
@@ -135,13 +131,7 @@
                 <option value="Part-time">Part-time</option>
                 <option value="Contract">Contract</option>
                 <option value="Freelance">Freelance</option>
-                <label for="desiredContractType" class="block text-sm font-medium text-gray-700">Contract type</label>
-                <select id="desiredContractType" name="desiredContractType" autocomplete="desiredContractType-name"
-                  class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                  <option value="full-time">Full-time</option>
-                  <option value="part-time">Part-time</option>
-                  <option value="contract">Contract</option>
-                  <option value="freelance">Freelance</option>
+                
                 </select>
                 @error('contractType') <span class="error text-red-600">{{ $message }}</span> @enderror
             </div>
@@ -153,11 +143,7 @@
                 <option value="Remote" selected>Remote</option>
                 <option value="On site">On site</option>
                 <option value="Hybrid">Hybrid</option>
-                <select id="flexibility" name="flexibility" autocomplete="flexibility-name"
-                  class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                  <option value="remote">Remote</option>
-                  <option value="on-site">On-site</option>
-                  <option value="hybrid">Hybrid</option>
+                
                 </select>
                 @error('flexibility') <span class="error text-red-600">{{ $message }}</span> @enderror
             </div>
@@ -167,8 +153,7 @@
                 <textarea id="description" wire:model.lazy="description" rows="3"
                   class="shadow-sm focus:ring-indigo-500 appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
                 @error('description') <span class="error text-red-600">{{ $message }}</span> @enderror
-                <textarea id="description" rows="3"
-                  class="shadow-sm focus:ring-green-500 appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                
               </div>
             </div>
           </form>
