@@ -115,6 +115,7 @@ class JobSeekerNewPost extends Component
         $this->cities = City::where('country_id', $this->selectedCountry)->get();
         $this->oldCityValue = City::find($this->cityId);
         $this->oldCityId = $this->oldCityValue->id;
+
     }
 
     public function render()
