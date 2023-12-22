@@ -1,7 +1,8 @@
 <?php
 
-use App\Livewire\JobSeekerNewPost;
+use App\Livewire\JobOfferNewPost;
 use App\Livewire\JobSeekerPost;
+use App\Livewire\JobSeekerNewPost;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,8 +28,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::get('/jobseeker-posts', JobSeekerNewPost::class)->name('jobseekerposts.index')->middleware('role:job_seeker');
+    Route::get('/joboffer-posts', JobOfferNewPost::class)->name('jobofferposts.index')->middleware('role:employer');
+
 });
 
-Route::group(['middleware' => 'auth'],function(){
-    Route::get('/jobseeker-posts', JobSeekerNewPost::class)->name('jobseekerposts.index')->middleware('role:job_seeker');
-});
+// Route::group(['middleware' => 'auth'],function(){
+// });

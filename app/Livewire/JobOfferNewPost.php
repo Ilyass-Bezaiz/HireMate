@@ -2,15 +2,13 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\City;
 use App\Models\Country;
-use App\Models\JobSeekerPost;
-use Livewire\WithPagination;
-class JobSeekerNewPost extends Component
+use Livewire\Component;
+use App\Models\JobOfferPost;
+
+class JobOfferNewPost extends Component
 {
-    
-    protected $paginationTheme = 'bootstrap';
     public $showingModal = false;
     public $countries = [];
     public $cities = [];
@@ -18,70 +16,45 @@ class JobSeekerNewPost extends Component
     public $isEditMode = false;
     public $oldCityValue = null;
     public $oldCityId = null;
-    // job seeker post data
+    // job offer post data
 
     public $post;
     public $title;
-    public $expectedSalary;
+    public $salary;
     public $cityId;
     public $description;
     public $contractType;
     public $flexibility;
-    
-    public function showJobSeekerPostModal(){
+
+    public function showJobOfferPostModal(){
         // resetting properties
         $this->resetExcept('countries','cities');
-
         $this->showingModal = true;
     }
     
+    public function updatedSelectedCountry($country){
+        $this->cities = City::where('country_id', $country)->get();
+    }
+
     public function mount(){
         $this->countries = Country::all();
     }
 
-    public function updatedSelectedCountry($country){
-        $this->cities = City::where('country_id', $country)->get();   
-    }
-
-    public function storeJobSeekerPost(){
+    public function storeJobOfferPost(){
         $this->validate([
             'title' =>'required|max:50',
             'description' => 'required|max:100',
-            'expectedSalary'=>'required|numeric',
+            'salary'=>'required|numeric',
             'flexibility' => 'required',
             'contractType' => 'required',
             'selectedCountry' => 'required',
             'cityId' => 'required'
         ]);
 
-        JobSeekerPost::create([
+        JobOfferPost::create([
             'title' => $this->title,
             'description' => $this->description,
-            'expected_salary' => $this->expectedSalary,
-            'flexibility' => $this->flexibility,
-            'requestedContract' => $this->contractType,
-            'country_id' => $this->selectedCountry,
-            'city_id' => $this->cityId,
-            'user_id' => auth()->user()->id
-        ]);
-        
-        $this->resetExcept('countries','cities');
-
-    }
-    public function updateJobSeekerPost(){
-        $this->validate([
-            'title' =>'required|max:50',
-            'description' => 'required|max:100',
-            'expectedSalary'=>'required|numeric',
-            'flexibility' => 'required',
-            'contractType' => 'required',
-            'selectedCountry' => 'required',
-            'cityId' => 'required'
-        ]);
-        $this->post->update([
-            'title' => $this->title,
-            'description' => $this->description,
-            'expected_salary' => $this->expectedSalary,
+            'salary' => $this->salary,
             'flexibility' => $this->flexibility,
             'requestedContract' => $this->contractType,
             'country_id' => $this->selectedCountry,
@@ -89,20 +62,13 @@ class JobSeekerNewPost extends Component
             'user_id' => auth()->user()->id
         ]);
         $this->resetExcept('countries','cities');
-    }
-
-    public function deletePost($id){
-        JobSeekerPost::findOrFail($id)->delete();
-        // resetting properties
-        $this->resetExcept('countries','cities');
-        
     }
 
     public function showEditPostModal($id){
-        $this->post = JobSeekerPost::findOrFail($id);
+        $this->post = JobOfferPost::findOrFail($id);
         // dd($post);
         $this->title = $this->post->title;
-        $this->expectedSalary = $this->post->expected_salary;
+        $this->salary = $this->post->salary;
         $this->flexibility = $this->post->flexibility;
         $this->contractType = $this->post->requestedContract;
         $this->description = $this->post->description;
@@ -114,13 +80,41 @@ class JobSeekerNewPost extends Component
         $this->cities = City::where('country_id', $this->selectedCountry)->get();
         $this->oldCityValue = City::find($this->cityId);
         $this->oldCityId = $this->oldCityValue->id;
-
     }
 
+    public function updateJobOfferPost(){
+        $this->validate([
+            'title' =>'required|max:50',
+            'description' => 'required|max:100',
+            'salary'=>'required|numeric',
+            'flexibility' => 'required',
+            'contractType' => 'required',
+            'selectedCountry' => 'required',
+            'cityId' => 'required'
+        ]);
+        $this->post->update([
+            'title' => $this->title,
+            'description' => $this->description,
+            'salary' => $this->salary,
+            'flexibility' => $this->flexibility,
+            'requestedContract' => $this->contractType,
+            'country_id' => $this->selectedCountry,
+            'city_id' => $this->cityId,
+            'user_id' => auth()->user()->id
+        ]);
+        $this->resetExcept('countries','cities');
+    }
+
+    public function deletePost($id){
+        JobOfferPost::findOrFail($id)->delete();
+        // resetting properties
+        $this->resetExcept('countries','cities');
+    }
+    
     public function render()
-    {  
-        return view('livewire.job-seeker-new-post',[
-            'posts' => JobSeekerPost::where('user_id',auth()->user()->id)->paginate(2),
+    {
+        return view('livewire.job-offer-new-post',[
+            'posts' => JobOfferPost::where('user_id',auth()->user()->id)->paginate(2),
         ]);
     }
 }
