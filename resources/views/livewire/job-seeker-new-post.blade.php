@@ -38,7 +38,7 @@
                 <td class="flex gap-4 px-6 py-4 text-right text-sm">
                   <x-button wire:click="showEditPostModal({{ $post->id }})" class="bg-gray-900 hover:bg-gray-600">EDIT
                   </x-button>
-                  <x-button wire:click="deletePost({{ $post->id }})" class="bg-red-700 hover:bg-red-600">DELETE
+                  <x-button wire:click="deletePost({{ $post->id }})" class="bg-red-700 hover:bg-red-600" wire:confirm="Are you sure you want to delete this post?">DELETE
                   </x-button>
                 </td>
               </tr>
@@ -59,6 +59,7 @@
 
     </div>
     <div>
+      
       <x-dialog-modal wire:model="showingModal">
 
         @if($isEditMode)
