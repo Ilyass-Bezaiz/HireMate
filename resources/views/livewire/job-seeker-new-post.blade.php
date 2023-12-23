@@ -98,9 +98,9 @@
                       @foreach($countries as $country)
                       <option value="{{ $country->id }}">{{ $country->name }}</option>
                       @endforeach
-                      @endif
-                    </select>
-                    @error('selectedCountry') <span class="error text-red-600">{{ $message }}</span> @enderror
+                    @endif
+                  </select>
+                  @error('selectedCountry') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-span-6 w-full">
                   <label for="city" class="block text-sm font-medium text-gray-700">City</label>
