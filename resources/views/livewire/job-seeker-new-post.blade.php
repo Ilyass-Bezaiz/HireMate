@@ -50,17 +50,14 @@
               @endif
             </tbody>
           </table>
-
           @if(count($posts) > 0)
           <div class="m-2 p-2" wire:ignore>{{ $posts->links() }}</div>
           @endif
         </div>
       </div>
-
     </div>
     <div>
       <x-dialog-modal wire:model="showingModal">
-
         @if($isEditMode)
         <x-slot name="title">Update Job seeker post</x-slot>
         @else
@@ -90,20 +87,16 @@
               <div class="flex gap-5 flex-col lg:flex-row md:flex-row">
                 <div class="col-span-6 mb-4 w-full">
                   <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                  
-                  @if ($countries)
                   <select wire:model.live="selectedCountry" id="country" name="country" autocomplete="country-name"
-                  class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                  <option value="null" selected disabled>Select your country</option>
                     class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option value="null" selected disabled>Select your country</option>
                     @if ($countries)
-                      @foreach($countries as $country)
-                      <option value="{{ $country->id }}">{{ $country->name }}</option>
-                      @endforeach
-                      @endif
-                    </select>
-                    @error('selectedCountry') <span class="error text-red-600">{{ $message }}</span> @enderror
+                    @foreach($countries as $country)
+                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                    @endforeach
+                    @endif
+                  </select>
+                  @error('selectedCountry') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
                 <div class="col-span-6 w-full">
                   <label for="city" class="block text-sm font-medium text-gray-700">City</label>
@@ -121,20 +114,9 @@
                     @endif
                   </select>
                   @error('cityId') <span class="error text-red-600">{{ $message }}</span> @enderror
-                      @foreach($cities as $city)
-                      @if ($oldCityId == $city->id)
-                      <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
-                      @else
-                      <option value="{{ $city->id }}">{{ $city->name }}</option>
-                      @endif
-                      @endforeach
-                      @endif
-                    </select>
-                    @error('cityId') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
               </div>
             </div>
-
             <div class="col-span-6 w-full mb-4">
               <label for="contractType" class="block text-sm font-medium text-gray-700">Contract type</label>
               <select id="contractType" name="contractType" autocomplete="contractType-name"
@@ -145,8 +127,8 @@
                 <option value="Part-time">Part-time</option>
                 <option value="Contract">Contract</option>
                 <option value="Freelance">Freelance</option>
-                </select>
-                @error('contractType') <span class="error text-red-600">{{ $message }}</span> @enderror
+              </select>
+              @error('contractType') <span class="error text-red-600">{{ $message }}</span> @enderror
             </div>
             <div class="col-span-6 w-full">
               <label for="flexibility" class="block text-sm font-medium text-gray-700">Flexibility</label>
@@ -157,7 +139,7 @@
                 <option value="On site">On site</option>
                 <option value="Hybrid">Hybrid</option>
               </select>
-                @error('flexibility') <span class="error text-red-600">{{ $message }}</span> @enderror
+              @error('flexibility') <span class="error text-red-600">{{ $message }}</span> @enderror
             </div>
             <div class="sm:col-span-6 pt-5">
               <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
