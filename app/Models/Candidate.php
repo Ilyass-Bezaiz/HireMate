@@ -13,6 +13,8 @@ class Candidate extends Model
     protected $fillable = [
         'user_id',
         'skills',
+        'age',
+        'gender',
         'workExperience',
         'education',
         'curriculumVitae',
