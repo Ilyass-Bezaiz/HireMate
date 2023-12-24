@@ -25,9 +25,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/home', function () {
+        return view('home-page');
+    })->name('home');
     Route::get('/jobseeker-posts', JobSeekerNewPost::class)->name('jobseekerposts.index')->middleware('role:job_seeker');
     Route::get('/joboffer-posts', JobOfferNewPost::class)->name('jobofferposts.index')->middleware('role:employer');
 
