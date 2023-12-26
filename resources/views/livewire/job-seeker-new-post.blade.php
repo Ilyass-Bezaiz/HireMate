@@ -71,7 +71,7 @@
               <div class="mt-1">
                 <input type="text" id="title" wire:model.lazy="title" name="title"
                   class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-              </div>
+                </div>
               @error('title') <span class="error text-red-600">{{ $message }}</span> @enderror
             </div>
             <div class="sm:col-span-6 mb-4">
@@ -105,7 +105,6 @@
                     class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option value="null" selected disabled>Select city</option>
                     @if ($cities)
-<<<<<<< HEAD
                       @foreach($cities as $city)
                       @if ($oldCityId == $city->id)
                       <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
@@ -114,20 +113,8 @@
                       @endif
                       @endforeach
                       @endif
-                    </select>
-                    @error('cityId') <span class="error text-red-600">{{ $message }}</span> @enderror
-=======
-                    @foreach($cities as $city)
-                    @if ($oldCityId == $city->id)
-                    <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
-                    @else
-                    <option value="{{ $city->id }}">{{ $city->name }}</option>
-                    @endif
-                    @endforeach
-                    @endif
                   </select>
                   @error('cityId') <span class="error text-red-600">{{ $message }}</span> @enderror
->>>>>>> 627a059001bfbd01be0dd22fbec6110af2384d93
                 </div>
               </div>
             </div>

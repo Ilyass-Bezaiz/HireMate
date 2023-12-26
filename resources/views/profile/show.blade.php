@@ -13,6 +13,13 @@
                 <x-section-border />
             @endif
 
+            @can('modify-job-seeker-information', Auth::user())
+                <div class="mt-10 sm:mt-0">
+                    @livewire('update-job-seeker-profile-data')
+                </div>
+                <x-section-border />
+            @endcan
+            
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.update-password-form')
@@ -20,7 +27,7 @@
 
                 <x-section-border />
             @endif
-
+            
             @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.two-factor-authentication-form')
@@ -40,6 +47,7 @@
                     @livewire('profile.delete-user-form')
                 </div>
             @endif
+            
             
         </div>
     </div>
