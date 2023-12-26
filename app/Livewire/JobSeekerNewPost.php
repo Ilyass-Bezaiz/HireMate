@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\JobSeekerPost;
 use Livewire\WithPagination;
+
 class JobSeekerNewPost extends Component
 {
     

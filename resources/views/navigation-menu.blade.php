@@ -17,15 +17,19 @@
           </x-nav-link>
 
           @if (auth()->user()->role == "job_seeker")
-          <x-nav-link wire:navigate href="{{ route('jobseekerposts.index') }}"
-            :active="request()->routeIs('jobseekerposts.index')">
-            {{ __('Create Job Seeking post') }}
-          </x-nav-link>
+            <x-nav-link wire:navigate href="{{ route('jobseekerposts.index') }}"
+              :active="request()->routeIs('jobseekerposts.index')">
+              {{ __('Create Job Seeking post') }}
+            </x-nav-link>
+            <x-nav-link wire:navigate href="{{ route('community-page.index') }}"
+              :active="request()->routeIs('community-page.index')">
+              {{ __('Community') }}
+            </x-nav-link>
           @else (auth()->user()->role == "employer")
-          <x-nav-link wire:navigate href="{{ route('jobofferposts.index') }}"
-            :active="request()->routeIs('jobofferposts.index')">
-            {{ __('Create Job Offer post') }}
-          </x-nav-link>
+            <x-nav-link wire:navigate href="{{ route('jobofferposts.index') }}"
+              :active="request()->routeIs('jobofferposts.index')">
+              {{ __('Create Job Offer post') }}
+            </x-nav-link>
           @endif
 
         </div>
