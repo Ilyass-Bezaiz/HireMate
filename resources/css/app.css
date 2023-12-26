@@ -1,7 +1,191 @@
 @tailwind base;
+
+@layer base {
+    h1 {
+      @apply text-2xl;
+    }
+    h2 {
+      @apply text-xl;
+    }
+    h3 {
+      @apply text-lg;
+    }
+
+    p{
+        margin:5px;
+    }
+
+    ol,
+    ul {
+    list-style: disc;
+    margin: 5px;
+    padding: 5px;
+    }
+}
+
 @tailwind components;
 @tailwind utilities;
 
 [x-cloak] {
     display: none;
+}
+
+/* Your custom styles go here */
+:root{
+    /* colors */
+    --color-primary: #4DD783;
+    --color-lightgreen-1:#EBF0EB;
+    --color-lightgreen-2:#E5F9ED;
+    --color-text: #2A2A2A;
+    --color-lightgray: #D9D9D9;
+    --color-darkgray:#888888;
+    --color-white:#ffffff;
+    --color-bgColor:#F5F5F5;
+    --color-error:#D43E3E;
+}
+
+/* Customizing the scroll bar */
+
+html::-webkit-scrollbar{
+    width:8px;
+}
+html::-webkit-scrollbar-thumb{
+    background-color:var(--color-primary);
+    border-radius: 30px;
+}
+
+
+select:focus{
+    outline: none;
+    box-shadow: 0px 0px 0px 3px rgba(77, 215, 131, 0.20);
+}
+
+.hero-section::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Adjust the alpha channel to control the darkness */
+    z-index: 0;
+}
+.hero-section-content{
+    z-index: 1;
+}
+
+
+.btn-primary {        
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 30px;
+    border: 1px solid transparent;
+    outline: none;
+    padding-block: 10px;
+}
+
+.btn-primary:hover {
+    transform: scale(1.02);
+    transition: all .2s ease-in-out;
+} 
+
+.btn-secondary {        
+    background-color: transparent;
+    color: var(--color-primary);
+    border-radius: 30px;
+    border: 1px solid var(--color-primary);
+    outline: none;
+    padding-block: 10px;
+}
+
+.btn-secondary:hover {
+    transform: scale(1.02);
+    transition: all .2s ease-in-out;
+} 
+
+
+/*---------------------------------------- MAIN NAV -----------------------------------*/
+    
+/*Animations*/
+.slidemenu label, .slider .bar {
+    -moz-transition: all 500ms ease-in-out;
+    -webkit-transition: all 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
+}
+
+/*Toggle*/
+  
+.slidemenu .slide-toggle:checked + label{
+    opacity: 1;
+    color: var(--color-primary);
+}  
+  
+.slidemenu #slide-item-1:checked ~ .slider .bar{ margin-left: 6.7%; }
+.slidemenu #slide-item-2:checked ~ .slider .bar{ margin-left: 39.5%; }
+.slidemenu #slide-item-3:checked ~ .slider .bar{ margin-left: 73%; }
+
+/*Date input*/
+.date-input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+.date-input{
+    outline: none;
+}
+
+/*dropdown style*/
+/* Style for the custom dropdown icon */
+.custom-dropdown::after {
+    content: '\f107'; /* Unicode for the Font Awesome arrow-down icon */
+    font-family: 'Font Awesome 6 Free'; /* Font Awesome font family */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+
+  /* Hide the default dropdown arrow */
+#myDropdown::-ms-expand {
+    display: none;
+}
+#myDropdown {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.list-content-container::-webkit-scrollbar{
+    width:6px;
+}
+.list-content-container::-webkit-scrollbar-thumb{
+    background-color:var(--color-primary);
+    border-radius: 30px;
+}
+
+.list-content .checked {
+    border-left: 5px solid var(--color-primary);
+}
+
+
+.content-details::-webkit-scrollbar{
+    width:6px;
+}
+.content-details::-webkit-scrollbar-thumb{
+    background-color:var(--color-lightgray);
+    border-radius: 30px;
+}
+
+
+.fill_upload{
+    box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.10);
+}
+
+.blur-dev {
+    --mask: linear-gradient(to bottom, 
+        rgba(0,0,0, 1) 0,   rgba(0,0,0, 1) 80%, 
+        rgba(0,0,0, 0) 100%, rgba(0,0,0, 0) 0
+    ) 100% 50% / 100% 100% repeat-x;
+    
+    -webkit-mask: var(--mask); 
+    mask: var(--mask);
 }
