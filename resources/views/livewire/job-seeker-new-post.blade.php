@@ -27,6 +27,22 @@
             <tbody class="bg-white divide-y divide-gray-200">
               <tr></tr>
               @if (count($posts) > 0)
+              @foreach($posts as $post)
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">{{ $post->title }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ $post->description }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ $post->flexibility }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  {{ $post->requestedContract }}
+                </td>
+                <td class="flex gap-4 px-6 py-4 text-right text-sm">
+                  <x-button wire:click="showEditPostModal({{ $post->id }})" class="bg-gray-900 hover:bg-gray-600">EDIT
+                  </x-button>
+                  <x-button wire:click="deletePost({{ $post->id }})" class="bg-red-700 hover:bg-red-600" wire:confirm="Are you sure you want to delete this post?">DELETE
+                  </x-button>
+                </td>
+              </tr>
+              @endforeach
                 @foreach($posts as $post)
                   <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $post->title }}</td>
@@ -57,6 +73,7 @@
       </div>
     </div>
     <div>
+      
       <x-dialog-modal wire:model="showingModal">
         @if($isEditMode)
         <x-slot name="title">Update Job seeker post</x-slot>
@@ -70,7 +87,7 @@
               <div class="mt-1">
                 <input type="text" id="title" wire:model.lazy="title" name="title"
                   class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-              </div>
+                </div>
               @error('title') <span class="error text-red-600">{{ $message }}</span> @enderror
             </div>
             <div class="sm:col-span-6 mb-4">
@@ -87,7 +104,7 @@
               <div class="flex gap-5 flex-col lg:flex-row md:flex-row">
                 <div class="col-span-6 mb-4 w-full">
                   <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                  <select wire:model.live="selectedCountry" id="country" name="country" autocomplete="country-name"
+                  <select wire:model.live="selectedCountry" id="country" name="country" autocomplete="country-name">
                     <option value="null" selected disabled>Select your country</option>
                     @if ($countries)
                       @foreach($countries as $country)
@@ -103,14 +120,14 @@
                     class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     <option value="null" selected disabled>Select city</option>
                     @if ($cities)
-                      @foreach($cities as $city)
-                        @if ($oldCityId == $city->id)
-                          <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
-                          @else
-                          <option value="{{ $city->id }}">{{ $city->name }}</option>
-                        @endif
-                      @endforeach
-                    @endif
+                        @foreach($cities as $city)
+                          @if ($oldCityId == $city->id)
+                            <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
+                            @else
+                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                          @endif
+                        @endforeach
+                      @endif
                   </select>
                   @error('cityId') <span class="error text-red-600">{{ $message }}</span> @enderror
                 </div>
