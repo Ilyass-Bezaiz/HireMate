@@ -3,7 +3,7 @@
 use App\Livewire\JobOfferNewPost;
 use App\Livewire\JobSeekerPost;
 use App\Livewire\JobSeekerNewPost;
-use App\Livewire\CommunityPage;
+use App\Livewire\Community;
 use Illuminate\Support\Facades\Route;
 
 
@@ -32,7 +32,7 @@ Route::middleware([
     })->name('home');
     Route::get('/jobseeker-posts', JobSeekerNewPost::class)->name('jobseekerposts.index')->middleware('role:job_seeker');
     //New route for the community page
-    Route::get('/community-page', CommunityPage::class)->name('community-page.index')->middleware('role:job_seeker');
+    Route::get('/community', Community::class)->name('community.index')->middleware('role:job_seeker');
 
     Route::get('/joboffer-posts', JobOfferNewPost::class)->name('jobofferposts.index')->middleware('role:employer');
 

@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Post;
+use App\Models\Like;
 
 class Comment extends Model
 {
-    protected $fillable = ['body'];
+    use HasFactory;
+
+    protected $fillable = ['body', 'user_id', 'post_id'];
 
     public function user()
     {
@@ -23,5 +28,4 @@ class Comment extends Model
     {
         return $this->hasMany(Like::class);
     }
-
 }
