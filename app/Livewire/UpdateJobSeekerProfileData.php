@@ -64,7 +64,7 @@ class UpdateJobSeekerProfileData extends Component
     {   
         $validated = $this->validate($this->rules());
         if ($this->resume && $this->changedResumeFile) {
-            $this->path = $this->resume->storeAs('public/uploads', 'cv-'.auth()->user()->name.'.pdf');
+            $this->path = $this->resume->storeAs('public/uploads', 'cv-user'.auth()->user()->id.'.pdf');
             if($this->changedResumeFile){
                 $this->user->update([
                     'age' => $this->age,
@@ -81,7 +81,6 @@ class UpdateJobSeekerProfileData extends Component
         }
 
         session()->flash('success', 'Data saved successfully !');
-        $this->reset();
         // Redirect to the profile page
         return redirect('/user/profile');
     }

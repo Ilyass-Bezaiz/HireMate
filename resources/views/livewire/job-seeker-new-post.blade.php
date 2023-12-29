@@ -43,22 +43,6 @@
                 </td>
               </tr>
               @endforeach
-                @foreach($posts as $post)
-                  <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->title }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->description }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $post->flexibility }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                      {{ $post->requestedContract }}
-                    </td>
-                    <td class="flex gap-4 px-6 py-4 text-right text-sm">
-                      <x-button wire:click="showEditPostModal({{ $post->id }})" class="bg-gray-900 hover:bg-gray-600">EDIT
-                      </x-button>
-                      <x-button wire:click="deletePost({{ $post->id }})" class="bg-red-700 hover:bg-red-600">DELETE
-                      </x-button>
-                    </td>
-                  </tr>
-                @endforeach
               @else
               <tr>
                 <td colspan="5" class="p-6 lg:text-2xl md:text-md text-md text-center">No posts to show !</td>
@@ -104,7 +88,7 @@
               <div class="flex gap-5 flex-col lg:flex-row md:flex-row">
                 <div class="col-span-6 mb-4 w-full">
                   <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
-                  <select wire:model.live="selectedCountry" id="country" name="country" autocomplete="country-name">
+                  <select wire:model.live="selectedCountry" id="country" name="country" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" autocomplete="country-name">
                     <option value="null" selected disabled>Select your country</option>
                     @if ($countries)
                     @foreach($countries as $country)

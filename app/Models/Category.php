@@ -16,6 +16,5 @@ class Category extends Model
             'name' => $this->name,
         ];
     }
-
     use HasFactory;
 }
