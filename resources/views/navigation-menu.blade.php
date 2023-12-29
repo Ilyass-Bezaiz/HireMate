@@ -21,8 +21,8 @@
               :active="request()->routeIs('jobseekerposts.index')">
               {{ __('Create Job Seeking post') }}
             </x-nav-link>
-            <x-nav-link wire:navigate href="{{ route('community-page.index') }}"
-              :active="request()->routeIs('community-page.index')">
+            <x-nav-link wire:navigate href="{{ route('community.index') }}"
+              :active="request()->routeIs('community.index')">
               {{ __('Community') }}
             </x-nav-link>
           @else (auth()->user()->role == "employer")
