@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,33 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            // Check if a theme preference is stored in localStorage
+            const savedTheme = localStorage.getItem('theme');
+          
+            // If a theme preference exists, set it
+            if (savedTheme) {
+                document.documentElement.classList.add(savedTheme);
+            }
+          
+            // Toggle theme function
+            function toggleTheme() {
+                // Toggle the 'dark' class on the html tag
+                document.documentElement.classList.toggle('dark');
+          
+                // Check if the 'dark' class is present
+                const isDarkMode = document.documentElement.classList.contains('dark');
+          
+                // Set the theme preference in localStorage
+                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+          
+            }
+          
+            // Attach the toggleTheme function to a button click or any other event you prefer
+            document.getElementById('theme-toggle-button').addEventListener('click', toggleTheme);
+            });
+          </script>
         <!-- Styles -->
         @livewireStyles
     </head>

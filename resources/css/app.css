@@ -189,3 +189,26 @@ select:focus{
     -webkit-mask: var(--mask); 
     mask: var(--mask);
 }
+
+
+/* Custom select dropdown stykes */
+.select2-selection__choice {
+    background-color: var(--color-primary) !important;
+    color: var(--color-white);
+    border: none !important;
+    border-radius: 30px !important;
+    /* padding: 0 12px !important; */
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+    color: var(--color-white);
+    border-right: 1px solid var(--color-white);
+}
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable{
+    background-color: var(--color-primary);
+}
+.select2-container--default .select2-results__option--selected{
+    background-color: var(--color-lightgreen-1);
+}
+.select2-container{
+    max-width: 100%;
+}

@@ -6,7 +6,10 @@ use Livewire\Component;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\JobSeekerPost;
+use Illuminate\Support\Facades\Auth;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Gate;
+
 
 class JobSeekerNewPost extends Component
 {
@@ -93,7 +96,16 @@ class JobSeekerNewPost extends Component
     }
 
     public function deletePost($id){
-        JobSeekerPost::findOrFail($id)->delete();
+
+        $post = JobSeekerPost::findOrFail($id);
+        
+        /* secure delete action
+        / ### prevent any user from deleting any post he wants .
+        */
+
+        $this->authorize('delete', $post);
+
+        $post->delete();
         // resetting properties
         $this->resetExcept('countries','cities');
         
@@ -101,7 +113,9 @@ class JobSeekerNewPost extends Component
 
     public function showEditPostModal($id){
         $this->post = JobSeekerPost::findOrFail($id);
-        // dd($post);
+        
+        $this->authorize('update',$this->post);
+
         $this->title = $this->post->title;
         $this->expectedSalary = $this->post->expected_salary;
         $this->flexibility = $this->post->flexibility;

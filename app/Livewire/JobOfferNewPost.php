@@ -65,8 +65,11 @@ class JobOfferNewPost extends Component
     }
 
     public function showEditPostModal($id){
+        
         $this->post = JobOfferPost::findOrFail($id);
-        // dd($post);
+        
+        $this->authorize('update',$this->post);
+
         $this->title = $this->post->title;
         $this->salary = $this->post->salary;
         $this->flexibility = $this->post->flexibility;
@@ -106,7 +109,13 @@ class JobOfferNewPost extends Component
     }
 
     public function deletePost($id){
-        JobOfferPost::findOrFail($id)->delete();
+
+        $post = JobOfferPost::findOrFail($id);
+
+        $this->authorize('delete',$post);
+
+        $post->delete();
+
         // resetting properties
         $this->resetExcept('countries','cities');
     }

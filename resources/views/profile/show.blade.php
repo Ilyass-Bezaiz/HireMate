@@ -15,6 +15,13 @@
 
             @can('modify-job-seeker-information', Auth::user())
                 <div class="mt-10 sm:mt-0">
+                    @livewire('modify-demographic-info')
+                </div>
+                <x-section-border />
+            @endcan
+
+            @can('modify-job-seeker-information', Auth::user())
+                <div class="mt-10 sm:mt-0">
                     @livewire('update-job-seeker-profile-data')
                 </div>
                 <x-section-border />
