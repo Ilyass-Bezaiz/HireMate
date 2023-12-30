@@ -3,6 +3,7 @@
 
         <!--Filters for posts-->
         <form enctype="multipart/form-data" class="sticky top-0 width-[350px] bg-white dark:bg-gray-800 p-7 rounded-md border-[1px] border-[#d9d9d9] h-[320px]">
+            @csrf
             <div class="mb-6">
                 <label for="categoryFilter" class="block text-[20px] font-medium text-gray-700 dark:text-gray-300 mb-2">Filter by category</label>
                 @if($categories)
@@ -33,6 +34,7 @@
         <div class="w-2/3 overflow-y-hidden">
             <div class="w-full bg-white p-7 rounded-md border-[1px] border-[#d9d9d9]">
                 <form enctype="multipart/form-data">
+                    @csrf
                     <div class="mb-6 width-[800px]">
                         <label for="Filter by category" class="block text-[20px] font-medium text-gray-700 mb-2">Create post</label>
                         <input wire:model="title" placeholder="Title" type="text" id="post-title" name="post-title" class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 text-base focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm sm:leading-5" />
@@ -64,8 +66,8 @@
                         <div class="flex items-center justify-between rounded-md w-full">
                             <div class="flex items-center">
                                 <div class="flex items-center justify-center">
-                                    <div class="img-picture w-[60px] h-[60px] rounded-full">
-                                        <img src="" alt="Profil picture" class="w-full h-full">
+                                    <div class="img-picture w-[60px] h-[60px] rounded-full overflow-hidden">
+                                        <img src="{{ Storage::url(auth()->user()->profile_photo_path) }}" alt="Profil picture" class="w-full h-full object-cover">
                                     </div>
                                 </div>
                                 <div class="ml-2 flex flex-col items-start">
@@ -99,12 +101,7 @@
                             <p class="font-light text-[14px] m-0 break-words">{{ $post->description }}</p>
                         </div>
                         <div class="mt-6 flex flex-row items-center">
-                            <div class="cursor-pointer flex flex-row items-center justify-between p-2 hover:bg-[#f5f5f5] rounded-md">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="24" viewBox="0 0 26 24" fill="none">
-                                    <path d="M2.79452 13.3699L12.3219 22.1601C12.6437 22.457 12.8046 22.6054 13 22.6054C13.1954 22.6054 13.3563 22.457 13.6781 22.1601L23.2055 13.3699C25.9108 10.874 26.2379 6.71586 23.9562 3.82755L23.6008 3.37759C20.9037 -0.0365739 15.5651 0.542922 13.6634 4.45627C13.3944 5.00988 12.6056 5.00987 12.3366 4.45627C10.4349 0.542921 5.09629 -0.0365701 2.39921 3.37759L2.04375 3.82756C-0.23792 6.71586 0.0892327 10.874 2.79452 13.3699Z" stroke="#888888"/>
-                                </svg>
-                                <span class="ml-2 text-[#888] font-bold">Like</span>
-                            </div>
+                            <livewire:posts.like-button :key="$post->id" :$post/>
                             <div wire:click="showCommentModal({{$post->id}})" class="cursor-pointer ml-2 flex flex-row items-center justify-between p-2 hover:bg-[#f5f5f5] rounded-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
                                     <path d="M24.1573 7.22215C25 8.48327 25 10.2388 25 13.75C25 17.2612 25 19.0167 24.1573 20.2779C23.7926 20.8238 23.3238 21.2926 22.7779 21.6573C21.6762 22.3935 20.1971 22.4865 17.5 22.4983V22.5L16.118 25.2639C15.6574 26.1852 14.3426 26.1852 13.882 25.2639L12.5 22.5V22.4983C9.80287 22.4865 8.32384 22.3935 7.22215 21.6573C6.6762 21.2926 6.20744 20.8238 5.84265 20.2779C5 19.0167 5 17.2612 5 13.75C5 10.2388 5 8.48327 5.84265 7.22215C6.20744 6.6762 6.6762 6.20744 7.22215 5.84265C8.48327 5 10.2388 5 13.75 5H16.25C19.7612 5 21.5167 5 22.7779 5.84265C23.3238 6.20744 23.7926 6.6762 24.1573 7.22215Z" stroke="#888888" stroke-linecap="round" stroke-linejoin="round"/>
@@ -137,6 +134,7 @@
                 </x-slot>
                 <x-slot name="content">
                     <form wire:submit.prevent="" class="relative">
+                        @csrf
                         <textarea wire:model="body" placeholder="What would you like to comment?" rows="3" class="relative w-full block mt-4 bg-white border border-gray-300 rounded-md py-2 px-3 text-base focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm sm:leading-5 overflow-y-hidden"></textarea>
                         @error('body') <span class="error text-red-600 text-[12px]">{{ $message }}</span> @enderror
                         <div class="mt-4">
