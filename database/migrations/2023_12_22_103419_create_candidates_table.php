@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('age')->nullable();
             $table->string('gender')->nullable();
-            $table->json('skills')->nullable();
-            $table->json('workExperience')->nullable();
-            $table->json('education')->nullable();
+            $table->text('skills')->nullable()->default(null);
+            $table->text('workExperience')->nullable();
+            $table->text('education')->nullable();
             $table->string('curriculumVitae')->nullable();
             $table->string('backgroundColor')->nullable();
             $table->string('textColor')->nullable();

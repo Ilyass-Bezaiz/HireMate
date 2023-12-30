@@ -2,7 +2,14 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\JobOfferPost;
+use App\Models\JobSeekerPost;
+use App\Models\User;
+use App\Policies\JobOfferPostPolicy;
+use App\Policies\JobSeekerPostPolicy;
+use Illuminate\Support\Facades\Gate;
+
+// use Illuminate\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -13,7 +20,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        JobSeekerPost::class => JobSeekerPostPolicy::class,
+        JobOfferPost::class => JobOfferPostPolicy::class
     ];
 
     /**
@@ -21,6 +29,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+        Gate::define('modify-job-seeker-information',function($user){
+            if($user->role == "job_seeker"){
+                return true;
+            }
+            return false;
+        });
+
     }
 }

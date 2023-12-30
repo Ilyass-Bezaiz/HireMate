@@ -28,7 +28,7 @@ class Candidate extends Model
     ];
 
     protected $casts = [
-        'skills' => 'json', // Cast the 'skills' attribute to JSON
+        'skills' => 'array', // Cast the 'skills' attribute to JSON
         'workExperience'=> 'json',
         'education' => 'json',
     ];
