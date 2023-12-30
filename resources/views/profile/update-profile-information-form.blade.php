@@ -81,6 +81,14 @@
                 @endif
             @endif
         </div>
+
+        <!-- Phone number -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="phone" value="{{ __('Phone number') }}" />
+            <x-input id="phone" type="tel" class="mt-1 block w-full" wire:model="state.phone" autocomplete="phone" />
+            <x-input-error for="phone" class="mt-2" />
+        </div>
+
     </x-slot>
 
     <x-slot name="actions">

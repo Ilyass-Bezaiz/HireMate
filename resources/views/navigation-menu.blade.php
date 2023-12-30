@@ -5,28 +5,28 @@
       <div class="flex">
         <!-- Logo -->
         <div class="shrink-0 flex items-center">
-          <a wire:navigate href="{{ route('home') }}">
+          <a  href="{{ route('home') }}">
             <x-application-mark class="block h-9 w-auto" />
           </a>
         </div>
 
         <!-- Navigation Links -->
         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-          <x-nav-link wire:navigate href="{{ route('home') }}" :active="request()->routeIs('home')">
+          <x-nav-link  href="{{ route('home') }}" :active="request()->routeIs('home')">
             {{ __('Home') }}
           </x-nav-link>
 
           @if (auth()->user()->role == "job_seeker")
-            <x-nav-link wire:navigate href="{{ route('jobseekerposts.index') }}"
+            <x-nav-link  href="{{ route('jobseekerposts.index') }}"
               :active="request()->routeIs('jobseekerposts.index')">
               {{ __('Create Job Seeking post') }}
             </x-nav-link>
-            <x-nav-link wire:navigate href="{{ route('community.index') }}"
+            <x-nav-link  href="{{ route('community.index') }}"
               :active="request()->routeIs('community.index')">
               {{ __('Community') }}
             </x-nav-link>
           @else (auth()->user()->role == "employer")
-            <x-nav-link wire:navigate href="{{ route('jobofferposts.index') }}"
+            <x-nav-link  href="{{ route('jobofferposts.index') }}"
               :active="request()->routeIs('jobofferposts.index')">
               {{ __('Create Job Offer post') }}
             </x-nav-link>
@@ -121,10 +121,12 @@
               <div class="block px-4 py-2 text-xs text-gray-400">
                 {{ __('Manage Account') }}
               </div>
-
-              <x-dropdown-link wire:navigate href="{{ route('profile.show') }}">
+              
+              <x-dropdown-link  href="{{ route('profile.show') }}">
                 {{ __('Profile') }}
               </x-dropdown-link>
+              <!-- Toggle dark mode -->
+              <x-dropdown-link id="theme-toggle-button">Toggle Theme</x-dropdown-link>
 
               @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
               <x-dropdown-link href="{{ route('api-tokens.index') }}">
@@ -165,11 +167,11 @@
   <!-- Responsive Navigation Menu -->
   <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
     <div class="pt-2 pb-3 space-y-1">
-      <x-responsive-nav-link wire:navigate href="{{ route('home') }}" :active="request()->routeIs('home')">
+      <x-responsive-nav-link  href="{{ route('home') }}" :active="request()->routeIs('home')">
         {{ __('Home') }}
       </x-responsive-nav-link>
       @if (auth()->user()->role == "job_seeker")
-      <x-responsive-nav-link wire:navigate href="{{ route('jobseekerposts.index') }}"
+      <x-responsive-nav-link  href="{{ route('jobseekerposts.index') }}"
         :active="request()->routeIs('jobseekerposts.index')">
         {{ __('Create Job Seeking post') }}
       </x-responsive-nav-link>
@@ -196,11 +198,11 @@
 
       <div class="mt-3 space-y-1">
         <!-- Account Management -->
-        <x-responsive-nav-link wire:navigate href="{{ route('profile.show') }}"
+        <x-responsive-nav-link  href="{{ route('profile.show') }}"
           :active="request()->routeIs('profile.show')">
           {{ __('Profile') }}
         </x-responsive-nav-link>
-
+        
         @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
         <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
           {{ __('API Tokens') }}

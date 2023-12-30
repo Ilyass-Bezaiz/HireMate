@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Livewire\Attributes\Validate;
 use App\Models\Candidate;
 use App\Models\Skills;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +13,6 @@ class UpdateJobSeekerProfileData extends Component
     use WithFileUploads;
 
     public $user;
-    public $gender;
     public $resume, $resumeUrl, $resumePath;
     public $coverPictureUrl, $coverPicturePath, $coverPicture;
     public $coverLetterUrl, $coverLetterPath, $coverLetter;
@@ -22,13 +20,10 @@ class UpdateJobSeekerProfileData extends Component
     public $showingAddSkillModal = false;
     public $skills;
     public $title;
-    public $age;
 
     public function mount()
     {
         $this->user = Candidate::where('user_id', auth()->user()->id)->first();
-        $this->age = $this->user->age;
-        $this->gender = $this->user->gender;
         $this->resumeUrl = $this->user->curriculumVitae;
         $this->coverPictureUrl = $this->user->coverPicture;
         $this->coverLetterUrl = $this->user->coverLetter;
@@ -47,8 +42,9 @@ class UpdateJobSeekerProfileData extends Component
         $this->user->update([
             'curriculumVitae' => null,
         ]);
+        $this->reset(['resume','resumeUrl']);
         // Redirect to the profile page
-        return redirect('/user/profile');
+        // return redirect('/user/profile');
     }
 
     // function to remove cover picture
@@ -57,8 +53,9 @@ class UpdateJobSeekerProfileData extends Component
         $this->user->update([
             'coverPicture' => null
         ]);
+        $this->reset(['coverPicture','coverPictureUrl']);
         // Redirect to the profile page
-        return redirect('/user/profile');
+        // return redirect('/user/profile');
     }
 
     // function to remove cover letter 
@@ -67,8 +64,9 @@ class UpdateJobSeekerProfileData extends Component
         $this->user->update([
             'coverLetter' => null
         ]);
+        $this->reset(['coverLetter','coverLetterUrl']);
         // Redirect to the profile page
-        return redirect('/user/profile');
+        // return redirect('/user/profile');
     }
 
     public function addSkill(){
@@ -80,7 +78,6 @@ class UpdateJobSeekerProfileData extends Component
         ]);
         
         $this->reset(['showingAddSkillModal']);
-
         return redirect('/user/profile');
 
     }
@@ -89,16 +86,12 @@ class UpdateJobSeekerProfileData extends Component
     public function save()
     {   
         $validated = $this->validate([
-            'age' => 'numeric|max:50',
-            'gender' => 'nullable',
             'resume' => 'nullable|file|mimes:pdf,docx|max:2048',
             'coverPicture' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
             'coverLetter' => 'nullable|file|mimes:pdf,docx|max:2048'
         ]);
         
         $this->user->update([
-            'age' => $this->age,
-            'gender' => $this->gender,
             'skills' => $this->skills
         ]);
         if ($this->resume) {
@@ -108,6 +101,7 @@ class UpdateJobSeekerProfileData extends Component
             $this->user->update([
                 'curriculumVitae' => $this->resumePath,
             ]);
+            return redirect('/user/profile');
         }
 
         if($this->coverPicture){
@@ -116,6 +110,7 @@ class UpdateJobSeekerProfileData extends Component
             $this->user->update([
                 'coverPicture' => $this->coverPicturePath,
             ]);
+            return redirect('/user/profile');
         }
 
         if($this->coverLetter){
@@ -124,18 +119,17 @@ class UpdateJobSeekerProfileData extends Component
             $this->user->update([
                 'coverLetter' => $this->coverLetterPath,
             ]);
+            return redirect('/user/profile');
         }
 
         session()->flash('success', 'Data saved successfully !');
 
-        // Redirect to the profile page
-        return redirect('/user/profile');
     }
 
     public function render()
     {
         return view('livewire.update-job-seeker-profile-data',[
-            'skillsList' => Skills::all(),        
+            'skills' => Skills::all(),   
         ]);
     }
 }
