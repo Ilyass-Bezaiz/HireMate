@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Country extends Model
 {
-    use SoftDeletes;
 
     protected $fillable = [
         'id', 'name', 'status'
@@ -23,5 +22,14 @@ class Country extends Model
     public function cities(): HasManyThrough
     {
         return $this->hasManyThrough(City::class, State::class);
+    }
+
+    public static function getCountry($countryId) {
+        $country = self::where('id', $countryId)->get();
+        return $country[0];
+    }
+    public static function getCountryId($countryName) {
+        $country = self::where("name", "like","%". $countryName ."%")->get();
+        return $country;
     }
 }

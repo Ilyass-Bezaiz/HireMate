@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('backgroundColor')->nullable();
             $table->string('textColor')->nullable();
             $table->string('fontFamily')->nullable();
-            $table->string('profilePicture')->nullable();
             $table->string('coverPicture')->nullable();
             $table->string('coverLetter')->nullable();
             $table->text('jobPreferences')->nullable();

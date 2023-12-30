@@ -70,4 +70,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(Candidate::class, 'id_user', 'idUser');
     }
+    public function favOfferPosts()
+    {
+        return $this->hasOne(Candidate::class, 'id_user', 'idUser');
+    }
+    public function favSeekerPost()
+    {
+        return $this->hasMany(fav_job_seeker_posts::class, 'id_user', 'idUser');
+    }
+
 }

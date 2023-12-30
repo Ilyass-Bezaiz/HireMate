@@ -54,6 +54,14 @@ html::-webkit-scrollbar-thumb{
     border-radius: 30px;
 }
 
+.card-slider::-webkit-scrollbar{
+    height:8px;
+}
+.card-slider::-webkit-scrollbar-thumb{
+    background-color:var(--color-primary);
+    border-radius: 30px;
+}
+
 
 select:focus{
     outline: none;

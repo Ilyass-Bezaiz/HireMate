@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class City extends Model
 {
-    use SoftDeletes;
 
     protected $fillable = [
         'id', 'state_id', 'name', 'status'
@@ -17,5 +16,16 @@ class City extends Model
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);
+    }
+
+    public static function getCity($cityId) {
+        $city = self::where('id', $cityId)->get();
+        return $city[0];
+    }
+
+    public static function getCityId($cityName) {
+        $city = self::where('name', "like","%". $cityName ."%")->get();
+        // dd($city[3]->name);
+        return $city;
     }
 }

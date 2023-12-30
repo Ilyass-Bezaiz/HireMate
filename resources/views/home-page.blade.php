@@ -4,7 +4,6 @@
     </x-slot> --}}
     
     <livewire:home-page.search-section />
-    <livewire:home-page.main-nav />
     @if (auth()->user()->role == "job_seeker")
         <livewire:home-page.jobseeker-offers />
     @elseif (auth()->user()->role == "employer")
