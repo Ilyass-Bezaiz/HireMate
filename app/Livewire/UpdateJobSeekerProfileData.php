@@ -61,7 +61,7 @@ class UpdateJobSeekerProfileData extends Component
     }
 
     public function save()
-    {   
+    {
         $validated = $this->validate($this->rules());
         if ($this->resume && $this->changedResumeFile) {
             $this->path = $this->resume->storeAs('public/uploads', 'cv-'.auth()->user()->name.'.pdf');
