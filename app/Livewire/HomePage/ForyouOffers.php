@@ -20,6 +20,12 @@ class ForyouOffers extends Component
     public static $postId = 0;
     public static  $selectedPostId = 0;
     public $showingFilter = false;
+    public $idJob = 1;
+
+    public function showModal(){
+        // dd($this->idJob);
+        $this->dispatch("modal-show",  ['id' => $this->idJob]);
+    }
 
     public function render()
     {
@@ -65,6 +71,7 @@ class ForyouOffers extends Component
     public function showOfferDetails($postId) {
 
         self::$selectedPostId = $postId-1;
+        $this->idJob = $postId;
 
         if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentSeekerPost::create([
