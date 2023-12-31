@@ -21,7 +21,7 @@ class UpdateEdcuationInfo extends Component
     #[Validate('required|max:30')]
     public $education_field;
 
-    #[Validate('required|before:end_date')]
+    #[Validate('required|before:today')]
     public $start_date;
 
     #[Validate('required|max:30|after:start_date')]
