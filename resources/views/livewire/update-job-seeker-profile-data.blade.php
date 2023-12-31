@@ -10,7 +10,9 @@
                 @if(session('success'))
                     <span class="text-gray-600 dark:text-green-500" x-data="{show: true}" x-show="show" x-init="setTimeout(() => show = false, 2000)" x-transition.duration.500ms>{{ Session::get('success'); }}</span>
                 @endif
-
+                @if(session('error'))
+                    <span class="text-red-600" x-data="{show: true}" x-show="show" x-init="setTimeout(() => show = false, 2000)" x-transition.duration.500ms>{{ Session::get('error'); }}</span>
+                @endif
                 <form wire:submit.prevent="save">
                     @csrf
                     <div class="mt-4">
@@ -85,43 +87,24 @@
                                     @endforeach                                
                                 @endif
                             </select>
-                            <button wire:click.prevent="showAddSkillModal" class="block underline font-semibold text-green-400">Add skill</button>
+                            <x-input-error for="skills" class="mt-2" />
                             @script
                                 <script>
                                     $(document).ready(function() {
-                                        $('#skills').select2({}).on('change',function(){
+                                        $('#skills').select2({
+                                            tags:true
+                                        }).on('change',function(){
                                             @this.set('skills', $(this).val());
                                         });
                                     });
                                     </script>
                             @endscript
-                            <div class="flex justify-end">
-                                <x-button type="submit" class="mt-4">Save changes</x-button>
-                            </div>
+                            
                         </div>
-                    </form>
-                        <!-- Add skill modal -->
-                        <x-dialog-modal wire:model="showingAddSkillModal">
-
-                            <x-slot name="title">Add new skill</x-slot>
-                    
-                            <x-slot name="content">
-                                <form wire:submit.prevent="addSkill">
-                                    <x-input 
-                                        type="text"
-                                        class="block w-full"
-                                        placeholder="What's your skill ?"
-                                        wire:model="title"
-                                        id="title"
-                                    />
-                                    <x-input-error for="title" class="mt-2" />
-                                </form>
-                            </x-slot>
-                            <x-slot name="footer">
-                                <x-button wire:click.prevent="addSkill">Add skill</x-button>
-                            </x-slot>
-                        </x-dialog-modal>
-                
+                        <div class="flex justify-end">
+                            <x-button type="submit" class="mt-4">Save changes</x-button>
+                        </div>
+                    </form>          
     </x-slot>
     
 </x-action-section>
