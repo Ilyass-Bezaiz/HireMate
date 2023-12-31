@@ -5,6 +5,7 @@ namespace App\Livewire\HomePage;
 use App\Models\Employer;
 use App\Models\favSeekerPost;
 use App\Models\JobOfferPost;
+use App\Models\recentSeekerPost;
 use App\Models\User;
 use Auth;
 use Livewire\Component;
@@ -64,6 +65,19 @@ class ForyouOffers extends Component
     public function showOfferDetails($postId) {
 
         self::$selectedPostId = $postId-1;
+
+        if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
+            recentSeekerPost::create([
+                'user_id' => $this->authUser->id,
+                'post_id' => $postId,
+            ]);
+        }else {
+            recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->delete();
+            recentSeekerPost::create([
+                'user_id' => $this->authUser->id,
+                'post_id' => $postId,
+            ]);
+        }
         
         // $this->js("console.log('$test')");
     }

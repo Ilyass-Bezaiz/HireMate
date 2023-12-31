@@ -2,18 +2,25 @@
 
 namespace App\Livewire\Partials;
 
+use App\Models\Candidate;
+use App\Models\Employer;
 use App\Models\favSeekerPost;
 use App\Models\User;
 use Livewire\Component;
 
 class CardSlider extends Component
 {
+    public $title;
     public $posts = [];
     public $users = [];
+    public $employers = [];
+    public $seekers = [];
     public function render()
     {
         return view('livewire.partials.card-slider', [
             $this->users = User::all(),
+            $this->employers = Employer::all(),
+            $this->seekers = Candidate::all(),
         ]);
     }
 
@@ -24,6 +31,6 @@ class CardSlider extends Component
     }
 
     public function mount($cardContent){
-        $this->posts = array_unique($cardContent);
+        $this->posts = $cardContent->unique();
     }
 }
