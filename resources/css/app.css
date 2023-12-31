@@ -54,6 +54,14 @@ html::-webkit-scrollbar-thumb{
     border-radius: 30px;
 }
 
+.card-slider::-webkit-scrollbar{
+    height:8px;
+}
+.card-slider::-webkit-scrollbar-thumb{
+    background-color:var(--color-primary);
+    border-radius: 30px;
+}
+
 
 select:focus{
     outline: none;
@@ -190,7 +198,6 @@ select:focus{
     mask: var(--mask);
 }
 
-
 /* Custom select dropdown stykes */
 .select2-selection__choice {
     background-color: var(--color-primary) !important;
@@ -230,3 +237,4 @@ html.dark .select2-container--default .select2-selection--multiple .select2-sele
 html.dark .select2-container--default .select2-results__option--selected{
     background-color: rgb(55 65 81);
 }
+
