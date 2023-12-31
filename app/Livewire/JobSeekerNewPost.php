@@ -50,7 +50,7 @@ class JobSeekerNewPost extends Component
     public function storeJobSeekerPost(){
         $this->validate([
             'title' =>'required|max:50',
-            'description' => 'required|max:100',
+            'description' => 'required|max:200',
             'expectedSalary'=>'required|numeric',
             'flexibility' => 'required',
             'contractType' => 'required',
@@ -75,7 +75,7 @@ class JobSeekerNewPost extends Component
     public function updateJobSeekerPost(){
         $this->validate([
             'title' =>'required|max:50',
-            'description' => 'required|max:100',
+            'description' => 'required|max:500',
             'expectedSalary'=>'required|numeric',
             'flexibility' => 'required',
             'contractType' => 'required',
@@ -135,7 +135,7 @@ class JobSeekerNewPost extends Component
     public function render()
     {  
         return view('livewire.job-seeker-new-post',[
-            'posts' => JobSeekerPost::where('user_id',auth()->user()->id)->paginate(2),
+            'posts' => JobSeekerPost::where('user_id',auth()->user()->id)->paginate(5),
         ]);
     }
 }

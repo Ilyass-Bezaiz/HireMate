@@ -26,6 +26,13 @@
                 </div>
                 <x-section-border />
             @endcan
+
+            @can('modify-job-seeker-information', Auth::user())
+                <div class="mt-10 sm:mt-0">
+                    @livewire('update-edcuation-info')
+                </div>
+                <x-section-border />
+            @endcan
             
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
                 <div class="mt-10 sm:mt-0">
