@@ -170,6 +170,7 @@
       <x-responsive-nav-link  href="{{ route('home') }}" :active="request()->routeIs('home')">
         {{ __('Home') }}
       </x-responsive-nav-link>
+      
       @if (auth()->user()->role == "job_seeker")
       <x-responsive-nav-link  href="{{ route('jobseekerposts.index') }}"
         :active="request()->routeIs('jobseekerposts.index')">

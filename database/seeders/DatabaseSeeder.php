@@ -36,7 +36,9 @@ class DatabaseSeeder extends Seeder
             EmployerSeeder::class,
             JobOfferPostSeeder::class,
             JobSeekerPostSeeder::class,
-            WorldSeeder::class
+            WorldSeeder::class,
+            Category::class,
+            SkillsSeeder::class
         ]);
 
     }

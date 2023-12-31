@@ -11,18 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employers', function (Blueprint $table) {
+        Schema::create('fav_seeker_posts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('post_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('companyName')->nullable();
-            $table->string('city')->nullable();
-            $table->integer('zip')->nullable();
-            $table->string('country')->nullable();
-            $table->string('industry')->nullable();
-            $table->integer('employeeCount')->nullable();
-            $table->string('coverPicture')->nullable();
-            $table->text('bio')->nullable();
+            $table->foreign('post_id')->references('id')->on('job_offer_posts')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -32,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employers');
+        Schema::dropIfExists('fav_seeker_posts');
     }
 };
