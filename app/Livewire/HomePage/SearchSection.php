@@ -22,8 +22,11 @@ class SearchSection extends Component
         if($this->inp1 != "" || $this->inp2 != ""){
             Session::put('last_search_title', $this->inp1);
             Session::put('last_search_location', $this->inp2);
-            $this->dispatch('head-to-search', 2);
+            $this->dispatch('change-main-nav', 2);
             $this->dispatch('searching', [$this->inp1, $this->inp2]);
+            $this->inp1 = '';
+            $this->inp2 = '';
+            $this->js("window.scrollTo(0, 500)");
         }
     }
 }

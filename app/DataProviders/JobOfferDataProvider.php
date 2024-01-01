@@ -41,7 +41,7 @@ abstract class JobOfferDataProvider
                 <li>Strong problem-solving and critical-thinking skills.</li>
                 <li>Excellent communication and collaboration abilities.</li>
             </ul>
-        </div>",'salary' => '100000.00','country_id' => 236,'city_id' => 141326,'flexibility' => 'On site','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
+        </div>",'salary' => '10000.00','required_experience' => '4', 'industry' => 'Tech', 'country_id' => 236,'city_id' => 141326,'flexibility' => 'On site','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
 
 
             array('id' => '2','user_id' => '33','title' => 'Data Scientist','description' => "<div>
@@ -74,7 +74,7 @@ abstract class JobOfferDataProvider
                 <li>Excellent problem-solving skills and the ability to communicate complex findings to both technical and non-technical stakeholders.</li>
                 <li>Demonstrated experience in applying data science methods to real-world business challenges.</li>
             </ul>
-        </div>",'salary' => '120000.00','country_id' => 236,'city_id' => 141326,'flexibility' => 'Hybrid','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
+        </div>",'salary' => '12000.00','required_experience' => '2', 'industry' => 'Tech','country_id' => 236,'city_id' => 141326,'flexibility' => 'Hybrid','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
 
 
             array('id' => '3','user_id' => '35','title' => 'UX/UI Designer','description' => "<div>
@@ -107,7 +107,7 @@ abstract class JobOfferDataProvider
                 <li>Experience with responsive design and a deep understanding of design systems.</li>
                 <li>Ability to iterate quickly and work in an agile development environment.</li>
             </ul>
-        </div>",'salary' => '90000.00','country_id' => 76,'city_id' => 30442,'flexibility' => 'Remote','requestedContract' => 'Contract','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
+        </div>",'salary' => '9000.00','required_experience' => '7', 'industry' => 'Tech','country_id' => 76,'city_id' => 30442,'flexibility' => 'Remote','requestedContract' => 'Contract','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
 
 
             array('id' => '4','user_id' => '37','title' => 'Marketing Specialist','description' => "<div>
@@ -140,7 +140,7 @@ abstract class JobOfferDataProvider
                 <li>Analytical mindset with the ability to interpret data and make data-driven marketing decisions.</li>
                 <li>Experience with marketing automation tools and customer relationship management (CRM) systems.</li>
             </ul>
-        </div>",'salary' => '80000.00','country_id' => 83,'city_id' => 34753,'flexibility' => 'Hybrid','requestedContract' => 'Part-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
+        </div>",'salary' => '8000.00','required_experience' => '0', 'industry' => 'Tech','country_id' => 83,'city_id' => 34753,'flexibility' => 'Hybrid','requestedContract' => 'Part-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
         
 
             array('id' => '5','user_id' => '39','title' => 'Software Developer', 'description' => "<div>
@@ -173,7 +173,7 @@ abstract class JobOfferDataProvider
                 <li>Ability to work collaboratively in an agile development environment.</li>
                 <li>Excellent communication skills and the ability to work in a global team.</li>
             </ul>
-        </div>",'salary' => '110000.00','country_id' => 235,'city_id' => 126741,'flexibility' => 'Hybrid','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
+        </div>",'salary' => '11000.00','required_experience' => '0', 'industry' => 'Tech','country_id' => 235,'city_id' => 126741,'flexibility' => 'Hybrid','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
 
 
             array('id' => '6','user_id' => '41','title' => 'AI Research Scientist','description' => "<div>
@@ -206,7 +206,7 @@ abstract class JobOfferDataProvider
                 <li>Proven track record of publishing research papers in renowned conferences and journals.</li>
                 <li>Excellent communication skills and the ability to collaborate in a dynamic and fast-paced environment.</li>
             </ul>
-        </div>",'salary' => '130000.00','country_id' => 236,'city_id' => 141326,'flexibility' => 'Remote','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
+        </div>",'salary' => '13000.00','required_experience' => '7', 'industry' => 'Tech','country_id' => 236,'city_id' => 141326,'flexibility' => 'Remote','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
 
 
             array('id' => '7','user_id' => '43','title' => 'Product Manager','description' => "<div>
@@ -239,7 +239,7 @@ abstract class JobOfferDataProvider
                 <li>Understanding of technology trends and a passion for creating innovative solutions.</li>
                 <li>Experience with agile development methodologies and project management tools.</li>
             </ul>
-        </div>",'salary' => '95000.00','country_id' => 236,'city_id' => 141326,'flexibility' => 'On site','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
+        </div>",'salary' => '9500.00','required_experience' => '5', 'industry' => 'Tech','country_id' => 236,'city_id' => 141326,'flexibility' => 'On site','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
 
 
             array('id' => '8','user_id' => '45','title' => 'Software Engineer','description' => "<div>
@@ -272,7 +272,7 @@ abstract class JobOfferDataProvider
                 <li>Excellent problem-solving and analytical skills.</li>
                 <li>Effective communication and collaboration abilities in a fast-paced environment.</li>
             </ul>
-        </div>",'salary' => '105000.00','country_id' => 236,'city_id' => 141326,'flexibility' => 'Hybrid','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
+        </div>",'salary' => '10500.00','required_experience' => '0', 'industry' => 'Tech','country_id' => 236,'city_id' => 141326,'flexibility' => 'Hybrid','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
 
 
             array('id' => '9','user_id' => '47','title' => 'Data Analyst','description' => "<div>
@@ -305,7 +305,7 @@ abstract class JobOfferDataProvider
                 <li>Ability to work with large and complex datasets in a variety of formats.</li>
                 <li>Effective communication skills and the ability to translate data findings into actionable insights.</li>
             </ul>
-        </div>",'salary' => '85000.00','country_id' => 83,'city_id' => 34751,'flexibility' => 'Hybrid','requestedContract' => 'Contract','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
+        </div>",'salary' => '8500.00','required_experience' => '7', 'industry' => 'Tech','country_id' => 83,'city_id' => 34751,'flexibility' => 'Hybrid','requestedContract' => 'Contract','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43'),
 
 
             array('id' => '10','user_id' => '49','title' => 'UX/UI Designer','description' => "<div>
@@ -338,7 +338,7 @@ abstract class JobOfferDataProvider
                 <li>Experience with responsive design and familiarity with web development technologies.</li>
                 <li>Excellent communication and collaboration skills, with the ability to present and justify design decisions.</li>
             </ul>
-        </div>",'salary' => '95000.00','country_id' => 236,'city_id' => 141326,'flexibility' => 'On site','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43')
+        </div>",'salary' => '9500.00','required_experience' => '5', 'industry' => 'Tech','country_id' => 236,'city_id' => 141326,'flexibility' => 'On site','requestedContract' => 'Full-time','created_at' => '2023-12-22 14:40:43','updated_at' => '2023-12-22 14:40:43')
         
         );
     }

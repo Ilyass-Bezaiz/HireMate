@@ -7,22 +7,19 @@ use Livewire\Component;
 
 class JobseekerOffers extends Component
 {
-    public static $selectedNavSection = 1;
+    public $selectedNavSection = 1;
 
     public function render()
     {
         return view('livewire.home-page.jobseeker-offers');
     }
 
-    public static function selectNavSection($section) {
-        self::$selectedNavSection = $section;
-        // dd(self::$selectedNavSection);
-    }
-
-    #[On('head-to-search')]
+    #[On('change-main-nav')]
     public function selectNav($section) {
-        self::selectNavSection($section);
-        // dd(self::$selectedNavSection);
+        $this->selectedNavSection = $section;
+        // $this->js("location.reload()");
+        // $this->dipsatch('refreshComponent');
+        return $this->selectedNavSection;
     }
 
     public static function getPostPublishDay($post) {

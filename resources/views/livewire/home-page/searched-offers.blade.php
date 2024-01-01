@@ -80,7 +80,7 @@
                                 <img src="images/ic-report.png" alt="ic-heart" width="30" height="30">                            
                             </span>
                             <span wire:loading.class='scale-90 opacity-50 duration-200' wire:target='addFav({{ self::$selectedPostId }})' wire:click='addFav({{ self::$selectedPostId }})' class="ic-like rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 duration-200 cursor-pointer">
-                                <img src="{{ $this->likedPost(self::$selectedPostId+1) ? 'images/ic-full-heart.png' : 'images/ic-empty-heart.png' }} " alt="ic-heart" width="30" height="30">
+                                <img src="{{ $this->likedPost(App\Models\JobOfferPost::where('id', self::$selectedPostId+1)->get()[0]->id) ? 'images/ic-full-heart.png' : 'images/ic-empty-heart.png' }} " alt="ic-heart" width="30" height="30">
                             </span>
                             <button class="bg-[var(--color-primary)] border-[1px] px-5 lg:px-10 py-2 rounded-full text-gray-100 font-bold hover:bg-transparent hover:border-[var(--color-primary)] hover:border-[1px] hover:text-[var(--color-primary)] duration-200">Apply</button>
                         </div>                        

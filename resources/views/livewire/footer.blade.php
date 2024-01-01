@@ -10,7 +10,7 @@
                     @foreach($footerLinks as $category => $links)
                         <div>
                             <h3 class="mb-10 text-xl dark:text-gray-200">{{ $category }}</h3>
-                            <ul>
+                            <ul class="list-none -ml-2">
                                 @foreach($links as $link)
                                     <li class="text-md dark:text-gray-300 mb-4 hover:underline"><a href="{{ $link['url'] }}">{{ $link['text'] }}</a></li>
                                 @endforeach
