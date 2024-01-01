@@ -40,6 +40,15 @@ class ForyouOffers extends Component
         ]);
     }
 
+    public function toggleFilter() {
+        $this->mount();
+        $this->showingFilter = !$this->showingFilter;
+    }
+    public function closeFilter() {
+        $this->mount();
+        $this->showingFilter = false;
+    }
+
     public function init($lastSelectedPostId) {
         self::$selectedPostId = $lastSelectedPostId;
     }

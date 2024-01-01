@@ -28,7 +28,7 @@
                         <p>{{App\Livewire\HomePage\JobseekerOffers::getPostPublishDay(App\Models\JobOfferPost::where('id', $post->post_id)->get()[0])}}</p>
                     </div>
                     <div class="flex gap-3">
-                        <button class="btn-primary flex-1 items-center">Hire Now</button>
+                        <button class="btn-primary flex-1 items-center">Apply Now</button>
                         <span wire:loading.class='scale-90 opacity-50 duration-200' wire:target='addFav({{App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->id}})' wire:click='addFav({{App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->id}})' class="rounded-full p-2 cursor-pointer border-1px border-green-400 hover:bg-gray-700">
                             <img src="{{ $this->likedPost(App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->id) ? 'images/ic-full-heart.png' : 'images/ic-empty-heart.png'}} " alt="ic-heart" width="30" height="30">
                         </span>

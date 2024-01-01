@@ -1,8 +1,7 @@
 <div class="dark:bg-gray-900">
   @livewire('applying-process')
   @unless (!$showingFilter)
-  <div wire:loading.class='opacity-50 duration-200' wire:click.outside="$set('showingFilter', false)"
-    class="rounded-lg absolute w-[378px] top-24 right-48 bg-gray-100 dark:bg-gray-800 z-50 p-5 shadow-xl">
+  <div wire:transition.in wire:loading.class='hidden' wire:click.outside="closeFilter" class="rounded-lg absolute w-[378px] top-24 right-48 bg-gray-100 dark:bg-gray-800 z-50 p-5 shadow-2xl border-2 border-gray-300 dark:border-gray-500">
     @livewire('home-page.filter-offers')
   </div>
   @endunless
@@ -12,9 +11,7 @@
       <p class="text-base font-light text-gray-400">Based on your interests</p>
     </div>
     <div class="flex justify-end flex-1">
-      <button wire:click="$toggle('showingFilter')"
-        class="flex gap-4 px-6 h-10 font-bold bg-gray-200 dark:bg-gray-900 text-gray-500 dark:text-gray-400 rounded-full border-[1px] border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 duration-200 shadow-sm"
-        id="btn-filters">
+      <button wire:click="toggleFilter" class="flex gap-4 px-6 h-10 font-bold bg-gray-200 dark:bg-gray-900 text-gray-500 dark:text-gray-400 rounded-full border-[1px] border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 duration-200 shadow-sm" id="btn-filters">
         <span class="my-auto">
           <svg width="21" height="14" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 2.8H21V4.2H0V2.8Z" fill="#888" />
@@ -52,13 +49,6 @@
               {{ $employer->user_id == $offer->user_id ? $employer->companyName : null }}
               @endforeach
             </h3>
-            {{-- <p class="flex text-sm">4.6
-                            <span class="my-auto ml-1">
-                                <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path class="fill-gray-800 dark:fill-gray-300" d="M3.5316 1.5848C3.94197 0.528266 4.14716 0 4.5 0C4.85284 0 5.05803 0.528266 5.4684 1.5848L5.48751 1.634C5.71935 2.23089 5.83528 2.52933 6.07153 2.71073C6.30778 2.89213 6.61791 2.92081 7.23818 2.97818L7.35031 2.98855C8.36545 3.08244 8.87302 3.12938 8.98163 3.46287C9.09023 3.79636 8.71329 4.15052 7.95941 4.85884L7.7078 5.09524C7.32617 5.4538 7.13535 5.63308 7.04642 5.86806C7.02983 5.91189 7.01603 5.9568 7.00513 6.00249C6.94667 6.24745 7.00255 6.50753 7.1143 7.0277L7.14909 7.18961C7.35447 8.14558 7.45716 8.62356 7.27786 8.82973C7.21086 8.90677 7.12378 8.96224 7.02705 8.98949C6.76818 9.06244 6.40065 8.75316 5.66559 8.1346C5.18293 7.72843 4.94159 7.52534 4.66452 7.47966C4.55553 7.46168 4.44447 7.46168 4.33548 7.47966C4.0584 7.52534 3.81707 7.72843 3.33441 8.1346C2.59935 8.75316 2.23182 9.06244 1.97295 8.98949C1.87622 8.96224 1.78914 8.90677 1.72214 8.82973C1.54284 8.62356 1.64553 8.14558 1.85092 7.18961L1.8857 7.0277C1.99745 6.50753 2.05333 6.24745 1.99487 6.00249C1.98397 5.9568 1.97017 5.91189 1.95358 5.86806C1.86465 5.63308 1.67383 5.4538 1.2922 5.09524L1.04059 4.85884C0.28671 4.15052 -0.0902328 3.79636 0.0183748 3.46287C0.126982 3.12938 0.634552 3.08244 1.64969 2.98855L1.76182 2.97818C2.38209 2.92081 2.69222 2.89213 2.92847 2.71073C3.16472 2.52933 3.28065 2.23089 3.51249 1.634L3.5316 1.5848Z"/>
-                                </svg>
-                            </span>
-                        </p>   --}}
             <div class="flex justify-end flex-1">
               <span wire:loading.class='scale-90 opacity-50 duration-200' wire:target='addFav({{ $offer->id }})'
                 @if($offer->id-1 == self::$selectedPostId) wire:click='addFav({{ $offer->id }})' @else
