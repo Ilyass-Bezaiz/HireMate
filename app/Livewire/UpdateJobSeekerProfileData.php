@@ -7,6 +7,7 @@ use App\Models\Candidate;
 use App\Models\Skills;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class UpdateJobSeekerProfileData extends Component
 {
@@ -17,9 +18,7 @@ class UpdateJobSeekerProfileData extends Component
     public $coverPictureUrl, $coverPicturePath, $coverPicture;
     public $coverLetterUrl, $coverLetterPath, $coverLetter;
     public $skillsList;
-    public $showingAddSkillModal = false;
     public $skills;
-    public $title;
 
     public function mount()
     {
@@ -31,11 +30,6 @@ class UpdateJobSeekerProfileData extends Component
         $this->skills = $this->user->skills;
     }
 
-
-    public function showAddSkillModal(){
-        $this->showingAddSkillModal = true;
-    }
-
     // function to remove CV
     public function removeCV(){
         Storage::delete($this->resumeUrl);
@@ -43,8 +37,6 @@ class UpdateJobSeekerProfileData extends Component
             'curriculumVitae' => null,
         ]);
         $this->reset(['resume','resumeUrl']);
-        // Redirect to the profile page
-        // return redirect('/user/profile');
     }
 
     // function to remove cover picture
@@ -54,8 +46,6 @@ class UpdateJobSeekerProfileData extends Component
             'coverPicture' => null
         ]);
         $this->reset(['coverPicture','coverPictureUrl']);
-        // Redirect to the profile page
-        // return redirect('/user/profile');
     }
 
     // function to remove cover letter 
@@ -65,32 +55,34 @@ class UpdateJobSeekerProfileData extends Component
             'coverLetter' => null
         ]);
         $this->reset(['coverLetter','coverLetterUrl']);
-        // Redirect to the profile page
-        // return redirect('/user/profile');
     }
-
-    public function addSkill(){
-        $validated = $this->validate([
-            'title' => 'required|max:25|unique:skills'
-        ]);
-        Skills::create([
-            'title' => $this->title
-        ]);
-        
-        $this->reset(['showingAddSkillModal']);
-        return redirect('/user/profile');
-
-    }
-
     // function to save data to the DB
     public function save()
     {   
         $validated = $this->validate([
             'resume' => 'nullable|file|mimes:pdf,docx|max:2048',
             'coverPicture' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
-            'coverLetter' => 'nullable|file|mimes:pdf,docx|max:2048'
+            'coverLetter' => 'nullable|file|mimes:pdf,docx|max:2048',
         ]);
         
+        // check if skill doesn't exist on the database before creating it
+        foreach($this->skills as $skill){
+            $checkSkill = Skills::where('title',$skill)->first();
+            if($checkSkill == null){
+                // Validate Skill String to check if it has tags or if it is too long before adding it to the skills table
+                if(Str::length($skill) <= 30 && $skill == strip_tags($skill)){
+                    $newSkill = Skills::create([
+                        'title' => $skill
+                    ]);
+                }
+                else{
+                    session()->flash('error', 'Something went wrong ! Please provide a skill that doesn\'t exceed 30 caracters.');
+                    return;
+                }
+            }
+        }
+        
+
         $this->user->update([
             'skills' => $this->skills
         ]);
@@ -128,8 +120,6 @@ class UpdateJobSeekerProfileData extends Component
 
     public function render()
     {
-        return view('livewire.update-job-seeker-profile-data',[
-            'skills' => Skills::all(),   
-        ]);
+        return view('livewire.update-job-seeker-profile-data');
     }
 }

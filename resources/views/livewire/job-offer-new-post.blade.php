@@ -30,7 +30,7 @@
               @foreach($posts as $post)
               <tr>
                 <td class="px-6 py-4 whitespace-nowrap">{{ $post->title }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ $post->description }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($post->description, 20) }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ $post->flexibility }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   {{ $post->requestedContract }}

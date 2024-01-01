@@ -56,9 +56,3 @@
         @endif
     </div>
 </div>
-
-<script>
-    $wire.on('change-main-nav', () => {
-        alert('location.reload()');
-    });
-</script>

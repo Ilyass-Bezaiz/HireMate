@@ -28,7 +28,14 @@ class SearchedOffers extends Component
     public $searchedTitle;
     
     public $searchedLocation;
- 
+
+    public $idJob = 1;
+
+    public function showModal(){
+        // dd($this->idJob);
+        $this->dispatch("modal-show",  ['id' => $this->idJob]);
+    }
+    
     public function render()
     {
         return view('livewire.home-page.searched-offers', [
@@ -114,9 +121,10 @@ class SearchedOffers extends Component
         self::$selectedPostId = $lastSelectedPostId;
     }
 
-    public function showOfferDetails($postId) {
-
+    public function showOfferDetails($postId, $id) {
+        // dd($postId ,$id);
         self::$selectedPostId = $postId-1;
+        $this->idJob = $id;
         
         if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentSeekerPost::create([

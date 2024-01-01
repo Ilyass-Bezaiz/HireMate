@@ -2,8 +2,9 @@
 
 namespace App\Livewire\HomePage;
 
-use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 
 class JobseekerOffers extends Component
 {
