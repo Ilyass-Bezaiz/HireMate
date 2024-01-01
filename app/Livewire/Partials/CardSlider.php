@@ -6,6 +6,8 @@ use App\Models\Candidate;
 use App\Models\Employer;
 use App\Models\favSeekerPost;
 use App\Models\User;
+use Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CardSlider extends Component
@@ -28,6 +30,19 @@ class CardSlider extends Component
         $liked = false;
         favSeekerPost::where('post_id', $postId)->exists() ? $liked = true : false;
         return $liked;
+    }
+
+    public function addFav($postId) {
+        // $this->js("alert('$postId')");
+        if(!favSeekerPost::where('user_id','=',Auth::user()->id)->where('post_id','=', $postId)->exists()) {
+            favSeekerPost::create([
+                'user_id' => Auth::user()->id,
+                'post_id' => $postId,
+            ]);
+        } else {
+            favSeekerPost::where('user_id','=',Auth::user()->id)->where('post_id','=', $postId)->delete();
+        }
+        // $this->mount(favSeekerPost::where("user_id", Auth::user()->id)->get()->reverse());
     }
 
     public function mount($cardContent){

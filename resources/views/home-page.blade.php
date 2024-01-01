@@ -5,7 +5,7 @@
 
   <livewire:home-page.search-section />
   @if (auth()->user()->role == "job_seeker")
-  <livewire:home-page.jobseeker-offers />
+    <livewire:home-page.jobseeker-offers />
   @elseif (auth()->user()->role == "employer")
   {{-- employer-offers --}}
   @endif

@@ -18,7 +18,7 @@ class ForyouOffers extends Component
     public $favPosts = [];
     public $authUser;
     public static $postId = 0;
-    public static  $selectedPostId = 0;
+    public static  $selectedPostId;
     public $showingFilter = false;
     public $idJob = 1;
 
@@ -30,15 +30,17 @@ class ForyouOffers extends Component
     public function render()
     {
         return view('livewire.home-page.foryou-offers', [
-            $this->offers = JobOfferPost::all(),
-            $this->employers = Employer::all(),
+            $this->offers = JobOfferPost::all()->reverse(),
+            $this->employers = Employer::all()->reverse(),
             $this->users = User::all(),
             $this->authUser = Auth::user(),
             $this->favPosts = favSeekerPost::UserFav(),
-            
         ]);
     }
 
+    public function mount() {
+        self::$selectedPostId = JobOfferPost::all()->keys()->last();
+    }
 
     public function likedPost($postId): bool {
         $liked = false;
@@ -60,7 +62,6 @@ class ForyouOffers extends Component
         }
 
         $this->init($postId-1);
-
     }
 
     public function init($lastSelectedPostId) {

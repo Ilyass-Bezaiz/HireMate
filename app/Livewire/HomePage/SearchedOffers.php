@@ -7,6 +7,7 @@ use App\Models\Country;
 use App\Models\Employer;
 use App\Models\favSeekerPost;
 use App\Models\JobOfferPost;
+use App\Models\recentSeekerPost;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Collection;
@@ -69,7 +70,7 @@ class SearchedOffers extends Component
                 foreach($cityIds as $cityId){
                     JobOfferPost::where("city_id", "like", $cityId->id)->exists() ? $city = JobOfferPost::where("city_id", "like", $cityId->id)->get() : null;
                 }
-                $this->offers = ($jobTitle->merge($companyName->merge($country->merge($city))));
+                $this->offers = ($jobTitle->merge($companyName))->intersect($country->merge($city));
             }elseif($this->searchedTitle != "") {
                 $jobTitle = JobOfferPost::where("title", "like", "%".$this->searchedTitle."%")->get();
                 $companyName = Employer::where("companyName", "like", "%".$this->searchedTitle."%")->get();
@@ -125,7 +126,18 @@ class SearchedOffers extends Component
         self::$selectedPostId = $postId-1;
         $this->idJob = $id;
         
-        // $this->js("console.log('$test')");
+        if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
+            recentSeekerPost::create([
+                'user_id' => $this->authUser->id,
+                'post_id' => $postId,
+            ]);
+        }else {
+            recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->delete();
+            recentSeekerPost::create([
+                'user_id' => $this->authUser->id,
+                'post_id' => $postId,
+            ]);
+        }
     }
 
 }

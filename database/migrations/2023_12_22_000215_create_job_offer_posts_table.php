@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->double('salary',8,2);
+            $table->integer('required_experience');
+            $table->enum('industry', ['Tech', 'Consulting', 'Advertising']);
             $table->foreignId('country_id');
             $table->foreignId('city_id');
             $table->enum('flexibility',['On site', 'Hybrid', 'Remote']);
