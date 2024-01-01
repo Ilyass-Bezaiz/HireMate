@@ -31,7 +31,7 @@ class SearchedOffers extends Component
     public $idJob = 1;
 
     public function showModal(){
-        // dd($this->idJob);
+        // dd($key);
         $this->dispatch("modal-show",  ['id' => $this->idJob]);
     }
     
