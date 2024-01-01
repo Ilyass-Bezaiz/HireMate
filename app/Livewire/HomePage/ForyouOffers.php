@@ -37,7 +37,6 @@ class ForyouOffers extends Component
             $this->users = User::all(),
             $this->authUser = Auth::user(),
             $this->favPosts = favSeekerPost::UserFav(),
-            $this->idJob = JobOfferPost::all()->keys()->last(),
         ]);
     }
 
@@ -47,6 +46,7 @@ class ForyouOffers extends Component
     
     public function mount() {
         self::$selectedPostId = JobOfferPost::all()->keys()->last();
+        $this->idJob = JobOfferPost::all()->keys()->last();
     }
 
     public function likedPost($postId): bool {
@@ -74,7 +74,7 @@ class ForyouOffers extends Component
     public function showOfferDetails($postId) {
 
         self::$selectedPostId = $postId-1;
-        $this->idJob = $postId;
+        $this->idJob = $postId-1;
 
         if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentSeekerPost::create([

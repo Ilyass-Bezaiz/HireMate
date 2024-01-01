@@ -12,7 +12,7 @@ use Livewire\Component;
 
 class ActivityOffers extends Component
 {
-    public $selectedCard = 2;
+    public $selectedCard = 1;
     public $favOffers = [];
     public $appOffers = [];
     public $recentOffers = [];

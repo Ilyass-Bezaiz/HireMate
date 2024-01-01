@@ -23,7 +23,7 @@
                         <p class="font-medium ml-3 text-lg text-gray-300">{{ App\Models\Employer::where('user_id', App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->user_id)->get()[0]->companyName }}</p>
                         <p class="text-[var(--color-primary)] font-bold flex-1 text-end">{{"$". App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->salary }} </p>
                     </div>
-                    <h3 class="font-medium text-xl my-0">{{$post->title}}</h3>
+                    <h3 class="font-medium text-xl my-0">{{App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->title}}</h3>
                     <div class="text-gray-400 font-thing p-0 mt-0 flex justify-between items-center">
                         <p>{{App\Livewire\HomePage\JobseekerOffers::getPostPublishDay(App\Models\JobOfferPost::where('id', $post->post_id)->get()[0])}}</p>
                     </div>
