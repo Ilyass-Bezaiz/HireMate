@@ -11,6 +11,7 @@ use App\Models\recentSeekerPost;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Session; 
@@ -26,11 +27,12 @@ class SearchedOffers extends Component
     public static  $selectedPostId = 0;
     public $showingFilter = false;
     public $searchedTitle;
-    
+
     public $searchedLocation;
 
     public $idJob = 1;
 
+    #[Renderless]
     public function showModal(){
         // dd($this->idJob);
         $this->dispatch("modal-show",  ['id' => $this->idJob]);
@@ -46,6 +48,7 @@ class SearchedOffers extends Component
         ]);
     }
 
+
     public function mount() {
         $this->searchedTitle = Session::get('last_search_title', '');
         $this->searchedLocation = Session::get('last_search_location', '');
@@ -59,7 +62,8 @@ class SearchedOffers extends Component
         if ($this->searchedTitle != "" || $this->searchedLocation != "") {
             if($this->searchedTitle != "" && $this->searchedLocation != "") {
                 $jobTitle = JobOfferPost::where("title", "like", "%".$this->searchedTitle."%")->get();
-                $companyName = Employer::where("companyName", "like", "%".$this->searchedTitle."%")->get();
+                $companyId = Employer::where("companyName", "like", "%".$this->searchedTitle."%")->get()[0]->user_id;
+                $companyName = JobOfferPost::where("user_id",  $companyId)->get();
                 $countryIds = Country::getCountryId($this->searchedLocation);
                 $cityIds = City::getCityId($this->searchedLocation);
                 $country = JobOfferPost::where("country_id", "like", "")->get();
@@ -73,7 +77,8 @@ class SearchedOffers extends Component
                 $this->offers = ($jobTitle->merge($companyName))->intersect($country->merge($city));
             }elseif($this->searchedTitle != "") {
                 $jobTitle = JobOfferPost::where("title", "like", "%".$this->searchedTitle."%")->get();
-                $companyName = Employer::where("companyName", "like", "%".$this->searchedTitle."%")->get();
+                $companyId = Employer::where("companyName", "like", "%".$this->searchedTitle."%")->get()[0]->user_id;
+                $companyName = JobOfferPost::where("user_id",  $companyId)->get();
                 $this->offers = $jobTitle->merge($companyName);
             }elseif($this->searchedLocation != "") {
                 $countryIds = Country::getCountryId($this->searchedLocation);

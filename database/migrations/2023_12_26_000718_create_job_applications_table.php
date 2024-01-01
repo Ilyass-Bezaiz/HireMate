@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('job_applications', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('post_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('job_offer_post_id');
-            $table->foreign('job_offer_post_id')->references('id')->on('job_offer_posts')->onDelete('cascade');
+            $table->foreign('post_id')->references('id')->on('job_offer_posts')->onDelete('cascade');
             $table->timestamps();
         });
     }

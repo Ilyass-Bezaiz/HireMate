@@ -113,7 +113,7 @@
               src="{{ $this->likedPost(self::$selectedPostId+1) ? 'images/ic-full-heart.png' : 'images/ic-empty-heart.png' }} "
               alt="ic-heart" width="30" height="30">
           </span>
-          <button wire:click="showModal()"
+          <button wire:click="showModal"
             class="bg-[var(--color-primary)] border-[1px] border-transparent px-5 lg:px-10 py-2 rounded-full text-gray-100 font-bold hover:bg-transparent hover:border-[var(--color-primary)] hover:border-[1px] hover:text-[var(--color-primary)] duration-200">Apply</button>
         </div>
       </div>
