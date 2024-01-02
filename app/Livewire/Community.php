@@ -10,7 +10,8 @@ use App\Models\User;
 use Livewire\WithPagination;
 
 class Community extends Component
-{
+{    
+    
     public $categories = [];
     public $posts = [];
     
@@ -20,6 +21,12 @@ class Community extends Component
 
     public $showModal = false;
     public $selectedPost;
+
+    //filters
+    public $categoryFilter;
+    public $selectedDate;
+    public $filtering = false;
+    public $filtredPosts = [];
 
     public $comments = [];
     public $body;
@@ -75,6 +82,7 @@ class Community extends Component
     }
 
     public function closeModal(){
+        $this->reset(['body']);
         $this->showModal = false;
     }
 
