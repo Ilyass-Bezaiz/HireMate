@@ -60,7 +60,7 @@
                   class="flex items-center bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-transparent dark:hover:text-white dark:hover:border dark:hover:border-solid dark:hover:border-white  hover:bg-gray-600 duration-200 h-8 px-4 w-fit rounded-md text-white font-semibold">View
                   resume</a>
                 <x-button wire:click="removeCV"
-                  class="flex items-center bg-red-500 dark:bg-red-500 px-4 h-8 rounded-md font-semibold text-white dark:text-white dark:hover:bg-red-600 hover:bg-red-600 duration-200">
+                  class="flex items-center bg-red-500 dark:bg-red-500 dark:hover:bg-red-700 dark:hover:focus:bg-red-700 dark:focus:bg-red-700 px-4 h-8 rounded-md font-semibold text-white dark:text-white hover:bg-red-600 duration-200">
                   Remove resume</x-button>
               </div>
               @endif
@@ -69,7 +69,7 @@
         </div>
         @endif
         @if($stepper == 3)
-        <div >
+        <div>
           <div class="sm:col-span-6 mb-4">
             <div class="mb-3">
               <h3 class="text-xl text-gray-700 dark:text-white">Review your application</h3>
@@ -97,9 +97,10 @@
                 <button class="text-green-400 text-base" wire:click="edit(2)">Edit</button>
               </div>
               @if ($resumeUrl != null)
-              <a href="/storage/uploads/cv-{{auth()->user()->name}}.pdf" target="_blank" class="inline-block px-8 py
-                2 rounded-md border border-transparent leading-6 font-medium text-white bg-blue-600 hover:bg
-                -blue-500 focus:outline-none transition duration-150 ease">View CV</a>
+              <a href="/storage/uploads/cv-{{auth()->user()->name}}.pdf" target="_blank" class="flex items-center h-6 px-4
+                font-semibold text-sm border-2 border-gray-800 text-gray-800 duration-200 bg-transparent rounded-md
+                hover:bg-gray-800 hover:text-white w-fit dark:border-neutral-200 dark:hover:bg-neutral-200
+                dark:text-neutral-200 dark:hover:text-gray-800">View CV</a>
               @else
               <!-- <p class="py-2 rounded-md border border-dashed flex items-center justify-center text-base font-medium text" -->
               <p class="py-2 rounded-md leading-6 font-medium text-red-600 ">Please upload a CV</p>
@@ -128,7 +129,8 @@
           class="bg-red-400 hover:bg-red-600 dark:bg-red-500 dark:text-white dark:hover:bg-red-500 dark:hover:focus:bg-red-700 dark:focus:bg-red-600 dark:hover:text-slate-50 dark:focus:ring-red-600 mr-3">
           Back</x-button>
         <x-button wire:click="submitApplication"
-          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:focus:bg-green-700 dark:hover:focus:bg-green-700">Submit</x-button>
+          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:focus:bg-green-700 dark:hover:focus:bg-green-700">
+          Submit</x-button>
         @break
         @default
         <x-button wire:click="stepBack"
@@ -143,21 +145,23 @@
   </x-apply-modal>
   @if($showingSuccessMessage)
   <!-- Add this section to your Livewire component's Blade file -->
-  <x-success-modal>
+  <x-success-modal maxWidth="lg">
     <x-slot name="title">
-      <div class="w-full p-4 text-center dark:text-white">Your application has been submitted!</div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="125" height="125" viewBox="0 0 125 125" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M62.5 124.375C96.6726 124.375 124.375 96.6726 124.375 62.5C124.375 28.3274 96.6726 0.625 62.5 0.625C28.3274 0.625 0.625 28.3274 0.625 62.5C0.625 96.6726 28.3274 124.375 62.5 124.375ZM91.1523 42.8353C91.6827 42.1989 91.5967 41.253 90.9603 40.7227C90.3239 40.1923 89.378 40.2783 88.8477 40.9147L55.5242 80.9029L36.0607 61.4393C35.4749 60.8536 34.5251 60.8536 33.9393 61.4393C33.3536 62.0251 33.3536 62.9749 33.9393 63.5607L54.5643 84.1857L55.7258 85.3471L56.7773 84.0853L91.1523 42.8353Z"
+          fill="#4DD783" />
+      </svg>
     </x-slot>
     <x-slot name="content">
-      <svg class="h-20 w-20 " fill="#4DD783" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"
-        enable-background="new 0 0 52 52" xml:space="preserve">
-        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-        <g id="SVGRepo_iconCarrier">
-          <path
-            d="M26,2C12.7,2,2,12.7,2,26s10.7,24,24,24s24-10.7,24-24S39.3,2,26,2z M39.4,20L24.1,35.5 c-0.6,0.6-1.6,0.6-2.2,0L13.5,27c-0.6-0.6-0.6-1.6,0-2.2l2.2-2.2c0.6-0.6,1.6-0.6,2.2,0l4.4,4.5c0.4,0.4,1.1,0.4,1.5,0L35,15.5 c0.6-0.6,1.6-0.6,2.2,0l2.2,2.2C40.1,18.3,40.1,19.3,39.4,20z">
-          </path>
-        </g>
-      </svg>
+      <h3 class="text-[24px] tracking-wide	">You're all done</h3>
+      <p class="text-[14px] dark:text-white text-gray-500 w-1/2 text-center font-light	">you can edit your profile
+        informations in the
+        Settings</p>
+    </x-slot>
+    <x-slot name="footer">
+      <button wire:click="close()"
+        class="w-1/2 bg-green-400 text-white focus:outline-none hover:bg-green-500 rounded-full py-2 px-5 mb-6">Close</button>
     </x-slot>
   </x-success-modal>
   @endif

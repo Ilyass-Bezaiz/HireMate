@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\User;
+use Livewire\Attributes\Renderless;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use App\Models\Employer;
 use App\Models\Candidate;
@@ -17,7 +19,7 @@ class ApplyingProcess extends Component
     use WithFileUploads;
 
     public $user = [];
-    public $applyingForJob = [];
+    public $postOfferId ;
     public $companyApplied;
     public $stepper = 1;
     public $showingModal = false;
@@ -34,13 +36,19 @@ class ApplyingProcess extends Component
 
     // #[On("modal-show")]
     public function applyForJob($params){
-        $id = $params['id'];
-        // dd($id);
         $this->showingSuccessMessage = false;
-        $this->applyingForJob = $id;
-        $userId = JobOfferPost::where('id', $this->applyingForJob)->value('user_id');
-        $this->companyApplied = Employer::where('user_id', $userId)->value('companyName');
-        $this->showingModal = true;
+        $this->postOfferId = $params['id'];
+        $companyId = JobOfferPost::where('id', $this->postOfferId)->value('user_id');
+        $this->companyApplied = Employer::where('user_id', $companyId)->value('companyName');
+        $alreadyApplied = JobApplication::where("user_id", auth()->user()->id)->where("post_id", $this->postOfferId)->exists();
+        if ($alreadyApplied) {
+            // If the user already applied, show a message and do not open the modal
+            $this->showingSuccessMessage = true;
+            
+        } else {
+            // If the user has not applied, open the modal
+            $this->showingModal = true;
+        }
     }
 
     public function nextStep(){
@@ -97,9 +105,6 @@ class ApplyingProcess extends Component
     public function cancelApplying(){
         $this->showingModal = false;
         $this->stepper = 1;
-        // $this->resumeUrl = null;
-        // $this->path =  null;
-        // $this->resume =  null;
     }
     
     public function submitApplication(){
@@ -108,12 +113,16 @@ class ApplyingProcess extends Component
         // Create the application record
         JobApplication::create([
             'user_id' => $userId,
-            'job_offer_post_id' => $this->applyingForJob,
+            'post_id' => $this->postOfferId,
             // Add any other application-related data here
         ]);
         $this->cancelApplying();
         session()->flash('message', 'Your application has been submitted!');
         $this->showingSuccessMessage = true;
+    }
+
+    public function close(){
+        $this->showingSuccessMessage = false;
     }
     
     public function mount(){

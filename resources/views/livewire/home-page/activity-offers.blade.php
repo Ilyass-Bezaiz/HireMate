@@ -37,7 +37,7 @@
     </div>
     <hr class="border-[1px] border-gray-300">
     @if ($this->selectedCard == 1)
-        {{--  --}}
+        <livewire:partials.card-slider title="Your Applications" :cardContent="$appOffers" />
     @elseif($this->selectedCard == 2)
         <livewire:partials.card-slider title="Your Favourites" :cardContent="$favOffers" />
     @elseif($this->selectedCard == 3)
