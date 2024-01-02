@@ -25,11 +25,14 @@ class JobOfferNewPost extends Component
     public $description;
     public $contractType;
     public $flexibility;
+    public $requiredExperience;
+
 
     public function showJobOfferPostModal(){
         // resetting properties
         $this->resetExcept('countries','cities');
         $this->showingModal = true;
+        $this->dispatch('resetEditor');
     }
     
     public function updatedSelectedCountry($country){
@@ -48,7 +51,8 @@ class JobOfferNewPost extends Component
             'flexibility' => 'required',
             'contractType' => 'required',
             'selectedCountry' => 'required',
-            'cityId' => 'required'
+            'cityId' => 'required',
+            'requiredExperience' => 'required|numeric|max:20'
         ]);
 
         JobOfferPost::create([
@@ -59,7 +63,8 @@ class JobOfferNewPost extends Component
             'requestedContract' => $this->contractType,
             'country_id' => $this->selectedCountry,
             'city_id' => $this->cityId,
-            'user_id' => auth()->user()->id
+            'required_experience' => $this->requiredExperience,
+            'user_id' => auth()->user()->id,
         ]);
         $this->resetExcept('countries','cities');
     }
@@ -76,6 +81,7 @@ class JobOfferNewPost extends Component
         $this->contractType = $this->post->requestedContract;
         $this->description = $this->post->description;
         $this->selectedCountry = $this->post->country_id;
+        $this->requiredExperience = $this->post->required_experience;
         $this->cityId = $this->post->city_id;
         $this->isEditMode = true;
         $this->showingModal = true;
@@ -83,6 +89,9 @@ class JobOfferNewPost extends Component
         $this->cities = City::where('country_id', $this->selectedCountry)->get();
         $this->oldCityValue = City::find($this->cityId);
         $this->oldCityId = $this->oldCityValue->id;
+
+        $this->dispatch('refreshEditor',description:$this->description);
+
     }
 
     public function updateJobOfferPost(){
@@ -93,7 +102,8 @@ class JobOfferNewPost extends Component
             'flexibility' => 'required',
             'contractType' => 'required',
             'selectedCountry' => 'required',
-            'cityId' => 'required'
+            'cityId' => 'required',
+            'requiredExperience' => 'required|numeric|max:20'
         ]);
         $this->post->update([
             'title' => $this->title,
@@ -103,6 +113,7 @@ class JobOfferNewPost extends Component
             'requestedContract' => $this->contractType,
             'country_id' => $this->selectedCountry,
             'city_id' => $this->cityId,
+            'required_experience' => $this->requiredExperience,
             'user_id' => auth()->user()->id
         ]);
         $this->resetExcept('countries','cities');

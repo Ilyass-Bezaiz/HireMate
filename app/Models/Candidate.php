@@ -25,6 +25,8 @@ class Candidate extends Model
         'coverPicture',
         'coverLetter',
         'jobPreferences',
+        'about',
+        'headline'
     ];
 
     protected $casts = [

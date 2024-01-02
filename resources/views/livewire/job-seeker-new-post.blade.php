@@ -29,7 +29,7 @@
               @foreach($posts as $post)
               <tr class="dark:bg-gray-700 dark:text-white">
                 <td class="px-6 py-4 whitespace-nowrap">{{ $post->title }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($post->description, 20) }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{!! Str::limit($post->description, 20) !!}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ $post->flexibility }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   {{ $post->requestedContract }}
@@ -141,14 +141,37 @@
               </select>
               @error('flexibility') <span class="error text-red-600">{{ $message }}</span> @enderror
             </div>
-            <div class="sm:col-span-6 pt-5">
+            <div class="sm:col-span-6 pt-5" wire:ignore>
               <x-label for="description">{{ __("Description") }}</x-label>
               <div class="mt-1">
-                <textarea id="description" wire:model.lazy="description" rows="3"
+                <textarea id="description" wire:model="description" rows="3"
                   class="shadow-sm focus:ring-green-400 appearance-none bg-white border border-gray-600 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-green-400 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-900"></textarea>
+                  @script
+                  <script>
+                    ClassicEditor
+                    .create(document.querySelector('#description'),{
+                              toolbar: [ 'heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
+                            })
+                            .then(editor => {
+                              $wire.on('refreshEditor', (event) => {
+                                editor.setData(event.description);
+                              });
+                              $wire.on('resetEditor',(event)=>{
+                                editor.setData('');
+                              });
+                              editor.model.document.on('change:data', () => {
+                                @this.set('description', editor.getData());
+                              })
+                            })
+                            .catch(error => {
+                              console.error(error);
+                            });  
+                    </script>
+                    @endscript
+                  </div>
+                </div>
                 @error('description') <span class="error text-red-600">{{ $message }}</span> @enderror
-              </div>
-            </div>
+
           </form>
         </x-slot>
         <x-slot name="footer">
