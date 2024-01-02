@@ -55,7 +55,8 @@ class CardSlider extends Component
         $this->selectedCard = $selectedCard;
     }
 
+    #[Renderless]
     public function showPopUpDetails($postId) {
-        $this->dispatch('popup-details', cardId:$this->selectedCard, postId:$postId);
+        $this->dispatch('popup-details', postId:$postId-1);
     }
 }

@@ -1,9 +1,5 @@
 <div class="relative py-10 px-28 dark:*:text-gray-200">
-    @unless (!$this->popupDetails())
-        <div wire:click.outside="$set('popup', false)" class="rounded-lg absolute w-[378px] inset-0 bg-gray-100 dark:bg-gray-800 z-50 p-5 shadow-2xl border-2 border-gray-300 dark:border-gray-500 overflow-y-auto">
-            <livewire:home-page.pop-up-offer-details :postId="$selectedPostId" />
-        </div>
-    @endunless
+    @livewire('home-page.pop-up-offer-details')
     <h1 class="text-5xl">Hello, <span id="employer-name">{{ Auth::user()->name }}</span></h1>
     <div class="flex justify-between flex-wrap gap-4 my-12">        
         <div wire:click='selectCard(1)' wire:loading.class='opacity-50' wire:target='selectCard(1)' class="flex flex-col gap-2 border-[1px] border-gray-400 hover:border-gray-600 hover:scale-[1.01] duration-200 {{ $selectedCard == 1 ? "border-gray-600" : null }} rounded-md w-80 px-8 py-4 cursor-pointer">

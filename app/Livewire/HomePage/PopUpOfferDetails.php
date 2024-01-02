@@ -12,11 +12,12 @@ use Livewire\Component;
 
 class PopUpOfferDetails extends Component
 {
-    public $postId;
+    public $postId = 1;
     public $users = [];
     public $offers = [];
     public $employers = [];
-    // protected $listeners = ['popup-details' => 'show'];
+    public $showingModal = false;
+
     public function render()
     {
         return view('livewire.home-page.pop-up-offer-details',[
@@ -26,10 +27,20 @@ class PopUpOfferDetails extends Component
         ]);
     }
 
+    
+    #[On('popup-details')]
     public function show($postId) {
+        // dd($postId);
+        $this->postId = $postId;
+        $this->showingModal = true;
         // $this->$postId = $postId;
         // dd($postId);
     }
+    
+    public function closeModal() {
+        $this->showingModal = false;
+    }
+    
 
     public function likedPost($postId): bool {
         $liked = false;

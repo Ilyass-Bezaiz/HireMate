@@ -31,13 +31,13 @@ class ActivityOffers extends Component
         ]);
     }
 
-    #[On('popup-details')]
-    public function showPopupDetails($postId, $cardId) {
-        $this->selectedPostId = $postId-1;
-        $this->popup = true;
-        $this->selectCard($cardId);
-        // dd($postId);
-    }
+    // #[On('popup-details')]
+    // public function showPopupDetails($postId, $cardId) {
+    //     $this->selectedPostId = $postId-1;
+    //     $this->popup = true;
+    //     $this->selectCard($cardId);
+    //     // dd($postId);
+    // }
 
     public function selectCard($cardId) {
         // if ($this->selectedCard != $cardId) {
@@ -45,8 +45,8 @@ class ActivityOffers extends Component
         // }
     }
 
-    public function popupDetails() {
-        return $this->popup;
-    }
+    // public function popupDetails() {
+    //     return $this->popup;
+    // }
 
 }
