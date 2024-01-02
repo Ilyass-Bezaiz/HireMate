@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('likes', function (Blueprint $table) {
+        Schema::create('work_experiences', function (Blueprint $table) {
             $table->id();
+            $table->string('company_name');
+            $table->string('position');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->text('responsibilities')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('likable_id');
-            $table->string('likable_type');
-            $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users');
-            // Add foreign key constraints for likable_id and likable_type if needed
+            $table->timestamps();
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('likes'); 
+        Schema::dropIfExists('work_experiences');
     }
 };

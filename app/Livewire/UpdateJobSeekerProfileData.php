@@ -17,8 +17,7 @@ class UpdateJobSeekerProfileData extends Component
     public $resume, $resumeUrl, $resumePath;
     public $coverPictureUrl, $coverPicturePath, $coverPicture;
     public $coverLetterUrl, $coverLetterPath, $coverLetter;
-    public $skillsList;
-    public $skills;
+    public $about,$headline,$skills,$skillsList;
 
     public function mount()
     {
@@ -27,6 +26,8 @@ class UpdateJobSeekerProfileData extends Component
         $this->coverPictureUrl = $this->user->coverPicture;
         $this->coverLetterUrl = $this->user->coverLetter;
         $this->skillsList = Skills::all();
+        $this->headline = $this->user->headline;
+        $this->about = $this->user->about;
         $this->skills = $this->user->skills;
     }
 
@@ -63,28 +64,35 @@ class UpdateJobSeekerProfileData extends Component
             'resume' => 'nullable|file|mimes:pdf,docx|max:2048',
             'coverPicture' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
             'coverLetter' => 'nullable|file|mimes:pdf,docx|max:2048',
+            'about' => 'nullable|max:500',
+            'headline' => 'nullable|max:40'
         ]);
         
         // check if skill doesn't exist on the database before creating it
-        foreach($this->skills as $skill){
-            $checkSkill = Skills::where('title',$skill)->first();
-            if($checkSkill == null){
-                // Validate Skill String to check if it has tags or if it is too long before adding it to the skills table
-                if(Str::length($skill) <= 30 && $skill == strip_tags($skill)){
-                    $newSkill = Skills::create([
-                        'title' => $skill
-                    ]);
-                }
-                else{
-                    session()->flash('error', 'Something went wrong ! Please provide a skill that doesn\'t exceed 30 caracters.');
-                    return;
+        if($this->skills && count($this->skills) > 0){
+            foreach($this->skills as $skill){
+                $checkSkill = Skills::where('title',$skill)->first();
+                if($checkSkill == null){
+                    // Validate Skill String to check if it has tags or if it is too long before adding it to the skills table
+                    if(Str::length($skill) <= 30 && $skill == strip_tags($skill)){
+                        $newSkill = Skills::create([
+                            'title' => $skill
+                        ]);
+                    }
+                    else{
+                        session()->flash('error', 'Something went wrong ! Please provide a skill that doesn\'t exceed 30 caracters.');
+                        return;
+                    }
                 }
             }
         }
         
+        
 
         $this->user->update([
-            'skills' => $this->skills
+            'skills' => $this->skills,
+            'about' => $this->about,
+            'headline' => $this->headline
         ]);
         if ($this->resume) {
             // storing file in storage/public/uploads folder

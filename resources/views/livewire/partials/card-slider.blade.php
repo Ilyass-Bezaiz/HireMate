@@ -1,4 +1,4 @@
-<div wire:transition class="flex flex-col gap-4 mt-8 dark:*:text-gray-200">
+<div wire:transition class="relative flex flex-col gap-4 mt-8 dark:*:text-gray-200">
     <div class="flex px-2">
         <h1 class="flex-1 text-2xl font-semibold">{{ $title }}</h1>
         <div class="flex gap-3">
@@ -17,7 +17,7 @@
     <div>
         <ul id="cards-container" class="blur-dev card-slider flex gap-4 overflow-y-hidden overflow-x-auto scroll-smooth">
             @foreach ($posts as $key => $post)
-                <li wire:key='{{$post->id}}' class="flex flex-col gap-6 border-[1px] border-gray-200 rounded-lg w-72 min-w-72 max-w-72 p-5 cursor-pointer hover:border-gray-600 hover:scale-[1.01] duration-200">                
+                <li wire:click="showPopUpDetails({{App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->id}})" wire:key='{{$post->id}}' class="flex flex-col gap-6 border-[1px] border-gray-200 rounded-lg w-72 min-w-72 max-w-72 p-5 cursor-pointer hover:border-gray-600 hover:scale-[1.01] duration-200">                
                     <div class="flex items-center justify-end">
                         <img class="rounded-full w-14 h-14" src="{{ "storage/". App\Models\User::where('id', App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->user_id)->get()[0]->profile_photo_path }}" alt="Offer-img">
                         <p class="font-medium ml-3 text-lg text-gray-300">{{ App\Models\Employer::where('user_id', App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->user_id)->get()[0]->companyName }}</p>

@@ -2,12 +2,13 @@
     <div class="flex items-align justify-start gap-x-8 w-full mt-[32px]">
 
         <!--Filters for posts-->
-        <form enctype="multipart/form-data" class="sticky top-0 width-[350px] bg-white dark:bg-gray-800 p-7 rounded-md border-[1px] border-[#d9d9d9] h-[320px]">
+        <div class="sticky top-0 width-[350px] bg-white dark:bg-gray-800 p-7 rounded-md border-[1px] border-[#d9d9d9] h-[320px]">
+        <form wire:submit.prevent="" enctype="multipart/form-data">
             @csrf
             <div class="mb-6">
                 <label for="categoryFilter" class="block text-[20px] font-medium text-gray-700 dark:text-gray-300 mb-2">Filter by category</label>
                 @if($categories)
-                    <select wire:model.live="selectedCategoryFilter" id="categoryFilter" name="categoryFilter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                    <select wire:model="categoryId" id="categoryFilter" name="categoryFilter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                         <option value="null" selected disabled>Select your category</option>
                         @if($categories)
                             @foreach($categories as $category)
@@ -18,8 +19,8 @@
                 @endif
             </div>
             <div class="mb-6">
-                <label for="Filter by date" class="block text-[20px] font-medium text-gray-700 mb-2 dark:text-gray-300">Filter by date</label>
-                <select wire:model.live="selectedDate" id="date" name="date" class="mt-1 block w-[350px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                <label for="dateFilter" class="block text-[20px] font-medium text-gray-700 mb-2 dark:text-gray-300">Filter by date</label>
+                <select wire:model="selectedDate" id="dateFilter" name="dateFilter" class="mt-1 block w-[350px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                     <option value="null" selected disabled>Select your date</option>
                     <option value="24h">Last 24h</option>
                     <option value="week">Last week</option>
@@ -27,8 +28,9 @@
                     <option value="3months">Last 3 months</option>
                 </select>
             </div>
-            <button class="w-full rounded-full py-2 border border-[1px] border-[#4DD783] text-[#4DD783] hover:bg-[#4DD783] hover:text-[white]" type="submit">Filter posts</button>
         </form>
+        <button wire:click="applyFilters" class="w-full rounded-full py-2 border border-[1px] border-[#4DD783] text-[#4DD783] hover:bg-[#4DD783] hover:text-[white]">Filter posts</button>
+        </div>
 
         <!--Create post box-->
         <div class="w-2/3 overflow-y-hidden">
@@ -36,12 +38,12 @@
                 <form enctype="multipart/form-data">
                     @csrf
                     <div class="mb-6 width-[800px]">
-                        <label for="Filter by category" class="block text-[20px] font-medium text-gray-700 mb-2">Create post</label>
+                        <label for="post-title" class="block text-[20px] font-medium text-gray-700 mb-2">Create post</label>
                         <input wire:model="title" placeholder="Title" type="text" id="post-title" name="post-title" class="block w-full bg-white border border-gray-300 rounded-md py-2 px-3 text-base focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm sm:leading-5" />
                         @error('title') <span class="error text-red-600 text-[12px]">{{ $message }}</span> @enderror
 
                         @if($categories)
-                            <select wire:model.live="selectedCategory" id="category" name="category" class="mt-4 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                            <select wire:model="selectedCategory" id="category" name="category" class="mt-4 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                             <option wire:model="category" value="null" selected disabled>Choose category</option>
                             @if($categories)
                                 @foreach($categories as $category)
@@ -56,7 +58,7 @@
                     </select>
                     </div>
                 </form>
-                <button class="w-1/3 rounded-full py-2 bg-[#4DD783] text-[white] border border-[1px] border-[#4DD783] hover:bg-white hover:text-[#4DD783]" wire:click = "createPost">+ Create post</button>
+                <button class="w-1/3 rounded-full py-2 bg-[#4DD783] text-[white] border border-[1px] border-[#4DD783] hover:bg-green-500" wire:click="createPost">+ Create post</button>
             </div>
 
             <!--Display posts here-->
@@ -67,11 +69,17 @@
                             <div class="flex items-center">
                                 <div class="flex items-center justify-center">
                                     <div class="img-picture w-[60px] h-[60px] rounded-full overflow-hidden">
-                                        <img src="{{ Storage::url(auth()->user()->profile_photo_path) }}" alt="Profil picture" class="w-full h-full object-cover">
+                                        <!--Check if the user has uploaded a profile picture-->
+                                        @if($post->user->profile_photo_path)
+                                            <img src="{{ Storage::url($post->user->profile_photo_path) }}" alt="Profile picture" class="w-full h-full object-cover">
+                                        @else
+                                            <!--Fall back to default picture if no profile picture uploaded-->
+                                            <img src="{{ asset('storage/profile-photos/defaultUser.jpg') }}" alt="Default picture" class="w-full h-full object-cover">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="ml-2 flex flex-col items-start">
-                                    <span class="font-bold">{{$post->user->name}} - <span class="font-light text-[14px] text-[#4DD783]">Business Consultant</span></span> 
+                                    <span class="font-bold">{{$post->user->name}} - <span class="font-light text-[14px] text-[#4DD783]">{{ $post->category->name }}</span></span> 
                                     <span class="text-[12px] text-[#888]">{{ $post->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
@@ -150,9 +158,14 @@
                                 <div class="w-full my-3 p-4 bg-white h-auto rounded-md border-[1px] border-[#d9d9d9]">
                                     <div class="flex items-center justify-between rounded-md w-full">
                                         <div class="flex items-center">
-                                            <div class="flex items-center justify-center">
-                                                <div class="img-picture w-[40px] h-[40px] rounded-full">
-                                                    <img src="" alt="Profil picture" class="w-full h-full">
+                                            <div class="flex items-center justify-center rounded-full overflow-hidden">
+                                                <div class="w-[40px] h-[40px]">
+                                                    @if($comment->user->profile_photo_path)
+                                                        <img src="{{ Storage::url($comment->user->profile_photo_path) }}" alt="Profile picture" class="w-full h-full object-cover">
+                                                    @else
+                                                        <!-- Fall back to default picture if no profile picture uploaded -->
+                                                        <img src="{{ asset('storage/profile-photos/defaultUser.jpg') }}" alt="Default picture" class="w-full h-full object-cover">
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="ml-2 flex flex-col items-start">
@@ -186,10 +199,7 @@
                                     </div>
                                     <div class="mt-3 flex flex-row items-center">
                                         <div class="cursor-pointer flex flex-row items-center justify-between p-2 hover:bg-[#f5f5f5] rounded-md">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 26 24" fill="none">
-                                                <path d="M2.79452 13.3699L12.3219 22.1601C12.6437 22.457 12.8046 22.6054 13 22.6054C13.1954 22.6054 13.3563 22.457 13.6781 22.1601L23.2055 13.3699C25.9108 10.874 26.2379 6.71586 23.9562 3.82755L23.6008 3.37759C20.9037 -0.0365739 15.5651 0.542922 13.6634 4.45627C13.3944 5.00988 12.6056 5.00987 12.3366 4.45627C10.4349 0.542921 5.09629 -0.0365701 2.39921 3.37759L2.04375 3.82756C-0.23792 6.71586 0.0892327 10.874 2.79452 13.3699Z" stroke="#888888"/>
-                                            </svg>
-                                            <span class="ml-2 text-[#888] font-bold">Like</span>
+                                            
                                         </div>
                                         <div class="cursor-pointer ml-2 flex flex-row items-center justify-between p-2 hover:bg-[#f5f5f5] rounded-md">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 30 30" fill="none">

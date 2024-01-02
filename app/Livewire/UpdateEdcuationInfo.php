@@ -12,23 +12,34 @@ class UpdateEdcuationInfo extends Component
     public $isEditMode = false;
     public $educationList = [];
 
-    #[Validate('required')]
-    public $education_status;
-    
-    #[Validate('required')]
+    public $education_status;    
     public $education_level;
-
-    #[Validate('required|max:30')]
     public $education_field;
-
-    #[Validate('required|before:today')]
     public $start_date;
-
-    #[Validate('required|max:30|after:start_date')]
     public $end_date;
-
     public $selectedEducation;
     public $disabled = false;
+
+    // conditional validation rules based on the Education status field
+    public function rules(){
+        if($this->education_status == 'Currently enrolled'){
+            return [
+                'education_status' => 'required',
+                'education_level' => 'required',
+                'education_field' => 'required|max:30',
+                'start_date' => 'required|before:today',
+                'end_date' => 'nullable'
+            ];
+        }else{
+            return [
+                'education_status' => 'required',
+                'education_level' => 'required',
+                'education_field' => 'required|max:30',
+                'start_date' => 'required|before_or_equal:today',
+                'end_date' => 'required|after:start_date|before:today'
+            ];
+        }
+    }
 
     public function showAddEducationModal(){
         $this->resetExcept('educationList');
@@ -53,10 +64,12 @@ class UpdateEdcuationInfo extends Component
 
     }
 
+    // change the value of the "disabled" property if the user has chosen "Currently enrolled" as education status
     public function updated($propertyName){
         if($propertyName == 'education_status'){
             if($this->education_status == 'Currently enrolled'){
                 $this->disabled = true;
+                $this->end_date = null;
             }else{
                 $this->disabled = false;
             }

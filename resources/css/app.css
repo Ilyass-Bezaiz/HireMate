@@ -30,7 +30,7 @@
     display: none;
 }
 
-html, body {
+, body {
     scroll-behavior: smooth;
 }
 
@@ -50,10 +50,10 @@ html, body {
 
 /* Customizing the scroll bar */
 
-html::-webkit-scrollbar{
+::-webkit-scrollbar{
     width:8px;
 }
-html::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb{
     background-color:var(--color-primary);
     border-radius: 30px;
 }
@@ -278,23 +278,53 @@ select:focus{
         width: 10%;
     }
 }
-html.dark .select2-selection{
+
+/* Select2 Dark mode styles */
+.dark .select2-selection{
     background-color: rgb(17 24 39) !important;
     border: 1px solid rgb(75 85 99);
     color: rgb(203 213 225);
 }
-html.dark .select2-selection__choice{
+.dark .select2-selection__choice{
     background-color: rgb(55 65 81) !important;
     color: rgb(203 213 225);
 }
-html.dark .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
+.dark .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
     color:rgb(100 116 139);
     border-right: 1px solid rgb(100 116 139);
-}html.dark .select2-results__option--selectable{
+}.dark .select2-results__option--selectable{
     background-color: rgb(17 24 39);
     color: rgb(203 213 225);
 }
-html.dark .select2-container--default .select2-results__option--selected{
+.dark .select2-container--default .select2-results__option--selected{
     background-color: rgb(55 65 81);
 }
 
+/* Rich text editor dark mode styles */
+.dark .ck.ck-content{
+    background-color: rgb(17 24 39);
+    color: rgb(209 213 219);
+    border-color: rgb(55 65 81) !important;
+}
+.dark .ck-toolbar{
+    background-color: rgb(55 65 81);
+    border-color: rgb(55 65 81) !important;
+}
+.dark .ck-icon,
+.dark .ck-button__label{
+    color: rgb(209 213 219) !important;
+}
+.dark .ck.ck-dropdown .ck-button.ck-dropdown__button:hover,
+.dark .ck-button.ck-off:hover{
+    background-color: rgb(31 41 55);
+}
+.dark .ck-on{
+    background-color: rgb(17 24 39) !important;
+}
+.dark .ck-list{
+    background-color: rgb(55 65 81);
+    color: (209 213 219);
+}
+.dark .ck.ck-list__item .ck-button:hover:not(.ck-disabled){
+    background-color: rgb(31 41 55) !important;
+}

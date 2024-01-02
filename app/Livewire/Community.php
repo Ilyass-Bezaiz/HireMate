@@ -10,7 +10,8 @@ use App\Models\User;
 use Livewire\WithPagination;
 
 class Community extends Component
-{
+{    
+    
     public $categories = [];
     public $posts = [];
     
@@ -21,11 +22,22 @@ class Community extends Component
     public $showModal = false;
     public $selectedPost;
 
+    //filters
+    public $categoryId = null;
+    public $selectedDate = null;
+    public $filtredPosts = [];
+
     public $comments = [];
     public $body;
     
-    public function mount(){
+    public function mount()
+    {
         $this->categories = Category::all();
+    }
+
+    public function loadPosts()
+    {
+        $this->posts = Post::with('user')->orderBy('created_at', 'desc')->get();
     }
     
     public function createPost()
@@ -43,6 +55,7 @@ class Community extends Component
             'description' => $this->description
         ]);
 
+        $this->loadPosts();
         // Reset the input fields
         $this->reset(['title', 'selectedCategory', 'description']);
     }
@@ -75,21 +88,43 @@ class Community extends Component
     }
 
     public function closeModal(){
+        $this->reset(['body']);
         $this->showModal = false;
+    }
+
+    public function applyFilters()
+    {
+        $this->render();
+    
     }
 
     public function render()
     {
-        // Ensure $this->posts is a collection
-        $postsCollection = collect($this->posts);
 
-        // Fetch the user information for each post
-        $postsCollection->each(function ($post) {
-            $post->user = User::find($post->user_id);
-        });
+        $query = Post::query();
 
-        return view('livewire.community', [
-            $this->posts = Post::orderBy('created_at', 'desc')->get(),
+    if ($this->categoryId) {
+        $query->where('category_id', $this->categoryId);
+    }
+
+    if ($this->selectedDate) {
+        if ($this->selectedDate === '24h') {
+            $query->whereBetween('created_at', [now()->subDay(), now()]);
+        } elseif ($this->selectedDate === 'week') {
+            $query->whereBetween('created_at', [now()->subWeek(), now()]);
+        } elseif ($this->selectedDate === 'month') {
+            $query->whereBetween('created_at', [now()->subMonth(), now()]);
+        } elseif ($this->selectedDate === '3months') {
+            $query->whereBetween('created_at', [now()->subMonths(3), now()]);
+        }
+    }
+
+    $posts = $query->get();
+        
+        return view('livewire.community',[
+            $this->posts = $posts,
         ]);
     }
+
+
 }

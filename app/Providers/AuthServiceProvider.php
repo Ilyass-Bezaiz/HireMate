@@ -6,9 +6,11 @@ use App\Models\Education;
 use App\Models\JobOfferPost;
 use App\Models\JobSeekerPost;
 use App\Models\User;
+use App\Models\WorkExperience;
 use App\Policies\EducationPolicy;
 use App\Policies\JobOfferPostPolicy;
 use App\Policies\JobSeekerPostPolicy;
+use App\Policies\WorkExperiencePolicy;
 use Illuminate\Support\Facades\Gate;
 
 // use Illuminate\Auth\Access\Gate;
@@ -24,7 +26,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         JobSeekerPost::class => JobSeekerPostPolicy::class,
         JobOfferPost::class => JobOfferPostPolicy::class,
-        Education::class => EducationPolicy::class
+        Education::class => EducationPolicy::class,
+        WorkExperience::class => WorkExperiencePolicy::class
     ];
 
     /**

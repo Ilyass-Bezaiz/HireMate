@@ -1,49 +1,59 @@
 <div class="dark:bg-gray-900">
   <x-apply-modal wire:model.live="showingModal">
-    <x-slot name="header">Apply to {{$companyApplied}}</x-slot>
+    <x-slot name="header">Apply to {{ $companyApplied }}</x-slot>
     <x-slot name="title">Your information</x-slot>
     <x-slot name="content">
       <form enctype="multipart/form-data" wire:submit.prevent="">
-        @if($stepper==1)
+        @if ($stepper == 1)
         <div>
           <div class="sm:col-span-6 mb-4">
-            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-white">Email </label>
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-white">Email
+            </label>
             <div class="mt-1">
               <input type="text" id="email" wire:model="email" name="email"
                 class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal sm:text-sm sm:leading-5 dark:text-black" />
             </div>
-            @error('email') <span class="error text-red-600">{{ $message }}</span> @enderror
+            @error('email')
+            <span class="error text-red-600">{{ $message }}</span>
+            @enderror
           </div>
           <div class="sm:col-span-6 mb-4">
-            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-white"> Phone Number</label>
+            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-white"> Phone
+              Number</label>
             <div class="mt-1">
               <input type="text" wire:model="phone" id="phone" inputmode="numeric" name="phone"
                 class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:text-black" />
             </div>
-            @error('phone') <span class="error text-red-600">{{ $message }}</span> @enderror
+            @error('phone')
+            <span class="error text-red-600">{{ $message }}</span>
+            @enderror
           </div>
         </div>
         @endif
-        @if($stepper == 2)
+        @if ($stepper == 2)
         <div>
           <div class="sm:col-span-6 mb-4">
             <div class="mt-4">
-              @if($resumeUrl == null)
+              @if ($resumeUrl == null)
               <x-label for="resume" class="mb-2 inline-block text-neutral-700 dark:text-neutral-200">Resume</x-label>
               <x-input wire:model.live="resume"
                 class="relative m-0 block w-2/3 lg:w-2/3 w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
                 type="file" id="resume" />
-              @error('resume') <span class="error text-red-600">{{ $message }}</span> @enderror
+              @error('resume')
+              <span class="error text-red-600">{{ $message }}</span>
+              @enderror
               @endif
-              @if($resumeUrl)
+              @if ($resumeUrl)
               <x-label for="resume" class="mb-2 inline-block text-neutral-700 dark:text-neutral-200">Resume already
                 uploaded</x-label>
               <div
                 class="relative text-[15px] flex items-center w-full min-w-0 rounded border border-solid border-neutral-300">
-                <span class="bg-gray-200 h-full border-r-2 dark:bg-white dark:text-black p-3">Your Resume</span>
+                <span class="bg-gray-200 h-full border-r-2 dark:bg-white dark:text-black p-3">Your
+                  Resume</span>
                 <span class=" text-neutral-700 dark:text-neutral-200 p-3">{{ auth()->user()->name }}'s
                   resume</span>
-                <div class="flex-grow"></div> <!-- This will make the SVG take up the remaining space -->
+                <div class="flex-grow"></div>
+                <!-- This will make the SVG take up the remaining space -->
                 <svg class="w-6 h-6 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                   stroke="#4DD783">
                   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -68,7 +78,7 @@
           </div>
         </div>
         @endif
-        @if($stepper == 3)
+        @if ($stepper == 3)
         <div>
           <div class="sm:col-span-6 mb-4">
             <div class="mb-3">
@@ -83,11 +93,11 @@
               </div>
               <div class="mb-3">
                 <div class=" text-gray-500 text-[13px] dark:text-white">Email:</div>
-                <div class=" text-black text-[15px] dark:text-white">{{$email}}</div>
+                <div class=" text-black text-[15px] dark:text-white">{{ $email }}</div>
               </div>
               <div class="mb-3">
                 <div class=" text-gray-500 text-[13px] dark:text-white">Phone:</div>
-                <div class=" text-black text-[15px] dark:text-white">{{$phone}}</div>
+                <div class=" text-black text-[15px] dark:text-white">{{ $phone }}</div>
               </div>
             </div>
             <hr>
@@ -97,13 +107,15 @@
                 <button class="text-green-400 text-base" wire:click="edit(2)">Edit</button>
               </div>
               @if ($resumeUrl != null)
-              <a href="/storage/uploads/cv-{{auth()->user()->name}}.pdf" target="_blank" class="flex items-center h-6 px-4
+              <a href="/storage/uploads/cv-{{ auth()->user()->name }}.pdf" target="_blank" class="flex items-center h-6 px-4
                 font-semibold text-sm border-2 border-gray-800 text-gray-800 duration-200 bg-transparent rounded-md
                 hover:bg-gray-800 hover:text-white w-fit dark:border-neutral-200 dark:hover:bg-neutral-200
-                dark:text-neutral-200 dark:hover:text-gray-800">View CV</a>
+                dark:text-neutral-200 dark:hover:text-gray-800">View
+                CV</a>
               @else
               <!-- <p class="py-2 rounded-md border border-dashed flex items-center justify-center text-base font-medium text" -->
-              <p class="py-2 rounded-md leading-6 font-medium text-red-600 ">Please upload a CV</p>
+              <p class="py-2 rounded-md leading-6 font-medium text-red-600 ">Please upload a CV
+              </p>
               @endif
             </div>
           </div>
@@ -114,36 +126,38 @@
     <x-slot name="footer" class="w-full flex justify-between">
       <div>
         <x-button wire:click="cancelApplying"
-          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-600 dark:focus:bg-green-700 dark:hover:focus:bg-green-700 dark:hover:text-white dark:hover:border dark:hover:border-green-400 dark:focus:bg-transparent">
+          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:focus:bg-green-700 dark:hover:focus:bg-green-700 dark:hover:text-white dark:hover:border dark:hover:border-green-400 dark:focus:bg-transparent">
           Cancel</x-button>
       </div>
       <div class="w-1/2 flex justify-end ">
         @switch($stepper)
         @case(1)
         <x-button wire:click="nextStep"
-          class="bg-green-400 hover:bg-green-600 dark:bg-green-400 dark:text-white dark:hover:bg-green-600 dark:hover:focus:bg-green-600 dark:focus:bg-green-500 dark:hover:text-slate-50 dark:focus:ring-green-600 mr-3">
-          Next {{$stepper}}</x-button>
+          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:hover:focus:bg-green-700 dark:focus:bg-green-700">
+          Next {{ $stepper }}</x-button>
         @break
+
         @case(3)
         <x-button wire:click="stepBack"
-          class="bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:text-white dark:hover:bg-red-600 dark:hover:focus:bg-red-600 dark:focus:bg-red-500 dark:hover:text-slate-50 dark:focus:ring-red-600 mr-3">
+          class="bg-red-400 hover:bg-red-600 dark:bg-red-500 dark:text-white dark:hover:bg-red-500 dark:hover:focus:bg-red-700 dark:focus:bg-red-600 dark:hover:text-slate-50 dark:focus:ring-red-600 mr-3">
           Back</x-button>
         <x-button wire:click="submitApplication"
-          class="bg-green-400 hover:bg-green-600 dark:bg-green-400 dark:text-white dark:hover:bg-green-600 dark:hover:focus:bg-green-600 dark:focus:bg-green-500 dark:hover:text-slate-50 dark:focus:ring-green-600 mr-3">
+          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:focus:bg-green-700 dark:hover:focus:bg-green-700">
           Submit</x-button>
         @break
+
         @default
         <x-button wire:click="stepBack"
-          class="bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:text-white dark:hover:bg-red-600 dark:hover:focus:bg-red-600 dark:focus:bg-red-500 dark:hover:text-slate-50 dark:focus:ring-red-600 mr-3">
+          class="bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:text-white dark:hover:bg-red-500 dark:hover:focus:bg-red-700 dark:focus:bg-red-700 dark:hover:text-slate-50 dark:focus:ring-red-600 mr-3">
           Back</x-button>
         <x-button wire:click="nextStep"
-          class="bg-green-400 hover:bg-green-600 dark:bg-green-400 dark:text-white dark:hover:bg-green-600 dark:hover:focus:bg-green-600 dark:focus:bg-green-500 dark:hover:text-slate-50 dark:focus:ring-green-600 mr-3">
+          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:hover:focus:bg-green-700">
           Next</x-button>
         @endswitch
       </div>
     </x-slot>
   </x-apply-modal>
-  @if($showingSuccessMessage)
+  @if ($showingSuccessMessage)
   <!-- Add this section to your Livewire component's Blade file -->
   <x-success-modal maxWidth="lg">
     <x-slot name="title">
@@ -155,7 +169,8 @@
     </x-slot>
     <x-slot name="content">
       <h3 class="text-[24px] tracking-wide	">You're all done</h3>
-      <p class="text-[14px] dark:text-white text-gray-500 w-1/2 text-center font-light	">you can edit your profile
+      <p class="text-[14px] dark:text-white text-gray-500 w-1/2 text-center font-light	">you can edit your
+        profile
         informations in the
         Settings</p>
     </x-slot>

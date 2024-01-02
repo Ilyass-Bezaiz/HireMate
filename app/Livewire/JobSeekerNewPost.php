@@ -36,8 +36,10 @@ class JobSeekerNewPost extends Component
         // resetting properties
         $this->resetExcept('countries','cities');
 
+        $this->dispatch('resetEditor');
+
         $this->showingModal = true;
-    }
+    }   
     
     public function mount(){
         $this->countries = Country::all();
@@ -129,6 +131,8 @@ class JobSeekerNewPost extends Component
         $this->cities = City::where('country_id', $this->selectedCountry)->get();
         $this->oldCityValue = City::find($this->cityId);
         $this->oldCityId = $this->oldCityValue->id;
+
+        $this->dispatch('refreshEditor',description:$this->description);
 
     }
 
