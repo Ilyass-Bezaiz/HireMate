@@ -8,6 +8,8 @@ use App\Models\JobOfferPost;
 use App\Models\JobSeekerPost;
 use App\Models\recentSeekerPost;
 use Auth;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 class ActivityOffers extends Component
@@ -17,6 +19,8 @@ class ActivityOffers extends Component
     public $appOffers = [];
     public $recentOffers = [];
     public $allOffers = [];
+    public $selectedPostId;
+    public $popup = false;
 
     public function render()
     {
@@ -27,10 +31,22 @@ class ActivityOffers extends Component
         ]);
     }
 
+    #[On('popup-details')]
+    public function showPopupDetails($postId, $cardId) {
+        $this->selectedPostId = $postId-1;
+        $this->popup = true;
+        $this->selectCard($cardId);
+        // dd($postId);
+    }
+
     public function selectCard($cardId) {
-        if ($this->selectedCard != $cardId) {
+        // if ($this->selectedCard != $cardId) {
            $this->selectedCard = $cardId;
-        }
+        // }
+    }
+
+    public function popupDetails() {
+        return $this->popup;
     }
 
 }
