@@ -2,12 +2,13 @@
     <div class="flex items-align justify-start gap-x-8 w-full mt-[32px]">
 
         <!--Filters for posts-->
-        <form enctype="multipart/form-data" class="sticky top-0 width-[350px] bg-white dark:bg-gray-800 p-7 rounded-md border-[1px] border-[#d9d9d9] h-[320px]">
+        <div class="sticky top-0 width-[350px] bg-white dark:bg-gray-800 p-7 rounded-md border-[1px] border-[#d9d9d9] h-[320px]">
+        <form wire:submit.prevent="" enctype="multipart/form-data">
             @csrf
             <div class="mb-6">
                 <label for="categoryFilter" class="block text-[20px] font-medium text-gray-700 dark:text-gray-300 mb-2">Filter by category</label>
                 @if($categories)
-                    <select wire:model="categoryFilter" id="categoryFilter" name="categoryFilter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                    <select wire:model="categoryId" id="categoryFilter" name="categoryFilter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
                         <option value="null" selected disabled>Select your category</option>
                         @if($categories)
                             @foreach($categories as $category)
@@ -27,8 +28,9 @@
                     <option value="3months">Last 3 months</option>
                 </select>
             </div>
-            <button class="w-full rounded-full py-2 border border-[1px] border-[#4DD783] text-[#4DD783] hover:bg-[#4DD783] hover:text-[white]">Filter posts</button>
         </form>
+        <button wire:click="applyFilters" class="w-full rounded-full py-2 border border-[1px] border-[#4DD783] text-[#4DD783] hover:bg-[#4DD783] hover:text-[white]">Filter posts</button>
+        </div>
 
         <!--Create post box-->
         <div class="w-2/3 overflow-y-hidden">
@@ -77,7 +79,7 @@
                                     </div>
                                 </div>
                                 <div class="ml-2 flex flex-col items-start">
-                                    <span class="font-bold">{{$post->user->name}} - <span class="font-light text-[14px] text-[#4DD783]">Business Consultant</span></span> 
+                                    <span class="font-bold">{{$post->user->name}} - <span class="font-light text-[14px] text-[#4DD783]">{{ $post->category->name }}</span></span> 
                                     <span class="text-[12px] text-[#888]">{{ $post->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
@@ -124,9 +126,7 @@
                             </div>
                         </div>
                     </div>
-                    
                 @endforeach
-                
             @else 
                 <div class="my-6 p-6 bg-white h-auto rounded-md border-[1px] border-[#d9d9d9]">
                     <div class="p-6 lg:text-2xl md:text-md text-md text-cente">Nothing to show!</div>
