@@ -19,7 +19,6 @@ class ApplyingProcess extends Component
     use WithFileUploads;
 
     public $user = [];
-    public $applyingForJob = 1;
     public $postOfferId ;
     public $companyApplied;
     public $stepper = 1;
@@ -38,14 +37,10 @@ class ApplyingProcess extends Component
     // #[On("modal-show")]
     public function applyForJob($params){
         $this->showingSuccessMessage = false;
-        $this->applyingForJob = $id+1;
-        $userId = JobOfferPost::where('id', $this->applyingForJob)->value('user_id');
-        $this->companyApplied = Employer::where('user_id', $userId)->value('companyName');
-        $this->showingModal = true;
-        $this->postOfferId =  $params['id'];
+        $this->postOfferId = $params['id'];
         $companyId = JobOfferPost::where('id', $this->postOfferId)->value('user_id');
         $this->companyApplied = Employer::where('user_id', $companyId)->value('companyName');
-        $alreadyApplied = JobApplication::where("user_id", auth()->user()->id)->where("job_offer_post_id", $this->postOfferId)->exists();
+        $alreadyApplied = JobApplication::where("user_id", auth()->user()->id)->where("post_id", $this->postOfferId)->exists();
         if ($alreadyApplied) {
             // If the user already applied, show a message and do not open the modal
             $this->showingSuccessMessage = true;
@@ -118,7 +113,8 @@ class ApplyingProcess extends Component
         // Create the application record
         JobApplication::create([
             'user_id' => $userId,
-            'post_id' => $this->applyingForJob,
+            'post_id' => $this->postOfferId,
+            // Add any other application-related data here
         ]);
         $this->cancelApplying();
         session()->flash('message', 'Your application has been submitted!');
