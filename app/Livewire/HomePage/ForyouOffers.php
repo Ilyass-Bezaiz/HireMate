@@ -20,7 +20,7 @@ class ForyouOffers extends Component
     public $authUser;
     public static $postId = 0;
     public static  $selectedPostId;
-    public $idJob;
+    public $idJob = 1;
     public $showingFilter = false;
 
     #[Renderless]
@@ -40,6 +40,11 @@ class ForyouOffers extends Component
         ]);
     }
 
+    public function mount() {
+        self::$selectedPostId = JobOfferPost::all()->keys()->last();
+        $this->idJob += JobOfferPost::all()->keys()->last();
+    }
+
     public function toggleFilter() {
         $this->mount();
         $this->showingFilter = !$this->showingFilter;
@@ -53,10 +58,7 @@ class ForyouOffers extends Component
         self::$selectedPostId = $lastSelectedPostId;
     }
     
-    public function mount() {
-        self::$selectedPostId = JobOfferPost::all()->keys()->last();
-        $this->idJob = JobOfferPost::all()->keys()->last();
-    }
+    
 
     public function likedPost($postId): bool {
         $liked = false;
@@ -83,7 +85,7 @@ class ForyouOffers extends Component
     public function showOfferDetails($postId) {
 
         self::$selectedPostId = $postId-1;
-        $this->idJob = $postId-1;
+        $this->idJob = $postId;
 
         if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentSeekerPost::create([

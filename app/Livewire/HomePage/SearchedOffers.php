@@ -34,7 +34,7 @@ class SearchedOffers extends Component
 
     #[Renderless]
     public function showModal(){
-        // dd($this->idJob);
+        // dd($key);
         $this->dispatch("modal-show",  ['id' => $this->idJob]);
     }
     

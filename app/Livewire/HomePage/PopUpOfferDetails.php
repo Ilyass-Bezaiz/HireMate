@@ -1,34 +1,46 @@
 <?php
 
-namespace App\Livewire\Partials;
+namespace App\Livewire\HomePage;
 
-use App\Models\Candidate;
 use App\Models\Employer;
 use App\Models\favSeekerPost;
+use App\Models\JobOfferPost;
 use App\Models\User;
 use Auth;
 use Livewire\Attributes\On;
-use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
-class CardSlider extends Component
+class PopUpOfferDetails extends Component
 {
-    public $title;
-    public $posts = [];
+    public $postId = 1;
     public $users = [];
+    public $offers = [];
     public $employers = [];
-    public $seekers = [];
-    public $popup = false;
-    public $selectedPostId;
-    public $selectedCard;
+    public $showingModal = false;
+
     public function render()
     {
-        return view('livewire.partials.card-slider', [
+        return view('livewire.home-page.pop-up-offer-details',[
             $this->users = User::all(),
+            $this->offers = JobOfferPost::all(),
             $this->employers = Employer::all(),
-            $this->seekers = Candidate::all(),
         ]);
     }
+
+    
+    #[On('popup-details')]
+    public function show($postId) {
+        // dd($postId);
+        $this->postId = $postId;
+        $this->showingModal = true;
+        // $this->$postId = $postId;
+        // dd($postId);
+    }
+    
+    public function closeModal() {
+        $this->showingModal = false;
+    }
+    
 
     public function likedPost($postId): bool {
         $liked = false;
@@ -48,15 +60,5 @@ class CardSlider extends Component
         }
         // $this->mount(favSeekerPost::where("user_id", Auth::user()->id)->get()->reverse());
     }
-
-    // #[On('')]
-    public function mount($selectedCard, $cardContent){
-        $this->posts = $cardContent->unique();
-        $this->selectedCard = $selectedCard;
-    }
-
-    #[Renderless]
-    public function showPopUpDetails($postId) {
-        $this->dispatch('popup-details', postId:$postId-1);
-    }
 }
+

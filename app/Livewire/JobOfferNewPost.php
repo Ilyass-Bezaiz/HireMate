@@ -9,6 +9,7 @@ use App\Models\JobOfferPost;
 
 class JobOfferNewPost extends Component
 {
+    protected $paginationTheme = 'bootstrap';
     public $showingModal = false;
     public $countries = [];
     public $cities = [];

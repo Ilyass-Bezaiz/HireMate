@@ -1,7 +1,8 @@
 <div class="dark:bg-gray-900">
   @livewire('applying-process')
   @unless (!$showingFilter)
-  <div wire:transition.in wire:loading.class='hidden' wire:click.outside="closeFilter" class="rounded-lg absolute w-[378px] top-24 right-48 bg-gray-100 dark:bg-gray-800 z-50 p-5 shadow-2xl border-2 border-gray-300 dark:border-gray-500">
+  <div wire:loading.class='opacity-50 duration-200' wire:click.outside="$set('showingFilter', false)"
+    class="rounded-lg absolute w-[378px] top-24 right-48 bg-gray-100 dark:bg-gray-800 z-50 p-5 shadow-xl">
     @livewire('home-page.filter-offers')
   </div>
   @endunless
@@ -11,7 +12,9 @@
       <p class="text-base font-light text-gray-400">Based on your interests</p>
     </div>
     <div class="flex justify-end flex-1">
-      <button wire:click="toggleFilter" class="flex gap-4 px-6 h-10 font-bold bg-gray-200 dark:bg-gray-900 text-gray-500 dark:text-gray-400 rounded-full border-[1px] border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 duration-200 shadow-sm" id="btn-filters">
+      <button wire:click="$toggle('showingFilter')"
+        class="flex gap-4 px-6 h-10 font-bold bg-gray-200 dark:bg-gray-900 text-gray-500 dark:text-gray-400 rounded-full border-[1px] border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 duration-200 shadow-sm"
+        id="btn-filters">
         <span class="my-auto">
           <svg width="21" height="14" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 2.8H21V4.2H0V2.8Z" fill="#888" />
@@ -103,8 +106,7 @@
               src="{{ $this->likedPost(self::$selectedPostId+1) ? 'images/ic-full-heart.png' : 'images/ic-empty-heart.png' }} "
               alt="ic-heart" width="30" height="30">
           </span>
-          <button wire:click="showModal"
-            class="bg-[var(--color-primary)] border-[1px] border-transparent px-5 lg:px-10 py-2 rounded-full text-gray-100 font-bold hover:bg-transparent hover:border-[var(--color-primary)] hover:border-[1px] hover:text-[var(--color-primary)] duration-200">Apply</button>
+          <button wire:click="showModal()" class="bg-[var(--color-primary)] border-[1px] border-transparent px-5 lg:px-10 py-2 rounded-full text-gray-100 font-bold hover:bg-transparent hover:border-[var(--color-primary)] hover:border-[1px] hover:text-[var(--color-primary)] duration-200">Apply</button>
         </div>
       </div>
       <h3 wire:loading.class="opacity-50 duration-300" wire:target="showOfferDetails"

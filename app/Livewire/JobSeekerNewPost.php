@@ -39,7 +39,7 @@ class JobSeekerNewPost extends Component
         $this->dispatch('resetEditor');
 
         $this->showingModal = true;
-    }
+    }   
     
     public function mount(){
         $this->countries = Country::all();
