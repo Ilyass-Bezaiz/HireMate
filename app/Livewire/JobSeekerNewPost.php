@@ -37,7 +37,7 @@ class JobSeekerNewPost extends Component
         $this->resetExcept('countries','cities');
 
         $this->showingModal = true;
-    }
+    }   
     
     public function mount(){
         $this->countries = Country::all();

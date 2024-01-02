@@ -3,7 +3,6 @@
 namespace App\Livewire\Posts;
 
 use App\Models\Post;
-use App\Models\Comment;
 use Livewire\Component;
 
 class LikeButton extends Component
