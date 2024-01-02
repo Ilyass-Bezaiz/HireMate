@@ -17,6 +17,51 @@
                     @csrf
                     <div class="mt-4">
                         <x-label
+                        for="headline"
+                        class="inline-block mb-2 text-neutral-700 dark:text-neutral-200">{{ __("Headline") }}
+                        </x-label> 
+                        <x-input type="text" id="headline" wire:model.lazy="headline" name="headline"
+                        class="block lg:w-2/3 w-full"
+                        placeholder="Headline"
+                        />
+                        <x-input-error for="headline" class="mt-2" />
+                    </div>
+
+                    <div class="mt-4" wire:ignore>
+                        <x-label
+                        for="about"
+                        class="block mb-2 text-neutral-700 dark:text-neutral-200">{{ __("About") }}
+                        </x-label>
+                        <div class="lg:w-2/3 w-full">
+                            <textarea id="about" wire:model="about">{!! $about !!}</textarea>
+                        </div> 
+                    </div>
+                    @script
+                        <script>
+                            ClassicEditor
+                            .create(document.querySelector('#about'),{
+                                    toolbar: [ 'heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
+                                    })
+                                    .then(editor => {
+                                    $wire.on('refreshEditor', (event) => {
+                                        editor.setData(event.description);
+                                    });
+                                    $wire.on('resetEditor',(event)=>{
+                                        editor.setData('');
+                                    });
+                                    editor.model.document.on('change:data', () => {
+                                        @this.set('about', editor.getData());
+                                    })
+                                    })
+                                    .catch(error => {
+                                    console.error(error);
+                                    });  
+                            </script>
+                        @endscript
+                    <x-input-error for="about" class="mt-2" />
+
+                    <div class="mt-4">
+                        <x-label
                             for="resume"
                             class="inline-block mb-2 text-neutral-700 dark:text-neutral-200">Resume
                         </x-label>
@@ -30,7 +75,7 @@
                         @if($resumeUrl)
                             <div class="flex items-center gap-4 mt-4">
                                 <a href="{{ Storage::url($resumeUrl) }}" target="_blank" class="flex items-center h-6 px-4 font-semibold text-sm border-2 border-gray-800 text-gray-800 duration-200 bg-transparent rounded-md hover:bg-gray-800 hover:text-white w-fit dark:border-neutral-200 dark:hover:bg-neutral-200 dark:text-neutral-200 dark:hover:text-gray-800">View resume</a>
-                                <button wire:click="removeCV" class="flex items-center h-6 px-4 font-semibold text-sm text-red-600 duration-200 border-2 border-red-500 bg-transparent rounded-md hover:bg-red-500 hover:text-white">Remove resume</button>   
+                                <button wire:click="removeCV" wire:confirm="{{ __("Are you sure you want to delete your resume") }}" class="flex items-center h-6 px-4 font-semibold text-sm text-red-600 duration-200 border-2 border-red-500 bg-transparent rounded-md hover:bg-red-500 hover:text-white">Remove resume</button>   
                             </div>         
                         @endif
                         
@@ -52,7 +97,7 @@
                         @if($coverPictureUrl)
                             <div class="flex items-center gap-4 mt-4">
                                 <a href="{{ Storage::url($coverPictureUrl) }}" target="_blank" class="fflex items-center h-6 px-4 font-semibold text-sm border-2 border-gray-800 text-gray-800 duration-200 bg-transparent rounded-md hover:bg-gray-800 hover:text-white w-fit dark:border-neutral-200 dark:hover:bg-neutral-200 dark:text-neutral-200 dark:hover:text-gray-800">View cover picture</a>
-                                <button wire:click="removeCoverPicture" class="flex items-center h-6 px-4 font-semibold text-sm text-red-600 duration-200 border-2 border-red-500 bg-transparent rounded-md hover:bg-red-500 hover:text-white">Remove cover picutre</button>   
+                                <button wire:click="removeCoverPicture" wire:confirm="{{ __("Are you sure you want to delete your cover picutre ?") }}" class="flex items-center h-6 px-4 font-semibold text-sm text-red-600 duration-200 border-2 border-red-500 bg-transparent rounded-md hover:bg-red-500 hover:text-white">Remove cover picutre</button>   
                             </div>         
                         @endif
                     </div>
@@ -72,7 +117,7 @@
                        @if($coverLetterUrl)
                             <div class="flex items-center gap-4 mt-4">
                                 <a href="{{ Storage::url($coverLetterUrl) }}" target="_blank" class="flex items-center h-6 px-4 font-semibold text-sm border-2 border-gray-800 text-gray-800 duration-200 bg-transparent rounded-md hover:bg-gray-800 hover:text-white w-fit dark:border-neutral-200 dark:hover:bg-neutral-200 dark:text-neutral-200 dark:hover:text-gray-800">View cover letter</a>
-                                <button wire:click="removeCoverLetter" class="flex items-center h-6 px-4 font-semibold text-sm text-red-600 duration-200 border-2 border-red-500 bg-transparent rounded-md hover:bg-red-500 hover:text-white">Remove cover letter</button>   
+                                <button wire:click="removeCoverLetter" wire:confirm="{{ __("Are you sure you want to delete your cover letter") }}" class="flex items-center h-6 px-4 font-semibold text-sm text-red-600 duration-200 border-2 border-red-500 bg-transparent rounded-md hover:bg-red-500 hover:text-white">Remove cover letter</button>   
                             </div>         
                         @endif
                     </div>

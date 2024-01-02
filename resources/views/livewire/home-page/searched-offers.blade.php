@@ -136,8 +136,8 @@
     @endunless
   </div>
   @else
-  <div class="flex justify-center gap-40 dark:*:text-gray-200">
-    <div>
+  <div class="flex flex-wrap-reverse justify-center md:gap-40 py-10 md:py-0 dark:*:text-gray-200">
+    <div class="max-w-52 sm:max-w-full">
       <h1>We couldn’t find any jobs matching your search</h1>
       <h2 class="mt-4">Search tips:</h2>
       <ul>

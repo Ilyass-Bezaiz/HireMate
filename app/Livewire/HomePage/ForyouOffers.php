@@ -40,6 +40,11 @@ class ForyouOffers extends Component
         ]);
     }
 
+    public function mount() {
+        self::$selectedPostId = JobOfferPost::all()->keys()->last();
+        $this->idJob += JobOfferPost::all()->keys()->last();
+    }
+
     public function toggleFilter() {
         $this->mount();
         $this->showingFilter = !$this->showingFilter;
@@ -53,10 +58,7 @@ class ForyouOffers extends Component
         self::$selectedPostId = $lastSelectedPostId;
     }
     
-    public function mount() {
-        self::$selectedPostId = JobOfferPost::all()->keys()->last();
-        $this->idJob = JobOfferPost::all()->keys()->last();
-    }
+    
 
     public function likedPost($postId): bool {
         $liked = false;

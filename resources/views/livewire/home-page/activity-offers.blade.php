@@ -1,4 +1,5 @@
-<div class="py-10 px-28 dark:*:text-gray-200">
+<div class="relative py-10 px-28 dark:*:text-gray-200">
+    @livewire('home-page.pop-up-offer-details')
     <h1 class="text-5xl">Hello, <span id="employer-name">{{ Auth::user()->name }}</span></h1>
     <div class="flex justify-between flex-wrap gap-4 my-12">        
         <div wire:click='selectCard(1)' wire:loading.class='opacity-50' wire:target='selectCard(1)' class="flex flex-col gap-2 border-[1px] border-gray-400 hover:border-gray-600 hover:scale-[1.01] duration-200 {{ $selectedCard == 1 ? "border-gray-600" : null }} rounded-md w-80 px-8 py-4 cursor-pointer">
@@ -37,10 +38,10 @@
     </div>
     <hr class="border-[1px] border-gray-300">
     @if ($this->selectedCard == 1)
-        <livewire:partials.card-slider title="Your Applications" :cardContent="$appOffers" />
+        <livewire:partials.card-slider title="Your Applications" selectedCard="1" :cardContent="$appOffers" />
     @elseif($this->selectedCard == 2)
-        <livewire:partials.card-slider title="Your Favourites" :cardContent="$favOffers" />
+        <livewire:partials.card-slider title="Your Favourites" selectedCard="2" :cardContent="$favOffers" />
     @elseif($this->selectedCard == 3)
-        <livewire:partials.card-slider title="Your Recents" :cardContent="$recentOffers" />
+        <livewire:partials.card-slider title="Your Recents" selectedCard="3" :cardContent="$recentOffers" />
     @endif
 </div>

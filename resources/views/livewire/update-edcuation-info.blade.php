@@ -34,7 +34,13 @@
                     <div class="flex gap-2 items-center">
                         <span class="dark:text-white text-sm text-gray-800">{{ $education->education_status }}</span>
                         <span class="dark:text-white text-gray-800 text-sm">|</span>
-                        <span class="dark:text-white text-gray-800 text-sm">{{ $education->start_date }} - {{ $education->end_date }}</span>
+                        <span class="dark:text-white text-gray-800 text-sm">{{ __("Started") }} : {{ $education->start_date }} 
+                            @if ($education->end_date)
+                                - {{ __("Ended") }} : {{ $education->end_date }}
+                            @else
+                                - {{ __("Present") }}
+                            @endif
+                        </span>
                     </div>
                 </div>
                 @endforeach
@@ -52,6 +58,8 @@
             @endif
 
             <x-slot name="content">
+                <form>
+                    @csrf
                 <div class="col-span-6 mb-4 w-full">
                     <x-label for="education-level">{{ __("Education level") }}</x-label>
                     <select wire:model.live="education_level" id="education-level" name="education-level" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-green-400 sm:text-sm dark:bg-gray-900 dark:border-neutral-700">
@@ -101,6 +109,7 @@
                       </div>
                       <x-input-error for="end_date" class="mt-2" />
                   </div>
+                </form>
             </x-slot>
             
             <x-slot name="footer">

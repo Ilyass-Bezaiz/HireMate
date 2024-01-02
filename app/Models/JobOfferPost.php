@@ -16,7 +16,8 @@ class JobOfferPost extends Model
         'country_id',
         'city_id',
         'flexibility',
-        'requestedContract'
+        'requestedContract',
+        'required_experience'
     ];
     
 }
