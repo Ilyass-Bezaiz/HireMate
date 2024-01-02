@@ -114,30 +114,30 @@
     <x-slot name="footer" class="w-full flex justify-between">
       <div>
         <x-button wire:click="cancelApplying"
-          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:focus:bg-green-700 dark:hover:focus:bg-green-700 dark:hover:text-white dark:hover:border dark:hover:border-green-400 dark:focus:bg-transparent">
+          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-600 dark:focus:bg-green-700 dark:hover:focus:bg-green-700 dark:hover:text-white dark:hover:border dark:hover:border-green-400 dark:focus:bg-transparent">
           Cancel</x-button>
       </div>
       <div class="w-1/2 flex justify-end ">
         @switch($stepper)
         @case(1)
         <x-button wire:click="nextStep"
-          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:hover:focus:bg-green-700 dark:focus:bg-green-700">
+          class="bg-green-400 hover:bg-green-600 dark:bg-green-400 dark:text-white dark:hover:bg-green-600 dark:hover:focus:bg-green-600 dark:focus:bg-green-500 dark:hover:text-slate-50 dark:focus:ring-green-600 mr-3">
           Next {{$stepper}}</x-button>
         @break
         @case(3)
         <x-button wire:click="stepBack"
-          class="bg-red-400 hover:bg-red-600 dark:bg-red-500 dark:text-white dark:hover:bg-red-500 dark:hover:focus:bg-red-700 dark:focus:bg-red-600 dark:hover:text-slate-50 dark:focus:ring-red-600 mr-3">
+          class="bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:text-white dark:hover:bg-red-600 dark:hover:focus:bg-red-600 dark:focus:bg-red-500 dark:hover:text-slate-50 dark:focus:ring-red-600 mr-3">
           Back</x-button>
         <x-button wire:click="submitApplication"
-          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:focus:bg-green-700 dark:hover:focus:bg-green-700">
+          class="bg-green-400 hover:bg-green-600 dark:bg-green-400 dark:text-white dark:hover:bg-green-600 dark:hover:focus:bg-green-600 dark:focus:bg-green-500 dark:hover:text-slate-50 dark:focus:ring-green-600 mr-3">
           Submit</x-button>
         @break
         @default
         <x-button wire:click="stepBack"
-          class="bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:text-white dark:hover:bg-red-500 dark:hover:focus:bg-red-700 dark:focus:bg-red-700 dark:hover:text-slate-50 dark:focus:ring-red-600 mr-3">
+          class="bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:text-white dark:hover:bg-red-600 dark:hover:focus:bg-red-600 dark:focus:bg-red-500 dark:hover:text-slate-50 dark:focus:ring-red-600 mr-3">
           Back</x-button>
         <x-button wire:click="nextStep"
-          class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:hover:focus:bg-green-700">
+          class="bg-green-400 hover:bg-green-600 dark:bg-green-400 dark:text-white dark:hover:bg-green-600 dark:hover:focus:bg-green-600 dark:focus:bg-green-500 dark:hover:text-slate-50 dark:focus:ring-green-600 mr-3">
           Next</x-button>
         @endswitch
       </div>
