@@ -56,6 +56,3 @@
         </div>
     </form>
 </div>
-<script>
-    // document.getElementById('salary-range')
-</script>

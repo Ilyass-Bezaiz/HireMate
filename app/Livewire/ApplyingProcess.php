@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\User;
+use Livewire\Attributes\Renderless;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use App\Models\Employer;
 use App\Models\Candidate;
@@ -17,6 +19,7 @@ class ApplyingProcess extends Component
     use WithFileUploads;
 
     public $user = [];
+    public $applyingForJob = 1;
     public $postOfferId ;
     public $companyApplied;
     public $stepper = 1;
@@ -35,6 +38,10 @@ class ApplyingProcess extends Component
     // #[On("modal-show")]
     public function applyForJob($params){
         $this->showingSuccessMessage = false;
+        $this->applyingForJob = $id+1;
+        $userId = JobOfferPost::where('id', $this->applyingForJob)->value('user_id');
+        $this->companyApplied = Employer::where('user_id', $userId)->value('companyName');
+        $this->showingModal = true;
         $this->postOfferId =  $params['id'];
         $companyId = JobOfferPost::where('id', $this->postOfferId)->value('user_id');
         $this->companyApplied = Employer::where('user_id', $companyId)->value('companyName');
@@ -111,8 +118,7 @@ class ApplyingProcess extends Component
         // Create the application record
         JobApplication::create([
             'user_id' => $userId,
-            'job_offer_post_id' => $this->postOfferId,
-            // Add any other application-related data here
+            'post_id' => $this->applyingForJob,
         ]);
         $this->cancelApplying();
         session()->flash('message', 'Your application has been submitted!');

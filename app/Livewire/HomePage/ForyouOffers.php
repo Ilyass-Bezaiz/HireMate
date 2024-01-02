@@ -8,6 +8,7 @@ use App\Models\JobOfferPost;
 use App\Models\recentSeekerPost;
 use App\Models\User;
 use Auth;
+use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
 class ForyouOffers extends Component
@@ -19,9 +20,10 @@ class ForyouOffers extends Component
     public $authUser;
     public static $postId = 0;
     public static  $selectedPostId;
+    public $idJob;
     public $showingFilter = false;
-    public $idJob = 1;
 
+    #[Renderless]
     public function showModal(){
         // dd($this->idJob);
         $this->dispatch("modal-show",  ['id' => $this->idJob]);
@@ -38,8 +40,22 @@ class ForyouOffers extends Component
         ]);
     }
 
+    public function toggleFilter() {
+        $this->mount();
+        $this->showingFilter = !$this->showingFilter;
+    }
+    public function closeFilter() {
+        $this->mount();
+        $this->showingFilter = false;
+    }
+
+    public function init($lastSelectedPostId) {
+        self::$selectedPostId = $lastSelectedPostId;
+    }
+    
     public function mount() {
         self::$selectedPostId = JobOfferPost::all()->keys()->last();
+        $this->idJob = JobOfferPost::all()->keys()->last();
     }
 
     public function likedPost($postId): bool {
@@ -64,15 +80,10 @@ class ForyouOffers extends Component
         $this->init($postId-1);
     }
 
-    public function init($lastSelectedPostId) {
-        self::$selectedPostId = $lastSelectedPostId;
-        
-    }
-
     public function showOfferDetails($postId) {
 
         self::$selectedPostId = $postId-1;
-        $this->idJob = $postId;
+        $this->idJob = $postId-1;
 
         if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentSeekerPost::create([
