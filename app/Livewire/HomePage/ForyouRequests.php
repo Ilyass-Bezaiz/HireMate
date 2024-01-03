@@ -91,9 +91,9 @@ class ForyouRequests extends Component
 
         // dd($this->windowWidth);
 
-        // if()) {
-            // $this->showPopUpDetails($postId);
-        // }
+        if($this->windowWidth < 768) {
+            $this->showPopUpDetails($postId);
+        }
 
         if(!recentEmployerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentEmployerPost::create([
@@ -111,7 +111,7 @@ class ForyouRequests extends Component
 
     #[Renderless]
     public function showPopUpDetails($postId) {
-        $this->dispatch('popup-details', postId:$postId-1);
+        $this->dispatch('popup-seeker-details', postId:$postId-1);
     }
 
     #[On('check-window')] 

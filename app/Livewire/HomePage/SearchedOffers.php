@@ -24,18 +24,18 @@ class SearchedOffers extends Component
     public $favPosts = [];
     public $authUser;
     public static $postId = 0;
-    public static  $selectedPostId = 0;
+    public static  $selectedPostId;
     public $showingFilter = false;
     public $searchedTitle;
-
     public $searchedLocation;
-
     public $idJob = 1;
+    public $windowWidth;
+    public $resultsFound = false;
 
     #[Renderless]
     public function showModal(){
         // dd($key);
-        $this->dispatch("modal-show",  ['id' => $this->idJob]);
+        $this->dispatch("modal-show",  ['id' => Session::get('selectedOfferPostId')]);
     }
     
     public function render()
@@ -45,9 +45,9 @@ class SearchedOffers extends Component
             $this->users = User::all(),
             $this->authUser = Auth::user(),
             $this->favPosts = favSeekerPost::UserFav(),
+            self::$selectedPostId = Session::get('selectedOfferPostId', ''),
         ]);
     }
-
 
     public function mount() {
         $this->searchedTitle = Session::get('last_search_title', '');
@@ -93,11 +93,18 @@ class SearchedOffers extends Component
                 foreach($cityIds as $cityId){
                     JobOfferPost::where("city_id", "like", $cityId->id)->exists() ? $city = JobOfferPost::where("city_id", "like", $cityId->id)->get() : null;
                 }
-                // dd($city);
                 $this->offers = $country->merge($city);
             }
             // JobseekerOffers::selectNavSection(2);
-            return $this->offers;
+            if ($this->offers->keys()->first() != ''){
+                self::$selectedPostId = $this->offers[$this->offers->keys()->first()]->id;
+                Session::put('selectedOfferPostId', self::$selectedPostId);
+                $this->resultsFound = true;
+                return $this->offers;
+            } else {
+                $this->resultsFound = false;
+                return $this->offers;
+            }
         } else {
             return null;
         }
@@ -105,7 +112,7 @@ class SearchedOffers extends Component
     public function likedPost($postId): bool {
         $liked = false;
         foreach($this->favPosts as $favPost) {
-            $favPost->post_id == ($postId+1) ? $liked = true : null;
+            $favPost->post_id == $postId ? $liked = true : null;
         }
         return $liked;
     }
@@ -128,10 +135,15 @@ class SearchedOffers extends Component
         self::$selectedPostId = $lastSelectedPostId;
     }
 
-    public function showOfferDetails($postId, $id) {
+    public function showOfferDetails($postId) {
         // dd($postId ,$id);
-        self::$selectedPostId = $postId-1;
-        $this->idJob = $id;
+        Session::put('selectedOfferPostId', $postId);
+        // self::$selectedPostId = $postId;
+        $this->idJob = $postId;
+
+        // if($this->windowWidth < 768) {
+        //     $this->dispatch('popup-joboffer-details', postId:$postId-1);
+        // }
         
         if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentSeekerPost::create([
