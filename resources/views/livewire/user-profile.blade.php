@@ -17,21 +17,42 @@
                 <div class="flex lg:items-center lg:justify-between lg:flex-row flex-col justify-start items-start gap-4">
                     <div class="flex flex-row gap-4 items-center">
                         @if($user->profile_photo_path)
-                            <img src="{{ Storage::url($user->profile_photo_path) }}" class="w-20 h-20 rounded-md object-cover">
+                            <img src="{{ Storage::url($user->profile_photo_path) }}" class="w-20 h-20 rounded-md object-cover"> 
                         @else
                             <img src="https://ui-avatars.com/api/?name={{ $user->name }}&color=4DD783&background=EBF0EB" class="w-20 h-20 rounded-md object-cover">
                         @endif
                         
                         <div class="flex flex-col">
-                            <h3 class="text-xl font-bold text-gray-800 dark:text-neutral-200">{{ $user->name }}</h3>
-                            <span class="text-md font-medium text-gray-800 dark:text-neutral-200 opacity-80">{{ $userData['headline'] ? $userData['headline'] : 'Looking for a job' }}</span>
-                        </div>
+                            @if($userRole == 'job_seeker')
+                                <h3 class="text-xl font-bold text-gray-800 dark:text-neutral-200">{{ $user->name }}</h3>
+                            @else
+                                <h3 class="text-xl font-bold text-gray-800 dark:text-neutral-200">{{ $userData['companyName'] ? $userData['companyName'] : $user->name }}</h3>
+                            @endif
+
+                            @if($userRole == 'job_seeker')
+                                <span class="text-md font-medium text-gray-800 dark:text-neutral-200 opacity-80">{{ $userData['headline'] ? $userData['headline'] : 'Looking for a job' }}</span>
+                            @else  
+                                <span class="text-md font-medium text-gray-800 dark:text-neutral-200 opacity-80">{{ $userData['industry'] ? $userData['industry'] : 'Hiring' }}</span>
+                            @endif
+
+                            @if($userRole == 'employer' && $userData['city'] && $userData['country'] && $userData['employee_count'])
+                                <span class="text-sm font-light text-gray-800 dark:text-neutral-200 opacity-80">
+                                    {{ $this->getCountryName($userData['country']). ", ". $userData['city']. " | ". $userData['employee_count'] . " Employees" }}
+                                </span>
+                            @endif
+
+                            </div>
                     </div>
+                    @if($user_id != auth()->user()->id)
                     <x-button wire:click="contactUser">{{ __("Send message") }}</x-button>
+                    @endif
                 </div>
             </div>
         </header>
         <main class="mt-20 grid grid-cols-1 gap-4">
+            @if($userRole == 'job_seeker')
+
+            <!-- Job seeker profile view -->
             @if($userData['about'] && $userData['workExperience'] && $userData['education'])
                 <!-- Full-width row -->
                 @if($userData['about'])
@@ -166,9 +187,84 @@
                 @endif
             @else
             <div class="flex flex-col items-center justify-center gap-8 bg-white p-12 rounded-md dark:bg-gray-800 dark:text-neutral-200 border border-gray-100 dark:border-gray-700">
-                <h3 class="text-2xl font-semibold">{{ __("Profile under construction.") }}</h3>
+                <h3 class="text-2xl font-semibold h-0   ">{{ __("Profile under construction.") }}</h3>
+                <p>This user's profile is still incomplete, but you could still make contact.</p>
                 <img src="{{ asset('vectors/career.svg') }}" class="w-[250px]">
             </div>
+            @endif
+
+            <!-- Employer profile view -->
+            @else
+                @if($userData['about'])
+                <div class="bg-white p-4 rounded-md dark:bg-gray-800 dark:text-neutral-200 border border-gray-100 dark:border-gray-700">
+                    <div class="flex w-full items-center justify-between">
+                        <h3 class="text-xl font-semibold">{{ __("About") }}</h3>
+                        @if($user_id == auth()->user()->id)
+                            <a href="{{ route('profile.show') }}#employer-info" target="_blank" class="p-4 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 text-green-400 rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-200 duration-200"><i class="fa-solid fa-pen"></i></a>
+                        @endif
+                    </div>
+                    <p class="text-sm">{!! $userData['about'] !!}</p>
+                </div>
+                @if($userData['posts'])
+                <div class="bg-white p-4 rounded-md dark:bg-gray-800 dark:text-neutral-200 border border-gray-100 dark:border-gray-700">
+                    <div class="flex w-full items-center justify-between">
+                        <h3 class="text-xl font-semibold">{{ __("Job offers") }}</h3>
+                        @if($user_id == auth()->user()->id)
+                            <a href="{{ route('jobofferposts.index') }}" target="_blank" class="p-4 bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 text-green-400 rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-200 duration-200"><i class="fa-solid fa-pen"></i></a>
+                        @endif
+                    </div>
+                    <div class="flex px-2 w-full justify-end py-8">
+                        <div class="flex gap-3">
+                            <span onclick="document.getElementById('cards-container').scrollBy(-300, 0)"
+                                class="p-2 rounded-full border-[1px] border-gray-300 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15 6L9 12L15 18" stroke="#888888" stroke-width="2" />
+                                </svg>
+                            </span>
+                            <span onclick="document.getElementById('cards-container').scrollBy(300, 0)"
+                                class="p-2 rounded-full border-[1px] border-gray-300 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 18L15 12L9 6" stroke="#888888" stroke-width="2" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <ul id="cards-container"
+                        class="blur-dev card-slider flex gap-4 overflow-y-hidden overflow-x-auto scroll-smooth">
+                        @foreach ($userData['posts'] as $post)
+                            <li 
+                                wire:key='{{ $post->id }}'
+                                class="flex flex-col gap-6 border-[1px] border-gray-200 rounded-lg w-72 min-w-72 max-w-72 p-5 cursor-pointer hover:border-gray-600 hover:scale-[1.01] duration-200">
+                                <div class="flex items-center justify-end">
+                                    <img class="rounded-full w-14 h-14"
+                                        src="{{ Storage::url($user->profile_photo_path) }}"
+                                        alt="Offer-img">
+                                    <p class="font-medium ml-3 text-lg text-gray-300">
+                                    {{ $userData['companyName'] }}
+                                    </p>
+                                    <p class="text-[var(--color-primary)] font-bold flex-1 text-end">${{ $post->salary }}</p>
+                                </div>
+                                <h3 class="font-medium text-xl my-0 text-gray-800 dark:text-neutral-200">{{ $post->title }}</h3>
+                                <div class="text-gray-400 font-thing p-0 mt-0 flex justify-between items-center">
+                                    <p class="h-0">
+                                        {{ $post->updated_at->diffForHumans() }}
+                                    </p>
+                                </div>
+                                <p class="h-0">{{ $this->getCountryName($post->country_id). ", ". $this->getCityName($post->city_id) }}</p>
+                                <p class="px-4 py-1 rounded-md bg-orange-300 text-sm w-fit text-orange-900 font-semibold">{{ __("Requires "). $post->required_experience . " years of experience" }}</p>
+                            </li>
+                        @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                @else
+                <div class="flex flex-col items-center justify-center gap-8 bg-white p-12 rounded-md dark:bg-gray-800 dark:text-neutral-200 border border-gray-100 dark:border-gray-700">
+                    <h3 class="text-2xl font-semibold h-0   ">{{ __("Profile under construction.") }}</h3>
+                    <p>This user's profile is still incomplete, but you could still make contact.</p>
+                    <img src="{{ asset('vectors/career.svg') }}" class="w-[250px]">
+                </div>
+                @endif
             @endif
         </main>        
         

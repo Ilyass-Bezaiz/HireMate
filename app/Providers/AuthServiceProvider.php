@@ -46,5 +46,12 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
+        Gate::define('modify-employer-information',function($user){
+            if($user->role == "employer"){
+                return true;
+            }
+            return false;
+        });
+
     }
 }

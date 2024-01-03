@@ -39,7 +39,7 @@ class UpdateLanguages extends Component
             'proficiency' => 'required',
             'selectedLanguage' => 'required'
         ]);
-        $languageExists = CandidateLanguages::where('language_id',$this->selectedLanguage)->get();
+        $languageExists = CandidateLanguages::where('language_id',$this->selectedLanguage)->where('user_id',auth()->user()->id)->get();
         $prevLanguages = CandidateLanguages::where('user_id',auth()->user()->id)->get();
         if(count($languageExists) == 0 && count($prevLanguages)<5){
             CandidateLanguages::create([
@@ -64,12 +64,18 @@ class UpdateLanguages extends Component
             'proficiency' => 'required',
             'selectedLanguage' => 'required'
         ]);
-        $this->languageToUpdate->update([
-            'language_id' => $this->selectedLanguage,
-            'proficiency' => $this->proficiency,
-            'user_id' => auth()->user()->id
-        ]);
-        $this->dispatch('success',message:"Languages updated successfully !");
+        $languageExists = CandidateLanguages::where('language_id',$this->selectedLanguage)->where('user_id',auth()->user()->id)->get();
+        if(count($languageExists) == 0){
+            $this->languageToUpdate->update([
+                'language_id' => $this->selectedLanguage,
+                'proficiency' => $this->proficiency,
+                'user_id' => auth()->user()->id
+            ]);
+            $this->dispatch('success',message:"Languages updated successfully !");
+        }else{
+            $this->dispatch('error',message:"You already added this language to the list !");
+        }
+        
         $this->languages = CandidateLanguages::where('user_id',auth()->user()->id)->get();
         $this->resetExcept('languagesList','languages');
     }

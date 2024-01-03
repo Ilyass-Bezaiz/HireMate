@@ -10,6 +10,10 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MyDemoMail;
 use App\Models\CandidateLanguages;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Employer;
+use App\Models\JobOfferPost;
 use App\Models\Language;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
@@ -26,6 +30,7 @@ class UserProfile extends Component
     public $showingModal = false;
     public $responsibilities = null;
     public $showingDetails = false;
+    public $employer;
 
     public function getLanguageName($id){
         $language = Language::findOrFail($id);
@@ -51,11 +56,27 @@ class UserProfile extends Component
                 'languages' => CandidateLanguages::where('user_id',$userId)->orderBy('updated_at','desc')->get()
            ];
         }elseif($this->userRole == 'employer'){
+            $this->employer = Employer::where('user_id',$userId)->first();
             $this->userData = [
-
+                'coverPicture' => $this->employer->coverPicture,
+                'companyName' => $this->employer->companyName,
+                'industry' => $this->employer->industry,
+                'about' => $this->employer->bio,
+                'posts' => JobOfferPost::where('user_id',$userId)->orderBy('updated_at','desc')->get(),
+                'country' => $this->employer->country,
+                'city' => $this->employer->city,
+                'zip' => $this->employer->zip,
+                'employee_count' => $this->employer->employeeCount
             ];
         }
 
+    }
+
+    public function getCountryName($id){
+        return Country::findOrFail($id)->name;
+    }
+    public function getCityName($id){
+        return City::findOrFail($id)->name;
     }
 
     public function sendMail($email)
@@ -69,6 +90,7 @@ class UserProfile extends Component
         $mailData = [
             'email' => $email,
             'subject' => $this->subject,
+            'from' => auth()->user()->email,
             'message' => $this->message,
         ]; 
         $list_of_subjects = [

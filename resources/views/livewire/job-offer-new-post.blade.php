@@ -5,8 +5,8 @@
   <div class="m-2 p-2">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-          <table class="w-full divide-y divide-gray-200">
+        <div class="shadow overflow-hidden border-b border-gray-200 dark:border-gray-600 sm:rounded-lg">
+          <table class="w-full divide-y divide-gray-200 dark:divide-gray-600">
             <thead class="bg-gray-50 dark:bg-gray-600 dark:text-gray-200">
               <tr>
                 <th scope="col"
@@ -49,7 +49,7 @@
               @endforeach
               @else
               <tr>
-                <td colspan="5"
+                <td colspan="6"
                   class="p-6 lg:text-2xl md:text-md text-md text-center dark:bg-gray-800 dark:text-neutral-200">No posts
                   to show !</td>
               </tr>
@@ -83,9 +83,9 @@
             @error('title') <span class="error text-red-600">{{ $message }}</span> @enderror
           </div>
           <div class="sm:col-span-6 mb-4">
-            <label for="requiredExperience" class="block text-sm font-medium text-gray-700"> {{ __("Required Experience") }} </label>
+            <x-label for="requiredExperience"> {{ __("Required Experience") }} </x-label>
             <div class="mt-1">
-              <input type="text" id="requiredExperience" wire:model="requiredExperience" name="requiredExperience"
+              <x-input type="text" id="requiredExperience" wire:model="requiredExperience" name="requiredExperience"
                 class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
             </div>
             @error('requiredExperience') <span class="error text-red-600">{{ $message }}</span> @enderror
