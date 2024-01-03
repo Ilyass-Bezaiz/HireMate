@@ -12,6 +12,8 @@ use Auth;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Livewire\Attributes\On; 
+use App\Mail\MailReport;
+use Illuminate\Support\Facades\Mail;
 
 class ForyouOffers extends Component
 {
@@ -85,7 +87,6 @@ class ForyouOffers extends Component
     }
 
     public function showOfferDetails($postId) {
-
 
         self::$selectedPostId = $postId-1;
         $this->idJob = $postId;

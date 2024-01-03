@@ -1,7 +1,7 @@
 <div class="relative py-10 px-28 dark:*:text-gray-200">
     @livewire('home-page.pop-up-offer-details')
     <h1 class="text-5xl">Hello, <span>{{ Auth::user()->name }}</span></h1>
-    <div class="flex justify-between flex-wrap gap-4 my-12">        
+    <div class="flex justify-between flex-wrap gap-4 my-12">
         <div wire:click='selectCard(1)' wire:loading.class='opacity-50' wire:target='selectCard(1)' class="flex flex-col gap-2 border-[1px] border-gray-400 hover:border-gray-600 hover:scale-[1.01] duration-200 {{ $selectedCard == 1 ? "border-gray-600" : null }} rounded-md w-80 px-8 py-4 cursor-pointer">
             <span>
                 <svg width="29" height="24" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +21,7 @@
                     <path d="M3.49636 12.2898L12.3891 20.4944C12.7109 20.7913 12.8718 20.9397 13.0672 20.9397C13.2626 20.9397 13.4235 20.7913 13.7453 20.4944L22.638 12.2898C25.1751 9.94903 25.4819 6.04947 23.3421 3.34078L23.0088 2.9188C20.4794 -0.283046 15.4728 0.260412 13.6893 3.9304C13.437 4.44958 12.6973 4.44958 12.4451 3.9304C10.6616 0.260412 5.65499 -0.283041 3.12563 2.91881L2.79228 3.34079C0.652501 6.04948 0.959308 9.94903 3.49636 12.2898Z" stroke="#4DD783"/>
                 </svg>
             </span>
-            <p class="font-bold">Saved Candidate</p>
+            <p class="font-bold">Saved Offers</p>
         </div>
         <div wire:click='selectCard(3)' wire:loading.class='opacity-50' wire:target='selectCard(3)' class="flex flex-col gap-2 border-[1px] border-gray-400 hover:border-gray-600 hover:scale-[1.01] duration-200 {{ $selectedCard == 3 ? "border-gray-600" : null }} rounded-md w-80 px-8  py-4 cursor-pointer">
             <span>
