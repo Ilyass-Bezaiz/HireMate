@@ -134,7 +134,7 @@
         @case(1)
         <x-button wire:click="nextStep"
           class="dark:bg-green-400 dark:text-white dark:hover:bg-green-500 dark:hover:focus:bg-green-700 dark:focus:bg-green-700">
-          Next {{ $stepper }}</x-button>
+          Next</x-button>
         @break
 
         @case(3)

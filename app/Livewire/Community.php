@@ -39,7 +39,7 @@ class Community extends Component
 
     public function loadPosts()
     {
-        $this->posts = Post::with('user')->orderBy('created_at', 'desc')->get();
+        $this->posts = Post::with('user')->get()->reverse();
     }
 
     public function toggleLikePost($postId)
@@ -135,7 +135,7 @@ class Community extends Component
         }
     }
 
-    $posts = $query->get();
+    $posts = $query->get()->reverse();
         
         return view('livewire.community',[
             $this->posts = $posts,

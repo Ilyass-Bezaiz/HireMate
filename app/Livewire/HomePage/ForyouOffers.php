@@ -21,28 +21,57 @@ class ForyouOffers extends Component
     public $employers = [];
     public $users = [];
     public $favPosts = [];
+    public $filtredOffers=[];
     public $authUser;
     public static $postId = 0;
     public static  $selectedPostId;
     public $idJob = 1;
     public $showingFilter = false;
+    public $filter;
+
     public $windowWidth = 0;
 
-    #[Renderless]
-    public function showModal(){
-        // dd($this->idJob);
-        $this->dispatch("modal-show",  ['id' => $this->idJob]);
-    }
-
+    
+    protected $listeners=[  
+        'filter'=>"applyFilters",
+    ];
+    
     public function render()
     {
+        if($this->filter){
+            $this->filtredOffers;
+            $offerIds = [];
+            
+            foreach ($this->filtredOffers as $offer) {
+                $offerIds[] = $offer['id'];
+            }
+            $this->offers = JobOfferPost::whereIn('id',$offerIds)->get();
+            // dd( $this->offers);
+        }
+        else{
+            $this->offers = JobOfferPost::all()->reverse();
+            // dd($this->offers);
+        }
         return view('livewire.home-page.foryou-offers', [
-            $this->offers = JobOfferPost::all()->reverse(),
+            $this->offers,
             $this->employers = Employer::all()->reverse(),
             $this->users = User::all(),
             $this->authUser = Auth::user(),
             $this->favPosts = favSeekerPost::UserFav(),
         ]);
+    }
+
+    #[Renderless]
+    public function showModal(){
+        // dd($this->idJob);
+        $this->filter = false;
+        $this->dispatch("modal-show",  ['id' => $this->idJob]);
+    }
+
+    public function applyFilters($params){
+        $this->filter = true;
+        $this->filtredOffers = $params['offers'];
+        // dd($params['offers']);
     }
 
     public function mount() {
