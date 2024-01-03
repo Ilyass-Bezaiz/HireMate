@@ -3,33 +3,33 @@
 
         <!--Filters for posts-->
         <div class="sticky top-0 width-[350px] bg-white dark:bg-gray-800 p-7 rounded-md border-[1px] border-[#d9d9d9] h-[320px]">
-        <form wire:submit.prevent="" enctype="multipart/form-data">
-            @csrf
-            <div class="mb-6">
-                <label for="categoryFilter" class="block text-[20px] font-medium text-gray-700 dark:text-gray-300 mb-2">Filter by category</label>
-                @if($categories)
-                    <select wire:model="categoryId" id="categoryFilter" name="categoryFilter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                        <option value="null" selected disabled>Select your category</option>
-                        @if($categories)
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        @endif
+            <form wire:submit.prevent="" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-6">
+                    <label for="categoryFilter" class="block text-[20px] font-medium text-gray-700 dark:text-gray-300 mb-2">Filter by category</label>
+                    @if($categories)
+                        <select wire:model="categoryId" id="categoryFilter" name="categoryFilter" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                            <option value="null" selected disabled>Select your category</option>
+                            @if($categories)
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    @endif
+                </div>
+                <div class="mb-6">
+                    <label for="dateFilter" class="block text-[20px] font-medium text-gray-700 mb-2 dark:text-gray-300">Filter by date</label>
+                    <select wire:model="selectedDate" id="dateFilter" name="dateFilter" class="mt-1 block w-[350px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                        <option value="null" selected disabled>Select your date</option>
+                        <option value="24h">Last 24h</option>
+                        <option value="week">Last week</option>
+                        <option value="month">Last month</option>
+                        <option value="3months">Last 3 months</option>
                     </select>
-                @endif
-            </div>
-            <div class="mb-6">
-                <label for="dateFilter" class="block text-[20px] font-medium text-gray-700 mb-2 dark:text-gray-300">Filter by date</label>
-                <select wire:model="selectedDate" id="dateFilter" name="dateFilter" class="mt-1 block w-[350px] py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
-                    <option value="null" selected disabled>Select your date</option>
-                    <option value="24h">Last 24h</option>
-                    <option value="week">Last week</option>
-                    <option value="month">Last month</option>
-                    <option value="3months">Last 3 months</option>
-                </select>
-            </div>
-        </form>
-        <button wire:click="applyFilters" class="w-full rounded-full py-2 border border-[1px] border-[#4DD783] text-[#4DD783] hover:bg-[#4DD783] hover:text-[white]">Filter posts</button>
+                </div>
+            </form>
+            <button wire:click="applyFilters" class="w-full rounded-full py-2 border border-[1px] border-[#4DD783] text-[#4DD783] hover:bg-[#4DD783] hover:text-[white]">Filter posts</button>
         </div>
 
         <!--Create post box-->
