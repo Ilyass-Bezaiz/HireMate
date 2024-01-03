@@ -136,9 +136,9 @@ class SearchedRequests extends Component
         Session::put('selectedSeekerPostId', $postId);
         // self::$selectedPostId = $postId;
         
-        // if($this->windowWidth < 768) {
-        //     $this->dispatch('popup-joboffer-details', postId:$postId-1);
-        // }
+        if($this->windowWidth < 768) {
+            $this->dispatch('popup-joboffer-details', postId:$postId-1);
+        }
 
         if(!recentEmployerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentEmployerPost::create([

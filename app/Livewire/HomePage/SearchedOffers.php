@@ -141,9 +141,9 @@ class SearchedOffers extends Component
         // self::$selectedPostId = $postId;
         $this->idJob = $postId;
 
-        // if($this->windowWidth < 768) {
-        //     $this->dispatch('popup-joboffer-details', postId:$postId-1);
-        // }
+        if($this->windowWidth < 768) {
+            $this->dispatch('popup-joboffer-details', postId:$postId-1);
+        }
         
         if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentSeekerPost::create([
