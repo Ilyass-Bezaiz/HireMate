@@ -114,7 +114,7 @@ class ApplyingProcess extends Component
         JobApplication::create([
             'user_id' => $userId,
             'post_id' => $this->postOfferId,
-            // Add any other application-related data here
+            'status' => 'pending'
         ]);
         $this->cancelApplying();
         session()->flash('message', 'Your application has been submitted!');
