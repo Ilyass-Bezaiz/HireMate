@@ -53,7 +53,7 @@ class ForyouRequests extends Component
         else{
             $this->offers = JobSeekerPost::all()->reverse();
             // dd($this->offers);
-            self::$selectedPostId = Session::get('request-selectedPostId');
+            // self::$selectedPostId = Session::get('request-selectedPostId');
         }
         return view('livewire.home-page.foryou-requests', [
             $this->requests = JobSeekerPost::all()->reverse(),
@@ -61,7 +61,7 @@ class ForyouRequests extends Component
             $this->users = User::all(),
             $this->authUser = Auth::user(),
             $this->favPosts = favOfferPost::UserFav(),
-            // self::$selectedPostId = $this->offers->keys()->first(),
+            // self::$selectedPostId = Session::get('selectedOfferPostId', ''),
         ]);
     }
 
