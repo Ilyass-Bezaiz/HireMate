@@ -2,20 +2,20 @@
 
 namespace App\Livewire\HomePage;
 
-use App\Models\Employer;
-use App\Models\favSeekerPost;
-use App\Models\JobOfferPost;
-use App\Models\recentSeekerPost;
+use App\Models\Candidate;
+use App\Models\favOfferPost;
+use App\Models\JobSeekerPost;
+use App\Models\recentEmployerPost;
 use App\Models\User;
 use Auth;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Livewire\Attributes\On; 
 
-class ForyouOffers extends Component
+class ForyouRequests extends Component
 {
-    public $offers = [];
-    public $employers = [];
+    public $requests = [];
+    public $seekers = [];
     public $users = [];
     public $favPosts = [];
     public $authUser;
@@ -33,18 +33,18 @@ class ForyouOffers extends Component
 
     public function render()
     {
-        return view('livewire.home-page.foryou-offers', [
-            $this->offers = JobOfferPost::all()->reverse(),
-            $this->employers = Employer::all()->reverse(),
+        return view('livewire.home-page.foryou-requests', [
+            $this->requests = JobSeekerPost::all()->reverse(),
+            $this->seekers = Candidate::all()->reverse(),
             $this->users = User::all(),
             $this->authUser = Auth::user(),
-            $this->favPosts = favSeekerPost::UserFav(),
+            $this->favPosts = favOfferPost::UserFav(),
         ]);
     }
 
     public function mount() {
-        self::$selectedPostId = JobOfferPost::all()->keys()->last();
-        $this->idJob += JobOfferPost::all()->keys()->last();
+        self::$selectedPostId = JobSeekerPost::all()->keys()->last();
+        $this->idJob += JobSeekerPost::all()->keys()->last();
         // $this->js("$wire.$set('windowWidth', window.innerWidth)");
     }
 
@@ -52,6 +52,7 @@ class ForyouOffers extends Component
         $this->mount();
         $this->showingFilter = !$this->showingFilter;
     }
+
     public function closeFilter() {
         $this->mount();
         $this->showingFilter = false;
@@ -71,13 +72,13 @@ class ForyouOffers extends Component
 
     public function addFav($postId) {
         // $this->js("alert('$postId')");
-        if(!favSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
-            favSeekerPost::create([
+        if(!favOfferPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
+            favOfferPost::create([
                 'user_id' => $this->authUser->id,
                 'post_id' => $postId,
             ]);
         } else {
-            favSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->delete();
+            favOfferPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->delete();
         }
 
         $this->init($postId-1);
@@ -94,18 +95,18 @@ class ForyouOffers extends Component
             // $this->showPopUpDetails($postId);
         // }
 
-        if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
-            recentSeekerPost::create([
+        if(!recentEmployerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
+            recentEmployerPost::create([
                 'user_id' => $this->authUser->id,
                 'post_id' => $postId,
             ]);
         }else {
-            recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->delete();
-            recentSeekerPost::create([
+            recentEmployerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->delete();
+            recentEmployerPost::create([
                 'user_id' => $this->authUser->id,
                 'post_id' => $postId,
             ]);
-        }        
+        }
     }
 
     #[Renderless]

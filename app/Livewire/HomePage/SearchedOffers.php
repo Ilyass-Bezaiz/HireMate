@@ -63,7 +63,8 @@ class SearchedOffers extends Component
             if($this->searchedTitle != "" && $this->searchedLocation != "") {
                 $jobTitle = JobOfferPost::where("title", "like", "%".$this->searchedTitle."%")->get();
                 $companyId = Employer::where("companyName", "like", "%".$this->searchedTitle."%")->exists() ? 
-                Employer::where("companyName", "like", "%".$this->searchedTitle."%")->get()[0]->user_id : null;                $companyName = JobOfferPost::where("user_id",  $companyId)->get();
+                Employer::where("companyName", "like", "%".$this->searchedTitle."%")->get()[0]->user_id : null;                
+                $companyName = JobOfferPost::where("user_id",  $companyId)->get();
                 $countryIds = Country::getCountryId($this->searchedLocation);
                 $cityIds = City::getCityId($this->searchedLocation);
                 $country = JobOfferPost::where("country_id", "like", "")->get();

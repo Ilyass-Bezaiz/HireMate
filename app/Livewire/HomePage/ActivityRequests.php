@@ -2,18 +2,18 @@
 
 namespace App\Livewire\HomePage;
 
-use App\Models\favSeekerPost;
+use App\Models\favOfferPost;
 use App\Models\JobApplication;
-use App\Models\JobSeekerPost;
-use App\Models\recentSeekerPost;
+use App\Models\JobOfferPost;
+use App\Models\recentEmployerPost;
 use Auth;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 
-class ActivityOffers extends Component
+class ActivityRequests extends Component
 {
-    public $selectedCard = 1;
+    public $selectedCard = 2;
     public $favOffers = [];
     public $appOffers = [];
     public $recentOffers = [];
@@ -23,14 +23,14 @@ class ActivityOffers extends Component
 
     public function render()
     {
-        return view('livewire.home-page.activity-offers', [
-            $this->appOffers = JobApplication::where("user_id", Auth::user()->id)->get()->reverse(),
-            $this->favOffers = favSeekerPost::where("user_id", Auth::user()->id)->get()->reverse(),
-            $this->recentOffers = recentSeekerPost::where("user_id", Auth::user()->id)->get()->reverse(),
+        return view('livewire.home-page.activity-requests', [
+            // $this->appOffers = JobApplication::where("user_id", Auth::user()->id)->get()->reverse(),
+            $this->favOffers = favOfferPost::where("user_id", Auth::user()->id)->get()->reverse(),
+            $this->recentOffers = recentEmployerPost::where("user_id", Auth::user()->id)->get()->reverse(),
         ]);
     }
 
-    #[On('popup-joboffer-details')]
+    #[On('popup-seeker-details')]
     public function showPopupDetails($postId, $cardId) {
         $this->selectedPostId = $postId-1;
         $this->popup = true;
@@ -47,5 +47,4 @@ class ActivityOffers extends Component
     public function popupDetails() {
         return $this->popup;
     }
-
 }
