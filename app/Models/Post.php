@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Comment;
 use App\Models\Category;
 use App\Models\Like;
+use App\Models\Candidate;
 
 class Post extends Model
 {
@@ -36,4 +37,8 @@ class Post extends Model
         return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id');
     }
 
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class);
+    }
 }

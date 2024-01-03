@@ -95,9 +95,9 @@
                   autocomplete="country-name">
                   <option value="null" selected disabled>Select your country</option>
                   @if ($countries)
-                  @foreach($countries as $country)
-                  <option value="{{ $country->id }}">{{ $country->name }}</option>
-                  @endforeach
+                    @foreach($countries as $country)
+                      <option value="{{ $country->id }}">{{ $country->name }}</option>
+                    @endforeach
                   @endif
                 </select>
                 @error('selectedCountry') <span class="error text-red-600">{{ $message }}</span> @enderror
@@ -108,13 +108,13 @@
                   class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-green-400 focus:border-green-400 sm:text-sm dark:bg-gray-900">
                   <option value="null" selected disabled>Select city</option>
                   @if ($cities)
-                  @foreach($cities as $city)
-                  @if ($oldCityId == $city->id)
-                  <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
-                  @else
-                  <option value="{{ $city->id }}">{{ $city->name }}</option>
-                  @endif
-                  @endforeach
+                    @foreach($cities as $city)
+                      @if ($oldCityId == $city->id)
+                        <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
+                      @else
+                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                      @endif
+                    @endforeach
                   @endif
 
                 </select>

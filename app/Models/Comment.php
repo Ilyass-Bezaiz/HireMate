@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Like;
+use App\Models\Candidate;
 
 class Comment extends Model
 {
@@ -27,5 +28,10 @@ class Comment extends Model
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function candidate()
+    {
+        return $this->belongsTo(Candidate::class);
     }
 }
