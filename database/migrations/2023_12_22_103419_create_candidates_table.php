@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('age')->nullable();
             $table->string('gender')->nullable();
             $table->text('skills')->nullable()->default(null);
+            $table->string('headline')->nullable()->default(null);
+            $table->text('about')->nullable()->default(null);
             $table->text('workExperience')->nullable();
             $table->text('education')->nullable();
             $table->string('curriculumVitae')->nullable();

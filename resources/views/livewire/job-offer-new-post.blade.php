@@ -20,6 +20,9 @@
                   Flexibility</th>
                 <th scope="col"
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
+                  Required Experience</th>
+                <th scope="col"
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-200 uppercase tracking-wider">
                   Requested Contract</th>
                 <th scope="col" class="relative px-6 py-3">Edit</th>
               </tr>
@@ -29,8 +32,9 @@
               @foreach($posts as $post)
               <tr class="dark:bg-gray-700 dark:text-white">
                 <td class="px-6 py-4 whitespace-nowrap">{{ $post->title }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($post->description, 20) }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{!! Str::limit($post->description, 20) !!}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ $post->flexibility }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ $post->required_experience }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   {{ $post->requestedContract }}
                 </td>
@@ -69,6 +73,7 @@
       @endif
       <x-slot name="content">
         <form enctype="multipart/form-data">
+          @csrf
           <div class="sm:col-span-6 mb-4">
             <x-label for="title">{{ __("Post title") }}</x-label>
             <div class="mt-1">
@@ -76,6 +81,14 @@
                 class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5 dark:bg-gray-900" />
             </div>
             @error('title') <span class="error text-red-600">{{ $message }}</span> @enderror
+          </div>
+          <div class="sm:col-span-6 mb-4">
+            <label for="requiredExperience" class="block text-sm font-medium text-gray-700"> {{ __("Required Experience") }} </label>
+            <div class="mt-1">
+              <input type="text" id="requiredExperience" wire:model="requiredExperience" name="requiredExperience"
+                class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+            </div>
+            @error('requiredExperience') <span class="error text-red-600">{{ $message }}</span> @enderror
           </div>
           <div class="sm:col-span-6 mb-4">
             <div class="mt-1">
@@ -148,23 +161,46 @@
             </select>
             @error('flexibility') <span class="error text-red-600">{{ $message }}</span> @enderror
           </div>
-          <div class="sm:col-span-6 pt-5">
-            <x-label for="description">{{ __("Description") }}</x-label>
+          <div class="sm:col-span-6 pt-5" wire:ignore>
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
             <div class="mt-1">
               <textarea id="description" wire:model.lazy="description" rows="3"
-                class="shadow-sm focus:ring-green-400 appearance-none bg-white border border-gray-600 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-green-400 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-900"></textarea>
-              @error('description') <span class="error text-red-600">{{ $message }}</span> @enderror
+                class="shadow-sm focus:ring-indigo-500 appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+              </div>
+              @script
+              <script>
+                ClassicEditor
+                .create(document.querySelector('#description'),{
+                          toolbar: [ 'heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
+                        })
+                        .then(editor => {
+                          $wire.on('refreshEditor', (event) => {
+                            editor.setData(event.description);
+                          });
+                          $wire.on('resetEditor',(event)=>{
+                            editor.setData('');
+                          });
+                          editor.model.document.on('change:data', () => {
+                            @this.set('description', editor.getData());
+                          })
+                        })
+                        .catch(error => {
+                          console.error(error);
+                        });  
+                        </script>
+              @endscript
             </div>
-          </div>
+            @error('description') <span class="error text-red-600">{{ $message }}</span> @enderror  
         </form>
       </x-slot>
-      <x-slot name="footer">
-        @if($isEditMode)
-        <x-button wire:click="updateJobOfferPost">Update post</x-button>
-        @else
-        <x-button wire:click="storeJobOfferPost">Create post</x-button>
-        @endif
-      </x-slot>
-    </x-dialog-modal>
+        <x-slot name="footer">
+          @if($isEditMode)
+          <x-button wire:click="updateJobOfferPost">Update post</x-button>
+          @else
+          <x-button wire:click="storeJobOfferPost">Create post</x-button>
+          @endif
+        </x-slot>
+      </x-dialog-modal>
+    </div>
   </div>
-</div>
+
