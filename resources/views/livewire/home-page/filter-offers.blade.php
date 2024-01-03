@@ -11,10 +11,10 @@
       </div>
       <input wire:input='incSalaryRange' wire:model='salaryRange' id="range-salary" type="range"
         class="w-full h-1 bg-gray-200 accent-green-400 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-        name="salary range" min="0" max="300000" value="0">
+        name="salary range" min="0" max="45000" value="0">
       <div class="flex mt-1">
         <p class="flex-1 text-sm">$0+</p>
-        <p class="text-sm">$300,000</p>
+        <p class="text-sm">$45,000</p>
       </div>
     </div>
     <hr>

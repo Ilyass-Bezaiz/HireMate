@@ -6,6 +6,8 @@ use App\Models\City;
 use App\Models\Country;
 use Livewire\Component;
 use App\Models\JobOfferPost;
+use Livewire\WithPagination;
+
 
 class JobOfferNewPost extends Component
 {

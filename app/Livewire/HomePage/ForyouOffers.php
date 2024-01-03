@@ -28,21 +28,11 @@ class ForyouOffers extends Component
 
     public $windowWidth = 0;
 
-    #[Renderless]
-    public function showModal(){
-        // dd($this->idJob);
-        $this->filter = false;
-        $this->dispatch("modal-show",  ['id' => $this->idJob]);
-    }
+    
     protected $listeners=[  
         'filter'=>"applyFilters",
     ];
     
-    public function applyFilters($params){
-        $this->filter = true;
-        $this->filtredOffers = $params['offers'];
-        // dd($params['offers']);
-    }
     public function render()
     {
         if($this->filter){
@@ -66,6 +56,19 @@ class ForyouOffers extends Component
             $this->authUser = Auth::user(),
             $this->favPosts = favSeekerPost::UserFav(),
         ]);
+    }
+
+    #[Renderless]
+    public function showModal(){
+        // dd($this->idJob);
+        $this->filter = false;
+        $this->dispatch("modal-show",  ['id' => $this->idJob]);
+    }
+
+    public function applyFilters($params){
+        $this->filter = true;
+        $this->filtredOffers = $params['offers'];
+        // dd($params['offers']);
     }
 
     public function mount() {
