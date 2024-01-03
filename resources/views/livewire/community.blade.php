@@ -1,6 +1,5 @@
 <div class="max-w-6xl mx-auto">
   <div class="flex items-align justify-start gap-x-8 w-full mt-[32px]">
-
     <!--Filters for posts-->
     <div
       class="sticky top-0 width-[350px] bg-white dark:bg-gray-800 p-7 rounded-md border-[1px] border-[#d9d9d9] h-[320px]">
@@ -21,6 +20,89 @@
           </select>
           @endif
         </div>
+
+        <!--Display Comments-->
+        @if($selectedPost)
+            <x-dialog-modal wire:model="showModal">
+                <x-slot name="title">
+                    <h1 class="text-[20px] text-[#3A3838]">{{ $selectedPost->title }}</h1>
+                </x-slot>
+                <x-slot name="content">
+                    <form wire:submit.prevent="" class="relative">
+                        @csrf
+                        <textarea wire:model="body" placeholder="What would you like to comment?" rows="3" class="relative w-full block mt-4 bg-white border border-gray-300 rounded-md py-2 px-3 text-base focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm sm:leading-5 overflow-y-hidden"></textarea>
+                        @error('body') <span class="error text-red-600 text-[12px]">{{ $message }}</span> @enderror
+                        <div class="mt-4">
+                            <button class="w-1/6 rounded-full py-2 bg-white text-[#4DD783] border border-[1px] border-[#4DD783] hover:bg-[#4DD783] hover:text-white" wire:click="closeModal">Cancel</button>
+                            <button class="w-1/6 rounded-full py-2 bg-[#4DD783] text-[white] border border-[1px] border-[#4DD783] hover:bg-green-500" wire:click="createComment">Comment</button>
+                        </div>
+                    </form>
+                </x-slot>
+                <x-slot name="footer">
+                    <div class="flex flex-col w-full blur-dev list-content-container flex-1 md:max-h-[300px] overflow-hidden md:overflow-y-scroll pr-2">
+                        @if(count($comments) > 0)
+                            @foreach($comments as $comment)
+                                <div class="w-full my-3 p-4 bg-white h-auto rounded-md border-[1px] border-[#d9d9d9]">
+                                    <div class="flex items-center justify-between rounded-md w-full">
+                                        <div class="flex items-center">
+                                            <div class="flex items-center justify-center rounded-full overflow-hidden">
+                                                <div class="w-[40px] h-[40px] flex items-center justify-center">
+                                                    @if($comment->user->profile_photo_path)
+                                                        <img src="{{ Storage::url($comment->user->profile_photo_path) }}" alt="Profile picture" class="w-full h-full object-cover">
+                                                    @else
+                                                        <!-- Fall back to default picture if no profile picture uploaded -->
+                                                        <img src="https://ui-avatars.com/api/?name={{ $comment->user->name }}&color=7F9CF5&background=EBF4FF" class="w-10 h-10 rounded-md object-cover">
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="ml-2 flex flex-col items-start">
+                                                <span class="font-bold">{{$comment->user->name}} - <span class="font-light text-[14px] text-[#4DD783]">Business Consultant</span></span> 
+                                                <span class="text-[12px] text-[#888]">{{ $comment->created_at->diffForHumans() }}</span>
+                                            </div>
+                                        </div>
+                                        <div x-data="{ open: false }" class="relative inline-block text-left">
+                                            <button @click="open = !open" class="bg-gray-200 text-gray-700 font-semibold w-[30px] h-[30px] flex items-center justify-center rounded-full inline-flex items-center hover:bg-gray-300">
+                                                <span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="4" viewBox="0 0 16 4" fill="none">
+                                                        <circle cx="8" cy="2" r="1" stroke="#33363F" stroke-width="2" stroke-linecap="round"/>
+                                                        <circle cx="2" cy="2" r="1" stroke="#33363F" stroke-width="2" stroke-linecap="round"/>
+                                                        <circle cx="14" cy="2" r="1" stroke="#33363F" stroke-width="2" stroke-linecap="round"/>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                            <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-[100px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                                                <div class="py-1 flex-col items-center justify-center">
+                                                    @if(auth()->user()->id == $comment->user_id)
+                                                        <button class="w-full font-bold text-[#4DD783] block px-4 py-2 text-gray-700 hover:bg-gray-100">Edit</button>
+                                                    @else
+                                                        <button class="w-full font-bold text-[#D43E3E] block px-4 py-2 text-gray-700 hover:bg-gray-100">Report</button>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-3">
+                                        <p class="text-justify font-light text-[14px] m-0 break-words">{{ $comment->body }}</p>
+                                    </div>
+                                    <div class="mt-3 flex flex-row items-center">
+                                        <div class="cursor-pointer flex flex-row items-center justify-between p-2 hover:bg-[#f5f5f5] rounded-md">
+                                            
+                                        </div>
+                                        <div class="cursor-pointer ml-2 flex flex-row items-center justify-between p-2 hover:bg-[#f5f5f5] rounded-md">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 30 30" fill="none">
+                                                <path d="M25 12.5L25.7071 13.2071L26.4142 12.5L25.7071 11.7929L25 12.5ZM4 22.5C4 23.0523 4.44772 23.5 5 23.5C5.55228 23.5 6 23.0523 6 22.5L4 22.5ZM19.4571 19.4571L25.7071 13.2071L24.2929 11.7929L18.0429 18.0429L19.4571 19.4571ZM25.7071 11.7929L19.4571 5.54289L18.0429 6.95711L24.2929 13.2071L25.7071 11.7929ZM25 11.5L11 11.5L11 13.5L25 13.5L25 11.5ZM4 18.5L4 22.5L6 22.5L6 18.5L4 18.5ZM11 11.5C7.13401 11.5 4 14.634 4 18.5L6 18.5C6 15.7386 8.23858 13.5 11 13.5L11 11.5Z" fill="#888888"/>
+                                            </svg>
+                                            <span class="ml-2 text-[#888] font-bold">Share</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </x-slot>
+            </x-dialog-modal>
+        @endif
+
         <div class="mb-6">
           <label for="dateFilter" class="block text-[20px] font-medium text-gray-700 mb-2 dark:text-gray-300">Filter by
             date</label>
