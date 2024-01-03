@@ -21,6 +21,7 @@ class MyDemoMail extends Mailable
     public function build()
     {
         return $this->to($this->mailData['email'])
+                    ->from($this->mailData['from'])
                     ->subject($this->mailData['subject'])
                     ->markdown('emails.my_demo_mail')
                     ->with([

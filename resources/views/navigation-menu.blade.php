@@ -123,10 +123,14 @@
               </div>
               
               <x-dropdown-link  href="{{ route('profile.show') }}">
+                {{ __('Settings') }}
+              </x-dropdown-link>
+
+              <x-dropdown-link  href="{{ config('app.url') }}/profile/{{ auth()->user()->id }}">
                 {{ __('Profile') }}
               </x-dropdown-link>
               <!-- Toggle dark mode -->
-              <x-dropdown-link id="theme-toggle-button">Toggle Theme</x-dropdown-link>
+              <x-dropdown-link id="theme-toggle-button" class="cursor-pointer ">Toggle Theme</x-dropdown-link>
 
               @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
               <x-dropdown-link href="{{ route('api-tokens.index') }}">
