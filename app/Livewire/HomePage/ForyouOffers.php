@@ -7,9 +7,14 @@ use App\Models\favSeekerPost;
 use App\Models\JobOfferPost;
 use App\Models\recentSeekerPost;
 use App\Models\User;
+use App\Models\JobApplication;
 use Auth;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
+use Livewire\Attributes\On; 
+use App\Mail\MailReport;
+use Illuminate\Support\Facades\Mail;
+use Session; 
 
 class ForyouOffers extends Component
 {
@@ -17,48 +22,75 @@ class ForyouOffers extends Component
     public $employers = [];
     public $users = [];
     public $favPosts = [];
+    public $filtredOffers=[];
     public $authUser;
     public static $postId = 0;
     public static  $selectedPostId;
     public $idJob = 1;
     public $showingFilter = false;
+    public $filter;
+    public $resultsFound = true;
 
-    #[Renderless]
-    public function showModal(){
-        // dd($this->idJob);
-        $this->dispatch("modal-show",  ['id' => $this->idJob]);
-    }
+    public $windowWidth = 0;
 
+    
+    protected $listeners=[  
+        'filter'=>"applyFilters",
+    ];
+    
     public function render()
     {
+        if($this->filter){
+            $this->filtredOffers;
+            $offerIds = [];
+            
+            foreach ($this->filtredOffers as $offer) {
+                $offerIds[] = $offer['id'];
+            }
+            $this->offers = JobOfferPost::whereIn('id',$offerIds)->get();
+            // dd( $this->offers);
+        }
+        else{
+            $this->offers = JobOfferPost::all()->reverse();
+            // dd($this->offers);
+            // self::$selectedPostId = Session::get('foryou-selectedPostId');
+        }
         return view('livewire.home-page.foryou-offers', [
-            $this->offers = JobOfferPost::all()->reverse(),
+            $this->offers,
             $this->employers = Employer::all()->reverse(),
             $this->users = User::all(),
             $this->authUser = Auth::user(),
             $this->favPosts = favSeekerPost::UserFav(),
+            // self::$selectedPostId = $this->offers->keys()->first(),
         ]);
+    }
+
+    #[Renderless]
+    public function showModal(){
+        $this->filter = false;
+        $this->dispatch("modal-show",  ['id' => $this->idJob]);
+    }
+
+    public function applyFilters($params){
+        $this->filter = true;
+        $this->filtredOffers = $params['offers'];
+        $this->showingFilter = false;
+        // dd($params['offers']);
     }
 
     public function mount() {
         self::$selectedPostId = JobOfferPost::all()->keys()->last();
         $this->idJob += JobOfferPost::all()->keys()->last();
+        // $this->js("$wire.$set('windowWidth', window.innerWidth)");
     }
 
     public function toggleFilter() {
-        $this->mount();
         $this->showingFilter = !$this->showingFilter;
-    }
-    public function closeFilter() {
-        $this->mount();
-        $this->showingFilter = false;
-    }
+    } 
 
     public function init($lastSelectedPostId) {
         self::$selectedPostId = $lastSelectedPostId;
     }
-    
-    
 
     public function likedPost($postId): bool {
         $liked = false;
@@ -87,6 +119,14 @@ class ForyouOffers extends Component
         self::$selectedPostId = $postId-1;
         $this->idJob = $postId;
 
+        Session::put('foryou-selectedPostId', self::$selectedPostId);
+
+        // dd($this->windowWidth);
+
+        if($this->windowWidth < 768) {
+            $this->dispatch('popup-joboffer-details', postId:$postId-1);
+        }
+
         if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentSeekerPost::create([
                 'user_id' => $this->authUser->id,
@@ -98,9 +138,11 @@ class ForyouOffers extends Component
                 'user_id' => $this->authUser->id,
                 'post_id' => $postId,
             ]);
-        }
-        
-        // $this->js("console.log('$test')");
+        }        
+    }
+
+    public function alreadyApplied($postId){
+        return JobApplication::where('user_id', auth()->user()->id)->where('post_id', $postId+1)->exists();
     }
 
 }

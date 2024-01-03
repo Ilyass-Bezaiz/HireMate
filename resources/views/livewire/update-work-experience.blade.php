@@ -1,4 +1,4 @@
-<x-action-section>
+<x-action-section id="experience">
     <x-slot name="title">
         {{ __('Update Work experience information') }}
     </x-slot>

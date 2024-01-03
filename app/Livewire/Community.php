@@ -204,8 +204,8 @@ class Community extends Component
             }
         }
 
-        $posts = $query->get()->reverse();
-            
+    $posts = $query->get()->reverse();
+        
         return view('livewire.community',[
             $this->posts = $posts,
         ]);

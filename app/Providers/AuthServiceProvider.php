@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\CandidateLanguages;
 use App\Models\Education;
 use App\Models\JobOfferPost;
 use App\Models\JobSeekerPost;
@@ -10,6 +11,7 @@ use App\Models\WorkExperience;
 use App\Policies\EducationPolicy;
 use App\Policies\JobOfferPostPolicy;
 use App\Policies\JobSeekerPostPolicy;
+use App\Policies\LanguagePolicy;
 use App\Policies\WorkExperiencePolicy;
 use Illuminate\Support\Facades\Gate;
 
@@ -27,7 +29,8 @@ class AuthServiceProvider extends ServiceProvider
         JobSeekerPost::class => JobSeekerPostPolicy::class,
         JobOfferPost::class => JobOfferPostPolicy::class,
         Education::class => EducationPolicy::class,
-        WorkExperience::class => WorkExperiencePolicy::class
+        WorkExperience::class => WorkExperiencePolicy::class,
+        CandidateLanguages::class => LanguagePolicy::class,
     ];
 
     /**
@@ -38,6 +41,13 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Gate::define('modify-job-seeker-information',function($user){
             if($user->role == "job_seeker"){
+                return true;
+            }
+            return false;
+        });
+
+        Gate::define('modify-employer-information',function($user){
+            if($user->role == "employer"){
                 return true;
             }
             return false;

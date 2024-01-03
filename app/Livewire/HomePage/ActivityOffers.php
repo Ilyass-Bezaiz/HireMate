@@ -4,7 +4,6 @@ namespace App\Livewire\HomePage;
 
 use App\Models\favSeekerPost;
 use App\Models\JobApplication;
-use App\Models\JobOfferPost;
 use App\Models\JobSeekerPost;
 use App\Models\recentSeekerPost;
 use Auth;
@@ -31,13 +30,13 @@ class ActivityOffers extends Component
         ]);
     }
 
-    // #[On('popup-details')]
-    // public function showPopupDetails($postId, $cardId) {
-    //     $this->selectedPostId = $postId-1;
-    //     $this->popup = true;
-    //     $this->selectCard($cardId);
-    //     // dd($postId);
-    // }
+    #[On('popup-joboffer-details')]
+    public function showPopupDetails($postId) {
+        $this->selectedPostId = $postId-1;
+        $this->popup = true;
+        // $this->selectCard($cardId);
+        // dd($postId);
+    }
 
     public function selectCard($cardId) {
         // if ($this->selectedCard != $cardId) {
@@ -45,8 +44,8 @@ class ActivityOffers extends Component
         // }
     }
 
-    // public function popupDetails() {
-    //     return $this->popup;
-    // }
+    public function popupDetails() {
+        return $this->popup;
+    }
 
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->double('expected_salary',8,2);
+            $table->integer('experience')->nullable()->default(null);
             $table->enum('flexibility',['On site', 'Hybrid', 'Remote']);
             $table->enum('requestedContract', ['Full-time', 'Part-time', 'Contract', 'Freelance']);
             $table->foreignId('country_id');

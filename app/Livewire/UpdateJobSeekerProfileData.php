@@ -64,7 +64,7 @@ class UpdateJobSeekerProfileData extends Component
             'resume' => 'nullable|file|mimes:pdf,docx|max:2048',
             'coverPicture' => 'nullable|file|mimes:png,jpg,jpeg|max:2048',
             'coverLetter' => 'nullable|file|mimes:pdf,docx|max:2048',
-            'about' => 'nullable|max:500',
+            'about' => 'nullable|max:1000',
             'headline' => 'nullable|max:40'
         ]);
         
