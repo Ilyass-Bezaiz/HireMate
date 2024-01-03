@@ -57,7 +57,7 @@ class ModifyEmployerInfo extends Component
             'industry' => 'nullable|max:40',
             'employee_count' => 'required|max:10000',
             'city' => 'nullable|string|max:40',
-            'zip' => 'nullable|max:10',
+            'zip' => 'nullable|numeric|max:999999',
             'company_name' => 'nullable|string|max:40',
         ]);
         

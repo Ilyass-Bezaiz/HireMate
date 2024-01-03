@@ -205,7 +205,7 @@
                     </div>
                     <p class="text-sm">{!! $userData['about'] !!}</p>
                 </div>
-                @if($userData['posts'])
+                @if(count($userData['posts']) > 0)
                 <div class="bg-white p-4 rounded-md dark:bg-gray-800 dark:text-neutral-200 border border-gray-100 dark:border-gray-700">
                     <div class="flex w-full items-center justify-between">
                         <h3 class="text-xl font-semibold">{{ __("Job offers") }}</h3>
