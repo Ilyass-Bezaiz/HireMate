@@ -83,7 +83,9 @@
             @error('title') <span class="error text-red-600">{{ $message }}</span> @enderror
           </div>
           <div class="sm:col-span-6 mb-4">
-            <x-label for="requiredExperience"> {{ __("Required Experience") }} </x-label>
+
+            <x-label for="requiredExperience" class="block text-sm font-medium text-gray-700">
+              {{ __("Required Experience") }} </x-label>
             <div class="mt-1">
               <x-input type="text" id="requiredExperience" wire:model="requiredExperience" name="requiredExperience"
                 class="block w-full transition duration-150 ease-in-out appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
@@ -162,45 +164,45 @@
             @error('flexibility') <span class="error text-red-600">{{ $message }}</span> @enderror
           </div>
           <div class="sm:col-span-6 pt-5" wire:ignore>
-            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <x-label for="description" class="block text-sm font-medium text-gray-700">Description</x-label>
             <div class="mt-1">
               <textarea id="description" wire:model.lazy="description" rows="3"
-                class="shadow-sm focus:ring-indigo-500 appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
-              </div>
-              @script
-              <script>
-                ClassicEditor
-                .create(document.querySelector('#description'),{
-                          toolbar: [ 'heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote' ],
-                        })
-                        .then(editor => {
-                          $wire.on('refreshEditor', (event) => {
-                            editor.setData(event.description);
-                          });
-                          $wire.on('resetEditor',(event)=>{
-                            editor.setData('');
-                          });
-                          editor.model.document.on('change:data', () => {
-                            @this.set('description', editor.getData());
-                          })
-                        })
-                        .catch(error => {
-                          console.error(error);
-                        });  
-                        </script>
-              @endscript
+                class="shadow-sm focus:ring-indigo-500 appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+              </textarea>
             </div>
-            @error('description') <span class="error text-red-600">{{ $message }}</span> @enderror  
+            @script
+            <script>
+            ClassicEditor
+              .create(document.querySelector('#description'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote'],
+              })
+              .then(editor => {
+                $wire.on('refreshEditor', (event) => {
+                  editor.setData(event.description);
+                });
+                $wire.on('resetEditor', (event) => {
+                  editor.setData('');
+                });
+                editor.model.document.on('change:data', () => {
+                  @this.set('description', editor.getData());
+                })
+              })
+              .catch(error => {
+                console.error(error);
+              });
+            </script>
+            @endscript
+            @error('description') <span class="error text-red-600">{{ $message }}</span> @enderror
+          </div>
         </form>
       </x-slot>
-        <x-slot name="footer">
-          @if($isEditMode)
-          <x-button wire:click="updateJobOfferPost">Update post</x-button>
-          @else
-          <x-button wire:click="storeJobOfferPost">Create post</x-button>
-          @endif
-        </x-slot>
-      </x-dialog-modal>
-    </div>
+      <x-slot name="footer">
+        @if($isEditMode)
+        <x-button wire:click="updateJobOfferPost">Update post</x-button>
+        @else
+        <x-button wire:click="storeJobOfferPost">Create post</x-button>
+        @endif
+      </x-slot>
+    </x-dialog-modal>
   </div>
-
+</div>

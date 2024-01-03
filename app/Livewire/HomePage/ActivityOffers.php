@@ -31,10 +31,10 @@ class ActivityOffers extends Component
     }
 
     #[On('popup-joboffer-details')]
-    public function showPopupDetails($postId, $cardId) {
+    public function showPopupDetails($postId) {
         $this->selectedPostId = $postId-1;
         $this->popup = true;
-        $this->selectCard($cardId);
+        // $this->selectCard($cardId);
         // dd($postId);
     }
 
