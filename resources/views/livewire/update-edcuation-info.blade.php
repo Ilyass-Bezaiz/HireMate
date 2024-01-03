@@ -1,4 +1,4 @@
-<x-action-section>
+<x-action-section id="education">
     <x-slot name="title">
         {{ __('Update Education information') }}
     </x-slot>

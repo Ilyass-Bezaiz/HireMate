@@ -7,7 +7,7 @@ use App\Models\Country;
 use App\Models\Candidate;
 use App\Models\favOfferPost;
 use App\Models\JobSeekerPost;
-use App\Models\recentOfferPost;
+use App\Models\recentEmployerPost;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Collection;
@@ -29,11 +29,13 @@ class SearchedRequests extends Component
     public $searchedTitle;
     public $searchedLocation;
     public $idJob = 1;
+    public $windowWidth;
+    public $resultsFound = false;
 
     #[Renderless]
     public function showModal(){
         // dd($key);
-        $this->dispatch("modal-show",  ['id' => $this->idJob]);
+        $this->dispatch("modal-show",  ['id' => Session::get('selectedSeekerPostId')]);
     }
 
     public function render()
@@ -43,6 +45,7 @@ class SearchedRequests extends Component
             $this->users = User::all(),
             $this->authUser = Auth::user(),
             $this->favPosts = favOfferPost::UserFav(),
+            self::$selectedPostId = Session::get('selectedSeekerPostId', ''),
         ]);
     }
 
@@ -88,7 +91,15 @@ class SearchedRequests extends Component
                 $this->requests = $country->merge($city);
             }
             // JobseekerOffers::selectNavSection(2);
-            return $this->requests;
+            if ($this->requests->keys()->first() != ''){
+                self::$selectedPostId = $this->requests[$this->requests->keys()->first()]->id;
+                Session::put('selectedSeekerPostId', self::$selectedPostId);
+                $this->resultsFound = true;
+                return $this->requests;
+            } else {
+                $this->resultsFound = false;
+                return $this->requests;
+            }
         } else {
             return null;
         }
@@ -97,7 +108,7 @@ class SearchedRequests extends Component
     public function likedPost($postId): bool {
         $liked = false;
         foreach($this->favPosts as $favPost) {
-            $favPost->post_id == ($postId+1) ? $liked = true : null;
+            $favPost->post_id == $postId ? $liked = true : null;
         }
         return $liked;
     }
@@ -120,19 +131,23 @@ class SearchedRequests extends Component
         self::$selectedPostId = $lastSelectedPostId;
     }
 
-    public function showOfferDetails($postId, $id) {
+    public function showOfferDetails($postId) {
         // dd($postId ,$id);
-        self::$selectedPostId = $postId-1;
-        $this->idJob = $id;
+        Session::put('selectedSeekerPostId', $postId);
+        // self::$selectedPostId = $postId;
         
-        if(!recentOfferPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
-            recentOfferPost::create([
+        // if($this->windowWidth < 768) {
+        //     $this->dispatch('popup-joboffer-details', postId:$postId-1);
+        // }
+
+        if(!recentEmployerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
+            recentEmployerPost::create([
                 'user_id' => $this->authUser->id,
                 'post_id' => $postId,
             ]);
         }else {
-            recentOfferPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->delete();
-            recentOfferPost::create([
+            recentEmployerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->delete();
+            recentEmployerPost::create([
                 'user_id' => $this->authUser->id,
                 'post_id' => $postId,
             ]);

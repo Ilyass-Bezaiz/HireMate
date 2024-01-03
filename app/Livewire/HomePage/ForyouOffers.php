@@ -7,6 +7,7 @@ use App\Models\favSeekerPost;
 use App\Models\JobOfferPost;
 use App\Models\recentSeekerPost;
 use App\Models\User;
+use App\Models\JobApplication;
 use Auth;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
@@ -78,12 +79,12 @@ class ForyouOffers extends Component
     }
 
     public function toggleFilter() {
-        $this->mount();
+        $this->mount(self::$selectedPostId);
         $this->showingFilter = !$this->showingFilter;
     }
     public function closeFilter() {
-        $this->mount();
         $this->showingFilter = false;
+        $this->mount();
     }
 
     public function init($lastSelectedPostId) {
@@ -114,14 +115,15 @@ class ForyouOffers extends Component
 
     public function showOfferDetails($postId) {
 
+
         self::$selectedPostId = $postId-1;
         $this->idJob = $postId;
 
         // dd($this->windowWidth);
 
-        // if()) {
-            // $this->showPopUpDetails($postId);
-        // }
+        if($this->windowWidth < 768) {
+            $this->dispatch('popup-joboffer-details', postId:$postId-1);
+        }
 
         if(!recentSeekerPost::where('user_id','=',$this->authUser->id)->where('post_id','=', $postId)->exists()) {
             recentSeekerPost::create([
@@ -137,14 +139,8 @@ class ForyouOffers extends Component
         }        
     }
 
-    #[Renderless]
-    public function showPopUpDetails($postId) {
-        $this->dispatch('popup-details', postId:$postId-1);
-    }
-
-    #[On('check-window')] 
-    public function checkWindow() {
-        dd('hello');
+    public function alreadyApplied($postId){
+        return JobApplication::where('user_id', auth()->user()->id)->where('post_id', $postId+1)->exists();
     }
 
 }

@@ -1,4 +1,4 @@
-<x-action-section>
+<x-action-section id="job_seeker_info">
     <x-slot name="title">
         {{ __('Update Candidate information') }}
     </x-slot>

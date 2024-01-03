@@ -30,7 +30,7 @@
     display: none;
 }
 
-, body {
+html, body {
     scroll-behavior: smooth;
 }
 

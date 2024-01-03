@@ -1,7 +1,5 @@
 <div class="dark:bg-gray-900">
-    {{-- <div class="block md:opacity-0">
-        <livewire:home-page.pop-up-offer-details class="invisible" />
-    </div> --}}
+    <livewire:home-page.pop-up-offer-details />
     {{-- @livewire('applying-process') --}}
     @unless (!$showingFilter)
         <div wire:loading.class='opacity-50 duration-200' wire:click.outside="$set('showingFilter', false)"
@@ -130,9 +128,8 @@
     </div>
 </div>
 <script>
-    Livewire: dispatch('check-window');
-    document.addEventListener('livewire:init', () => {
-        // alert(window.innerWidth)
-        // $wire.$set('windowWidth', window.innerWidth);
+    document.addEventListener('livewire:initialized', () => {
+        let component = @this;
+        component.windowWidth = window.innerWidth;
     })
 </script>

@@ -37,11 +37,8 @@ class PopUpOfferDetails extends Component
     
     // #[On('popup-details')]
     public function show($postId) {
-        // dd($postId);
         $this->postId = $postId;
         $this->showingModal = true;
-        // $this->$postId = $postId;
-        // dd($postId);
     }
     
     public function closeModal() {

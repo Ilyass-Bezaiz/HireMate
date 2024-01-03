@@ -1,7 +1,5 @@
 <div class="dark:bg-gray-900">
-  <div class="block md:opacity-0">
-    <livewire:home-page.pop-up-offer-details class="invisible" />
-  </div>
+  <livewire:home-page.pop-up-offer-details />
   @livewire('applying-process')
   @unless (!$showingFilter)
   <div wire:loading.class='opacity-50 duration-200' wire:click.outside="$set('showingFilter', false)"
@@ -48,15 +46,16 @@
           class="{{ $offer->id - 1 == self::$selectedPostId ? 'checked' : 'unchecked' }} cursor-pointer hover:translate-x-1 duration-200 py-[4%] px-[5%] border-b-[0.5px] border-gray-300 dark:border-gray-600 dark:text-gray-300">
           <div class="ic-name-rating-like flex justify-start items-center gap-[3%]">
             <img class="rounded-full w-10 h-10 shadow-xl"
-              src="@foreach ($users as $user) {{ $offer->user_id == $user->id ? 'storage/' . $user->profile_photo_path : null }} @endforeach">
+              src="@foreach ($users as $user) {{ $offer->user_id == $user->id ? 'storage/' . $user->profile_photo_path : null }} @endforeach"
+              alt="{{ 'img_' . $employers[$offer->id - 1]->companyName }}">
             <h3 class="font-bold text-xl">
               @foreach ($employers as $employer)
               {{ $employer->user_id == $offer->user_id ? $employer->companyName : null }}
               @endforeach
             </h3>
             <div class="flex justify-end flex-1">
-              <span wire:loading.class='scale-90 opacity-50 duration-200' wire:target='addFav({{ $offer->id }})'
-                @if($offer->id - 1 == self::$selectedPostId) wire:click='addFav({{ $offer->id }})' @else
+              <span wire:loading.class='scale-90 opacity-50 duration-200' wire:target='addFav({{ $offer->id }})' @if
+                ($offer->id - 1 == self::$selectedPostId) wire:click='addFav({{ $offer->id }})' @else
                 wire:click.stop='addFav({{ $offer->id }})' @endif
                 class="ic-like rounded-full hover:bg-gray-100
                 dark:hover:bg-gray-700 p-1.5 duration-200 cursor-pointer">
@@ -84,6 +83,7 @@
         @endforeach
       </ul>
     </div>
+
     <div
       class="blur-dev content-details flex-1 max-w-[50%] max-h-[585px] border-l border-gray-400 overflow-y-auto hidden md:block"
       id="offer-description">
