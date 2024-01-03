@@ -14,31 +14,6 @@
             <p class="text-base font-light text-gray-400">Results found {{ isset($requests) ? $requests->count() : 0 }}
             </p>
         </div>
-        <div class="flex justify-end flex-1">
-            <button wire:click="$toggle('showingFilter')"
-                class="flex gap-4 px-6 h-10 font-bold bg-gray-200 dark:bg-gray-900 text-gray-500 dark:text-gray-400 rounded-full border-[1px] border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 duration-200 shadow-sm"
-                id="btn-filters">
-                <span class="my-auto">
-                    <svg width="21" height="14" viewBox="0 0 21 14" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 2.8H21V4.2H0V2.8Z" fill="#888" />
-                        <path d="M0 10.5H21V11.9H0V10.5Z" fill="#888" />
-                        <path
-                            d="M9.41379 3.15C9.41379 4.8897 7.95486 6.3 6.15517 6.3C4.35549 6.3 2.89655 4.8897 2.89655 3.15C2.89655 1.4103 4.35549 0 6.15517 0C7.95486 0 9.41379 1.4103 9.41379 3.15Z"
-                            fill="#888" />
-                        <path
-                            d="M17.3793 10.85C17.3793 12.5897 15.9204 14 14.1207 14C12.321 14 10.8621 12.5897 10.8621 10.85C10.8621 9.1103 12.321 7.7 14.1207 7.7C15.9204 7.7 17.3793 9.1103 17.3793 10.85Z"
-                            fill="#888" />
-                        <path
-                            d="M6.15517 5.3C5.91447 5.3 5.6844 5.26482 5.46948 5.2H6.84086C6.62594 5.26482 6.39588 5.3 6.15517 5.3ZM7.91221 1.8H4.39814C4.80687 1.31653 5.43317 1 6.15517 1C6.87718 1 7.50347 1.31653 7.91221 1.8ZM14.1207 13C13.88 13 13.6499 12.9648 13.435 12.9H14.8064C14.5915 12.9648 14.3614 13 14.1207 13ZM15.8777 9.5H12.3637C12.7724 9.01653 13.3987 8.7 14.1207 8.7C14.8427 8.7 15.469 9.01653 15.8777 9.5Z"
-                            stroke="#888" stroke-width="2" />
-                    </svg>
-                </span>
-                <span class="my-auto">
-                    Filters
-                </span>
-            </button>
-        </div>
     </div>
     @if ($resultsFound)
         <div class="flex align-top m-10 mb-20 gap-6">
@@ -100,10 +75,6 @@
                         {{ 'storage/' . App\Models\User::where('id', App\Models\JobSeekerPost::where('id', self::$selectedPostId)->get()[0]->user_id)->get()[0]->name }}
                     </h3>
                     <div class="btns flex items-center flex-1 gap-2 justify-end mr-1">
-                        <span
-                            class="rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 duration-200 cursor-pointer">
-                            <img src="images/ic-report.png" alt="ic-heart" width="30" height="30">
-                        </span>
                         <span wire:loading.class='scale-90 opacity-50 duration-200'
                             wire:target='addFav({{ self::$selectedPostId }})'
                             wire:click='addFav({{ self::$selectedPostId }})'

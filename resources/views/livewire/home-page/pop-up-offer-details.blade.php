@@ -49,10 +49,6 @@
                         @foreach ($users as $user) {{ $requests[$postId]->user_id == $user->id ? $user->name : null }} @endforeach
                     </h3>
                     <div class="btns flex items-center flex-1 gap-2 justify-end mr-1">
-                        <span
-                            class="rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 duration-200 cursor-pointer">
-                            <img src="images/ic-report.png" alt="ic-heart" width="30" height="30">
-                        </span>
                         <span wire:loading.class='scale-90 opacity-50 duration-200'
                             wire:target='addFav({{ $postId }})' wire:click='addFav({{ $postId }})'
                             class="ic-like rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 duration-200 cursor-pointer">

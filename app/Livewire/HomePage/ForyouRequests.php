@@ -11,6 +11,7 @@ use Auth;
 use Livewire\Attributes\Renderless;
 use Livewire\Component;
 use Livewire\Attributes\On; 
+use Session;
 
 class ForyouRequests extends Component
 {
@@ -18,6 +19,8 @@ class ForyouRequests extends Component
     public $seekers = [];
     public $users = [];
     public $favPosts = [];
+    public $filtredOffers = [];
+    public $filter;
     public $authUser;
     public static $postId = 0;
     public static  $selectedPostId;
@@ -44,13 +47,13 @@ class ForyouRequests extends Component
             foreach ($this->filtredOffers as $offer) {
                 $offerIds[] = $offer['id'];
             }
-            $this->offers = JobOfferPost::whereIn('id',$offerIds)->get();
+            $this->offers = JobSeekerPost::whereIn('id',$offerIds)->get();
             // dd( $this->offers);
         }
         else{
-            $this->offers = JobOfferPost::all()->reverse();
+            $this->offers = JobSeekerPost::all()->reverse();
             // dd($this->offers);
-            self::$selectedPostId = Session::get('foryou-selectedPostId');
+            self::$selectedPostId = Session::get('request-selectedPostId');
         }
         return view('livewire.home-page.foryou-requests', [
             $this->requests = JobSeekerPost::all()->reverse(),
@@ -58,12 +61,13 @@ class ForyouRequests extends Component
             $this->users = User::all(),
             $this->authUser = Auth::user(),
             $this->favPosts = favOfferPost::UserFav(),
+            // self::$selectedPostId = $this->offers->keys()->first(),
         ]);
     }
 
     public function applyFilters($params){
         $this->filter = true;
-        $this->filtredOffers = $params['offers'];
+        $this->filtredOffers = $params['requests'];
         $this->showingFilter = false;
         // dd($params['offers']);
     }
@@ -115,6 +119,7 @@ class ForyouRequests extends Component
         self::$selectedPostId = $postId-1;
         $this->idJob = $postId;
 
+        Session::put('request-selectedPostId', self::$selectedPostId);
         // dd($this->windowWidth);
 
         if($this->windowWidth < 768) {

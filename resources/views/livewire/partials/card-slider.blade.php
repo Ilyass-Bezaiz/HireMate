@@ -54,7 +54,7 @@
           <span wire:loading.class='scale-90 opacity-50 duration-200'
             wire:target='addFav({{ App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->id }})'
             wire:click.stop='addFav({{ App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->id }})'
-            class="rounded-full p-2 cursor-pointer border-1px border-green-400 hover:bg-gray-700">
+            class="rounded-full p-2 cursor-pointer border-1px border-green-400 hover:bg-gray-200 dark:hover:bg-gray-700">
             <img
               src="{{ $this->likedPost(App\Models\JobOfferPost::where('id', $post->post_id)->get()[0]->id) ? 'images/ic-full-heart.png' : 'images/ic-empty-heart.png' }} "
               alt="ic-heart" width="30" height="30">
