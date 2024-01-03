@@ -54,8 +54,8 @@
               @endforeach
             </h3>
             <div class="flex justify-end flex-1">
-              <span wire:loading.class='scale-90 opacity-50 duration-200' wire:target='addFav({{ $offer->id }})' @if
-                ($offer->id - 1 == self::$selectedPostId) wire:click='addFav({{ $offer->id }})' @else
+              <span wire:loading.class='scale-90 opacity-50 duration-200' wire:target='addFav({{ $offer->id }})' 
+                @if ($offer->id - 1 == self::$selectedPostId) wire:click='addFav({{ $offer->id }})' @else
                 wire:click.stop='addFav({{ $offer->id }})' @endif
                 class="ic-like rounded-full hover:bg-gray-100
                 dark:hover:bg-gray-700 p-1.5 duration-200 cursor-pointer">
