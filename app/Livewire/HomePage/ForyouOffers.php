@@ -14,6 +14,7 @@ use Livewire\Component;
 use Livewire\Attributes\On; 
 use App\Mail\MailReport;
 use Illuminate\Support\Facades\Mail;
+use Session; 
 
 class ForyouOffers extends Component
 {
@@ -28,6 +29,7 @@ class ForyouOffers extends Component
     public $idJob = 1;
     public $showingFilter = false;
     public $filter;
+    public $resultsFound = true;
 
     public $windowWidth = 0;
 
@@ -51,6 +53,7 @@ class ForyouOffers extends Component
         else{
             $this->offers = JobOfferPost::all()->reverse();
             // dd($this->offers);
+            self::$selectedPostId = Session::get('foryou-selectedPostId');
         }
         return view('livewire.home-page.foryou-offers', [
             $this->offers,
@@ -58,12 +61,13 @@ class ForyouOffers extends Component
             $this->users = User::all(),
             $this->authUser = Auth::user(),
             $this->favPosts = favSeekerPost::UserFav(),
+            
+            self::$selectedPostId = $this->offers->keys()->first(),
         ]);
     }
 
     #[Renderless]
     public function showModal(){
-        // dd($this->idJob);
         $this->filter = false;
         $this->dispatch("modal-show",  ['id' => $this->idJob]);
     }
@@ -71,6 +75,7 @@ class ForyouOffers extends Component
     public function applyFilters($params){
         $this->filter = true;
         $this->filtredOffers = $params['offers'];
+        $this->showingFilter = false;
         // dd($params['offers']);
     }
 
@@ -81,13 +86,8 @@ class ForyouOffers extends Component
     }
 
     public function toggleFilter() {
-        $this->mount(self::$selectedPostId);
         $this->showingFilter = !$this->showingFilter;
-    }
-    public function closeFilter() {
-        $this->showingFilter = false;
-        $this->mount();
-    }
+    } 
 
     public function init($lastSelectedPostId) {
         self::$selectedPostId = $lastSelectedPostId;
@@ -119,6 +119,8 @@ class ForyouOffers extends Component
 
         self::$selectedPostId = $postId-1;
         $this->idJob = $postId;
+
+        Session::put('foryou-selectedPostId', self::$selectedPostId);
 
         // dd($this->windowWidth);
 

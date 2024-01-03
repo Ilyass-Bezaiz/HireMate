@@ -25,6 +25,10 @@ class ForyouRequests extends Component
     public $showingFilter = false;
     public $windowWidth = 0;
 
+    protected $listeners=[  
+        'filter-requests'=>"applyFilters",
+    ];
+
     #[Renderless]
     public function showModal(){
         // dd($this->idJob);
@@ -33,6 +37,21 @@ class ForyouRequests extends Component
 
     public function render()
     {
+        if($this->filter){
+            $this->filtredOffers;
+            $offerIds = [];
+            
+            foreach ($this->filtredOffers as $offer) {
+                $offerIds[] = $offer['id'];
+            }
+            $this->offers = JobOfferPost::whereIn('id',$offerIds)->get();
+            // dd( $this->offers);
+        }
+        else{
+            $this->offers = JobOfferPost::all()->reverse();
+            // dd($this->offers);
+            self::$selectedPostId = Session::get('foryou-selectedPostId');
+        }
         return view('livewire.home-page.foryou-requests', [
             $this->requests = JobSeekerPost::all()->reverse(),
             $this->seekers = Candidate::all()->reverse(),
@@ -40,6 +59,13 @@ class ForyouRequests extends Component
             $this->authUser = Auth::user(),
             $this->favPosts = favOfferPost::UserFav(),
         ]);
+    }
+
+    public function applyFilters($params){
+        $this->filter = true;
+        $this->filtredOffers = $params['offers'];
+        $this->showingFilter = false;
+        // dd($params['offers']);
     }
 
     public function mount() {

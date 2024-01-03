@@ -3,7 +3,7 @@
   @livewire('applying-process')
   @unless (!$showingFilter)
   <div wire:loading.class='opacity-50 duration-200' wire:click.outside="$set('showingFilter', false)"
-    class="rounded-lg absolute w-[378px] top-24 right-48 bg-gray-100 dark:bg-gray-800 z-50 p-5 shadow-xl">
+    class="rounded-lg absolute w-[378px] top-24 right-48 bg-gray-100 dark:bg-gray-800 z-50 p-5 shadow-2xl border-[1px] border-gray-400">
     @livewire('home-page.filter-offers')
   </div>
   @endunless
@@ -132,9 +132,8 @@
   </div>
 </div>
 <script>
-Livewire: dispatch('check-window');
-document.addEventListener('livewire:init', () => {
-  // alert(window.innerWidth)
-  // $wire.$set('windowWidth', window.innerWidth);
+document.addEventListener('livewire:initialized', () => {
+  let component = @this;
+  component.windowWidth = window.innerWidth;
 })
 </script>
