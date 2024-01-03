@@ -26,6 +26,8 @@ class Community extends Component
     public $categoryId = null;
     public $selectedDate = null;
     public $filtredPosts = [];
+    #[Reactive]
+    public $post;
 
     public $comments = [];
     public $body;
@@ -38,6 +40,20 @@ class Community extends Component
     public function loadPosts()
     {
         $this->posts = Post::with('user')->orderBy('created_at', 'desc')->get();
+    }
+
+    public function toggleLikePost($postId)
+    {
+        $user = auth()->user();
+        $this->post = Post::find($postId);
+        // dd($this->post);
+
+        if($user->hasLiked($this->post))
+        {
+            $user->likes()->detach($this->post);
+            return;
+        }
+        $user->likes()->attach($this->post);
     }
     
     public function createPost()
