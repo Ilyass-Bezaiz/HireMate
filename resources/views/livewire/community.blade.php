@@ -68,13 +68,13 @@
                         <div class="flex items-center justify-between rounded-md w-full">
                             <div class="flex items-center">
                                 <div class="flex items-center justify-center">
-                                    <div class="img-picture w-[60px] h-[60px] rounded-full overflow-hidden">
+                                    <div class="img-picture w-[60px] h-[60px] flex items-center justify-center rounded-full overflow-hidden">
                                         <!--Check if the user has uploaded a profile picture-->
                                         @if($post->user->profile_photo_path)
                                             <img src="{{ Storage::url($post->user->profile_photo_path) }}" alt="Profile picture" class="w-full h-full object-cover">
                                         @else
                                             <!--Fall back to default picture if no profile picture uploaded-->
-                                            <img src="{{ asset('storage/profile-photos/defaultUser.jpg') }}" alt="Default picture" class="w-full h-full object-cover">
+                                            <img src="https://ui-avatars.com/api/?name={{ $post->user->name }}&color=7F9CF5&background=EBF4FF" class="w-20 h-20 rounded-md object-cover">
                                         @endif
                                     </div>
                                 </div>
@@ -159,12 +159,12 @@
                                     <div class="flex items-center justify-between rounded-md w-full">
                                         <div class="flex items-center">
                                             <div class="flex items-center justify-center rounded-full overflow-hidden">
-                                                <div class="w-[40px] h-[40px]">
+                                                <div class="w-[40px] h-[40px] flex items-center justify-center">
                                                     @if($comment->user->profile_photo_path)
                                                         <img src="{{ Storage::url($comment->user->profile_photo_path) }}" alt="Profile picture" class="w-full h-full object-cover">
                                                     @else
                                                         <!-- Fall back to default picture if no profile picture uploaded -->
-                                                        <img src="{{ asset('storage/profile-photos/defaultUser.jpg') }}" alt="Default picture" class="w-full h-full object-cover">
+                                                        <img src="https://ui-avatars.com/api/?name={{ $comment->user->name }}&color=7F9CF5&background=EBF4FF" class="w-10 h-10 rounded-md object-cover">
                                                     @endif
                                                 </div>
                                             </div>

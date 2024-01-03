@@ -117,8 +117,6 @@ class UpdateEdcuationInfo extends Component
             session()->flash('error', 'You have exceeded the maximum number of education entries !');
             return;
         }
-        
-
 
     }
 

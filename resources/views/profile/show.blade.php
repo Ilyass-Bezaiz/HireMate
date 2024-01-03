@@ -26,6 +26,13 @@
                 </div>
                 <x-section-border />
             @endcan
+            
+            @can('modify-job-seeker-information', Auth::user())
+                <div class="mt-10 sm:mt-0">
+                    @livewire('update-languages')
+                </div>
+                <x-section-border />
+            @endcan
 
             @can('modify-job-seeker-information', Auth::user())
                 <div class="mt-10 sm:mt-0">
