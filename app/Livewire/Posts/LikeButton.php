@@ -9,7 +9,7 @@ class LikeButton extends Component
 {
 
     #[Reactive]
-    public Post $post;
+    public $post;
 
     public function toggleLikePost()
     {
