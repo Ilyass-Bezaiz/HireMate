@@ -80,8 +80,8 @@
                         <img src="{{ $this->likedPost(self::$selectedPostId + 1) ? 'images/ic-full-heart.png' : 'images/ic-empty-heart.png' }} "
                             alt="ic-heart" width="30" height="30">
                     </span>
-                    <button wire:click="showModal()"
-                        class="bg-[var(--color-primary)] border-[1px] border-transparent px-5 lg:px-10 py-2 rounded-full text-gray-100 font-bold hover:bg-transparent hover:border-[var(--color-primary)] hover:border-[1px] hover:text-[var(--color-primary)] duration-200">Hire</button>
+                    <a href="{{ route('user.profile', ['userId' => $requests[self::$selectedPostId]->user_id]) }}"
+                        class="bg-[var(--color-primary)] border-[1px] border-transparent px-5 lg:px-10 py-2 rounded-full text-gray-100 font-bold hover:bg-transparent hover:border-[var(--color-primary)] hover:border-[1px] hover:text-[var(--color-primary)] duration-200">Show Profile</a>
                 </div>
             </div>
             <h3 wire:loading.class="opacity-50 duration-300" wire:target="showOfferDetails"

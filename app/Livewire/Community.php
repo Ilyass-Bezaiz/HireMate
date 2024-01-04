@@ -208,6 +208,6 @@ class Community extends Component
         
         return view('livewire.community',[
             $this->posts = $posts,
-        ]);
-    }
+   ]);
+ }
 }

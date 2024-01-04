@@ -90,7 +90,7 @@
           </p>
         </div>
         <div class="flex gap-3">
-          <button class="btn-primary flex-1 items-center">Hire Now</button>
+          <a href="{{ route('user.profile', ['userId' => App\Models\User::where('id', App\Models\JobSeekerPost::where('id', $post->post_id)->get()[0]->user_id)->get()[0]->id]) }}" class="bg-[var(--color-primary)] border-[1px] border-transparent px-5 lg:px-10 pt-2 rounded-full text-gray-100 font-bold hover:bg-transparent hover:border-[var(--color-primary)] hover:border-[1px] hover:text-[var(--color-primary)] duration-200">Show Profile</a>
           <span wire:loading.class='scale-90 opacity-50 duration-200'
             wire:target='addFav({{ App\Models\JobSeekerPost::where('id', $post->post_id)->get()[0]->id }})'
             wire:click.stop='addFav({{ App\Models\JobSeekerPost::where('id', $post->post_id)->get()[0]->id }})'

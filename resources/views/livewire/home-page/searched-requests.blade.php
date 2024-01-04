@@ -82,8 +82,8 @@
                             <img src="{{ $this->likedPost(App\Models\JobSeekerPost::where('id', self::$selectedPostId)->get()[0]->id) ? 'images/ic-full-heart.png' : 'images/ic-empty-heart.png' }} "
                                 alt="ic-heart" width="30" height="30">
                         </span>
-                        <button wire:click="showModal()"
-                            class="bg-[var(--color-primary)] border-[1px] px-5 lg:px-10 py-2 rounded-full text-gray-100 font-bold hover:bg-transparent hover:border-[var(--color-primary)] hover:border-[1px] hover:text-[var(--color-primary)] duration-200">Hire</button>
+                        <a href="{{ route('user.profile', ['userId' => App\Models\User::where('id', App\Models\JobSeekerPost::where('id', self::$selectedPostId)->get()[0]->user_id)->get()[0]->id ]) }}"
+                            class="bg-[var(--color-primary)] border-[1px] px-5 lg:px-10 py-2 rounded-full text-gray-100 font-bold hover:bg-transparent hover:border-[var(--color-primary)] hover:border-[1px] hover:text-[var(--color-primary)] duration-200">Show Profile</a>
                     </div>
                 </div>
                 <h3 wire:loading.class="opacity-50 duration-300" wire:target="showOfferDetails"
