@@ -1,5 +1,18 @@
 # HireMate
 
+## Table of Contents
+
+- [Description](#Description)
+- [Badges](#Badges)
+- [Visuals](#Visuals)
+- [Installation](#Installation)
+- [Usage](#Usage)
+- [Support](#Support)
+- [Roadmap](#Roadmap)
+- [Contributing](#Contributing)
+- [Authors and Acknowledgment](#Authors-and-Acknowledgment)
+- [License](#license)
+
 ## Description
 
 HireMate is a recruitment platform developed using Laravel, Livewire, Alpine.js, and Tailwind CSS. It facilitates job seekers in creating and customizing their profiles, searching for jobs, and tracking their applications. Employers can post job opportunities and manage applicants. The platform features a landing page, home page with personalized sections, a job-seeking page, and a community forum. It also supports both light and dark modes.
@@ -105,6 +118,6 @@ Contributions are welcome! Please follow these steps:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Project Status
+<!-- ## Project Status
 
-The project is actively maintained. Future updates and improvements are planned.
+The project is actively maintained. Future updates and improvements are planned. -->
