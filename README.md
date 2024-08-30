@@ -1,9 +1,11 @@
 # HireMate
 
+HireMate is a recruitment platform designed to streamline the job search and hiring process. Built with Laravel, Livewire, Alpine.js, and Tailwind CSS, this platform offers both job seekers and employers a comprehensive toolset to manage profiles, applications, and community interactions.
+
 ## Table of Contents
 
-- [Description](#Description)
-- [Badges](#Badges)
+- [Features](#Features)
+- [Technologies Used](#Technologies-Used)
 - [Visuals](#Visuals)
 - [Installation](#Installation)
 - [Usage](#Usage)
@@ -13,15 +15,27 @@
 - [Authors and Acknowledgment](#Authors-and-Acknowledgment)
 - [License](#license)
 
-## Description
+## Features
 
-HireMate is a recruitment platform developed using Laravel, Livewire, Alpine.js, and Tailwind CSS. It facilitates job seekers in creating and customizing their profiles, searching for jobs, and tracking their applications. Employers can post job opportunities and manage applicants. The platform features a landing page, home page with personalized sections, a job-seeking page, and a community forum. It also supports both light and dark modes.
+- **Landing Page:** A welcoming introduction to the platform.
+- **Home Page:**
+  - **For You:** Tailored job suggestions.
+  - **Search Section:** Find jobs that match your criteria.
+  - **Activity Section:** View recent activity, including consulted posts, liked jobs, and application statuses (Pending, Refused, Accepted).
+- **Profile Page:** Customize your profile with details like name, email, phone number, and demographic information. 
+- **Settings Page:** Manage profile information, candidate data, work experience, education, and account security.
+- **Job Seeking Page:** Create and edit job posts seeking new opportunities.
+- **Community Page:** Engage with posts, questions, and opinions from other users. (Only available for job seekers.)
+- **Dark/Light Mode:** Choose between a dark or light theme.
 
-## Badges
 
-[![Laravel](https://img.shields.io/badge/Laravel-8.x-red)](https://laravel.com/)
-[![Livewire](https://img.shields.io/badge/Livewire-2.x-blue)](https://laravel-livewire.com/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.x-green)](https://tailwindcss.com/)
+
+## Technologies Used
+
+- **Laravel**: Back-end framework.
+- **Livewire**: Reactive components for dynamic user interfaces.
+- **Alpine.js**: Minimal JavaScript framework for interactivity.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
 
 ## Visuals
 
